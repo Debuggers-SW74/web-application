@@ -1,7 +1,7 @@
 .footer-auth {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
+  /* position: absolute; */
+  /* bottom: 0; */
+  /* width: 100%; */
   background-color: var(--mat-primary);
   color: white;
   display: flex;
