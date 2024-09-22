@@ -5,8 +5,6 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './footer-auth.component.html',
-  styleUrl: './footer-auth.component.css'
+  styleUrl: './footer-auth.component.css',
 })
-export class FooterAuthComponent {
-
-}
+export class FooterAuthComponent {}
