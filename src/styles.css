@@ -11,5 +11,15 @@ body {
 }
 
 :root {
-  --mat-primary: #0F15A3;
+  --mat-primary: #0f15a3;
+}
+
+.container {
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.fp-button {
+  border-radius: 33px !important;
+  padding: 20px 0 !important;
 }
