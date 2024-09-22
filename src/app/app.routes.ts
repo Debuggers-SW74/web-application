@@ -7,20 +7,37 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'sign-in',
-    //title: 'Sign In',
+    path: '',
     loadComponent: () =>
-      import('./public/pages/sign-in/sign-in.component').then(
-        (m) => m.SignInComponent,
+      import('./shared/pages/auth-layout/auth-layout.component').then(
+        (m) => m.AuthLayoutComponent,
       ),
+    children: [
+      {
+        path: 'sign-in',
+        //title: 'Sign In',
+        loadComponent: () =>
+          import('./public/pages/sign-in/sign-in.component').then(
+            (m) => m.SignInComponent,
+          ),
+      },
+      {
+        path: 'sign-up',
+        //title: 'Sign Up',
+        loadComponent: () =>
+          import('./public/pages/sign-up/sign-up.component').then(
+            (m) => m.SignUpComponent,
+          ),
+      },
+    ],
   },
   {
-    path: 'sign-up',
-    //title: 'Sign Up',
+    path: '',
     loadComponent: () =>
-      import('./public/pages/sign-up/sign-up.component').then(
-        (m) => m.SignUpComponent,
+      import('./shared/pages/app-layout/app-layout.component').then(
+        (m) => m.AppLayoutComponent,
       ),
+    children: [],
   },
   {
     path: '**',
