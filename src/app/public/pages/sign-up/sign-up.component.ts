@@ -24,6 +24,7 @@ export class SignUpComponent {
 
   currentStep = this.steps[0];
   currentStepView: any = SensorCodeComponent;
+  stepTitle = 'Insert your Sensor Code';
 
   @ViewChild('dynamicComponentContainer', { read: ViewContainerRef, static:true})
   container!: ViewContainerRef;
@@ -35,15 +36,19 @@ export class SignUpComponent {
     this.currentStep = step;
     if (step === Steps.SensorCode) {
       this.currentStepView = SensorCodeComponent;
+      this.stepTitle = 'Insert your Sensor Code';
     }
     if (step === Steps.UserType) {
       this.currentStepView = UserTypeComponent;
+      this.stepTitle = 'Select your type of profile!';
     }
     if (step === Steps.Register) {
       this.currentStepView = RegisterComponent;
+      this.stepTitle = 'Create your account!';
     }
     if (step === Steps.FillInformation) {
       this.currentStepView = FillInformationComponent;
+      this.stepTitle = 'Fill your information!';
     }
     this.loadComponent(this.currentStepView);
   }
