@@ -1,0 +1,24 @@
+.register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  margin: 50px 0;
+}
+
+.form-register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-register mat-form-field {
+  min-width: 336px;
+}
+
+.continue-button {
+  margin-top: 20px;
+  min-width: 336px;
+}

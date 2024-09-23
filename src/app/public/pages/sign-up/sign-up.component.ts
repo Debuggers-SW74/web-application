@@ -61,6 +61,8 @@ export class SignUpComponent {
       componentRef.instance.onSubmit = () => this.changeStep(this.steps[1]);
     } else if (componentRef.instance instanceof UserTypeComponent) {
       componentRef.instance.onSubmit = () => this.changeStep(this.steps[2]);
+    } else if (componentRef.instance instanceof RegisterComponent) {
+      componentRef.instance.onSubmit = () => this.changeStep(this.steps[3]);
     }
   }
 
