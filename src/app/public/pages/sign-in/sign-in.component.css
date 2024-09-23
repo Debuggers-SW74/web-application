@@ -39,3 +39,9 @@ button {
   margin-top: 20px;
   gap: 10px;
 }
+
+.redirect {
+  color: #60A3F0;
+  text-decoration: none;
+  cursor: pointer;
+}
