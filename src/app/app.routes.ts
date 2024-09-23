@@ -29,6 +29,14 @@ export const routes: Routes = [
             (m) => m.SignUpComponent,
           ),
       },
+      {
+        path: 'forgot-password',
+        // title: 'Forgot Password',
+        loadComponent: () =>
+          import('./public/pages/forgot-password/forgot-password.component').then(
+            (m) => m.ForgotPasswordComponent,
+          ),
+      },
     ],
   },
   {
