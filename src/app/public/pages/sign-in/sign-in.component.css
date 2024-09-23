@@ -7,12 +7,6 @@
   margin: 50px 0;
 }
 
-.logo {
-  border-radius: 20px;
-  border: 1px solid #cecece;
-  padding: 10px;
-}
-
 .form-container {
   padding: 50px 80px;
   display: flex;

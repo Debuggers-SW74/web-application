@@ -4,11 +4,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { TitleComponent } from '@shared/components/auth/title/title.component';
 
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [MatInputModule, MatFormFieldModule, MatButtonModule, RouterModule],
+  imports: [MatInputModule, MatFormFieldModule, MatButtonModule, RouterModule, TitleComponent],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.css',
 })
