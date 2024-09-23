@@ -1,0 +1,39 @@
+.user-type {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-type-container {
+  display: flex;
+  flex-direction: row;
+  gap: 200px;
+}
+
+.user-type-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-type-option span {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.user-type-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 3px solid var(--mat-primary);
+  border-radius: 100%;
+  padding: 30px;
+  background-color: transparent;
+}
+
+.continue-button {
+  margin-top: 20px;
+  min-width: 336px;
+  margin-top: 50px;
+}

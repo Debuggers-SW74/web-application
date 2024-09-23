@@ -59,6 +59,8 @@ export class SignUpComponent {
 
     if (componentRef.instance instanceof SensorCodeComponent) {
       componentRef.instance.onSubmit = () => this.changeStep(this.steps[1]);
+    } else if (componentRef.instance instanceof UserTypeComponent) {
+      componentRef.instance.onSubmit = () => this.changeStep(this.steps[2]);
     }
   }
 
