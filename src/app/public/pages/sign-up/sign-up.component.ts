@@ -1,5 +1,5 @@
 import { Component, ViewChild, ViewContainerRef } from '@angular/core';
-import { Steps } from '@shared/models/steps';
+import { SignUpSteps } from '@app/shared/models/sign-up-steps';
 import { TitleComponent } from '@shared/components/auth/title/title.component';
 import { SensorCodeComponent } from './components/steps/sensor-code/sensor-code.component';
 import { UserTypeComponent } from './components/steps/user-type/user-type.component';
@@ -16,10 +16,10 @@ import { FillInformationComponent } from './components/steps/fill-information/fi
 export class SignUpComponent {
 
   steps = [
-    Steps.SensorCode,
-    Steps.UserType,
-    Steps.Register,
-    Steps.FillInformation
+    SignUpSteps.SensorCode,
+    SignUpSteps.UserType,
+    SignUpSteps.Register,
+    SignUpSteps.FillInformation
   ];
 
   currentStep = this.steps[0];
@@ -31,22 +31,22 @@ export class SignUpComponent {
 
   constructor() { }
 
-  changeStep(step: Steps) {
+  changeStep(step: SignUpSteps) {
     console.log(step);
     this.currentStep = step;
-    if (step === Steps.SensorCode) {
+    if (step === SignUpSteps.SensorCode) {
       this.currentStepView = SensorCodeComponent;
       this.stepTitle = 'Insert your Sensor Code';
     }
-    if (step === Steps.UserType) {
+    if (step === SignUpSteps.UserType) {
       this.currentStepView = UserTypeComponent;
       this.stepTitle = 'Select your type of profile!';
     }
-    if (step === Steps.Register) {
+    if (step === SignUpSteps.Register) {
       this.currentStepView = RegisterComponent;
       this.stepTitle = 'Create your account!';
     }
-    if (step === Steps.FillInformation) {
+    if (step === SignUpSteps.FillInformation) {
       this.currentStepView = FillInformationComponent;
       this.stepTitle = 'Fill your information!';
     }
