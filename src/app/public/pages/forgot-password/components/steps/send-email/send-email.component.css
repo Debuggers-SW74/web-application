@@ -1,0 +1,38 @@
+.title-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-container {
+  padding: 50px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-forgot-password {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.form-forgot-password mat-form-field,
+button {
+  min-width: 336px;
+}
+
+.create-account {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.redirect {
+  color: #60A3F0;
+  text-decoration: none;
+  cursor: pointer;
+}
