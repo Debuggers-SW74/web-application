@@ -37,7 +37,16 @@ export const routes: Routes = [
       import('./shared/pages/app-layout/app-layout.component').then(
         (m) => m.AppLayoutComponent,
       ),
-    children: [],
+    children: [
+      {
+        path: 'home',
+        //title: 'Home',
+        loadComponent: () =>
+          import('./context/alerts-system/pages/home/home.component').then(
+            (m) => m.HomeComponent,
+          ),
+      },
+    ],
   },
   {
     path: '**',
