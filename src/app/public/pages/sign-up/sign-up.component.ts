@@ -55,7 +55,11 @@ export class SignUpComponent {
 
   loadComponent(component: any) {
     this.container.clear();
-    this.container.createComponent(component);
+    const componentRef = this.container.createComponent(component);
+
+    if (componentRef.instance instanceof SensorCodeComponent) {
+      componentRef.instance.onSubmit = () => this.changeStep(this.steps[1]);
+    }
   }
 
   ngOnInit(): void {
