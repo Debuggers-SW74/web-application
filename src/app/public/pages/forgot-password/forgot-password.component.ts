@@ -1,5 +1,5 @@
 import { Component, ViewChild, ViewContainerRef } from '@angular/core';
-import { ForgotPasswordSteps } from '@app/shared/models/forgot-password-steps';
+import { ForgotPasswordSteps } from '@shared/models/enum/forgot-password-steps';
 import { SendEmailComponent } from './components/steps/send-email/send-email.component';
 import { NewPasswordComponent } from './components/steps/new-password/new-password.component';
 

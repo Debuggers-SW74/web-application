@@ -1,5 +1,5 @@
 import { Component, ViewChild, ViewContainerRef } from '@angular/core';
-import { SignUpSteps } from '@app/shared/models/sign-up-steps';
+import { SignUpSteps } from '@shared/models/enum/sign-up-steps';
 import { TitleComponent } from '@shared/components/auth/title/title.component';
 import { SensorCodeComponent } from './components/steps/sensor-code/sensor-code.component';
 import { UserTypeComponent } from './components/steps/user-type/user-type.component';
