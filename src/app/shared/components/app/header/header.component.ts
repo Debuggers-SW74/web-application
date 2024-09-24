@@ -8,7 +8,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   standalone: true,
   imports: [MatToolbarModule, MatButtonModule, MatIconModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrl: './header.component.css',
 })
 export class HeaderComponent {
   userName = 'John Doe';

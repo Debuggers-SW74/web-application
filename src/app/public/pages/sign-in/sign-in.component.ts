@@ -9,24 +9,26 @@ import { TitleComponent } from '@shared/components/auth/title/title.component';
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [MatInputModule, MatFormFieldModule, MatButtonModule, RouterModule, TitleComponent],
+  imports: [
+    MatInputModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    RouterModule,
+    TitleComponent,
+  ],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.css',
 })
 export class SignInComponent {
-
   signInForm!: FormGroup;
 
-  constructor(
-    private router:Router,
-    private formBuilder:FormBuilder
-  ) {}
+  constructor(private router: Router, private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this.signInForm = this.formBuilder.group({
       email: [''],
-      password: ['']
-    })
+      password: [''],
+    });
   }
 
   signIn() {

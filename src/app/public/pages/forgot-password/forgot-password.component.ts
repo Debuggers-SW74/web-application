@@ -8,22 +8,21 @@ import { NewPasswordComponent } from './components/steps/new-password/new-passwo
   standalone: true,
   imports: [],
   templateUrl: './forgot-password.component.html',
-  styleUrl: './forgot-password.component.css'
+  styleUrl: './forgot-password.component.css',
 })
 export class ForgotPasswordComponent {
-
-  steps = [
-    ForgotPasswordSteps.SendEmail,
-    ForgotPasswordSteps.NewPassword,
-  ];
+  steps = [ForgotPasswordSteps.SendEmail, ForgotPasswordSteps.NewPassword];
 
   currentStep = this.steps[0];
   currentStepView: any = SendEmailComponent;
 
-  @ViewChild('dynamicComponentContainer', { read: ViewContainerRef, static:true})
+  @ViewChild('dynamicComponentContainer', {
+    read: ViewContainerRef,
+    static: true,
+  })
   container!: ViewContainerRef;
 
-  constructor() { }
+  constructor() {}
 
   changeStep(step: ForgotPasswordSteps) {
     console.log(step);

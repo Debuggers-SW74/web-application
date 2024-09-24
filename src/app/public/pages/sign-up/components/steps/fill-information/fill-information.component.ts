@@ -9,17 +9,19 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-fill-information',
   standalone: true,
-  imports: [MatInputModule, MatFormFieldModule, MatButtonModule, MatCheckboxModule],
+  imports: [
+    MatInputModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatCheckboxModule,
+  ],
   templateUrl: './fill-information.component.html',
-  styleUrl: './fill-information.component.css'
+  styleUrl: './fill-information.component.css',
 })
 export class FillInformationComponent {
   fillInformationForm!: FormGroup;
 
-  constructor(
-    private formBuilder:FormBuilder,
-    private router:Router
-  ) {}
+  constructor(private formBuilder: FormBuilder, private router: Router) {}
 
   submit() {
     console.log('Fill Information Submitted');
@@ -32,6 +34,6 @@ export class FillInformationComponent {
       phoneNumber: [''],
       termsConditions: [false],
       information: [false],
-    })
+    });
   }
 }

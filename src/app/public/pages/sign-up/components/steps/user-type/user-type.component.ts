@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
   standalone: true,
   imports: [MatButtonModule],
   templateUrl: './user-type.component.html',
-  styleUrl: './user-type.component.css'
+  styleUrl: './user-type.component.css',
 })
 export class UserTypeComponent {
   @Input() onSubmit!: () => void;

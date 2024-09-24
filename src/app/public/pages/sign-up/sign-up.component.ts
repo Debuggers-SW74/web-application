@@ -11,25 +11,27 @@ import { FillInformationComponent } from './components/steps/fill-information/fi
   standalone: true,
   imports: [TitleComponent, SensorCodeComponent, UserTypeComponent],
   templateUrl: './sign-up.component.html',
-  styleUrl: './sign-up.component.css'
+  styleUrl: './sign-up.component.css',
 })
 export class SignUpComponent {
-
   steps = [
     SignUpSteps.SensorCode,
     SignUpSteps.UserType,
     SignUpSteps.Register,
-    SignUpSteps.FillInformation
+    SignUpSteps.FillInformation,
   ];
 
   currentStep = this.steps[0];
   currentStepView: any = SensorCodeComponent;
   stepTitle = 'Insert your Sensor Code';
 
-  @ViewChild('dynamicComponentContainer', { read: ViewContainerRef, static:true})
+  @ViewChild('dynamicComponentContainer', {
+    read: ViewContainerRef,
+    static: true,
+  })
   container!: ViewContainerRef;
 
-  constructor() { }
+  constructor() {}
 
   changeStep(step: SignUpSteps) {
     console.log(step);

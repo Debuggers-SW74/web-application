@@ -9,16 +9,14 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   standalone: true,
   imports: [MatInputModule, MatFormFieldModule, MatButtonModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrl: './register.component.css',
 })
 export class RegisterComponent {
   @Input() onSubmit!: () => void;
 
   registerForm!: FormGroup;
 
-  constructor(
-    private formBuilder:FormBuilder
-  ) {}
+  constructor(private formBuilder: FormBuilder) {}
 
   submit() {
     this.onSubmit();
@@ -28,7 +26,7 @@ export class RegisterComponent {
     this.registerForm = this.formBuilder.group({
       email: [''],
       password: [''],
-      confirmPassword: ['']
-    })
+      confirmPassword: [''],
+    });
   }
 }
