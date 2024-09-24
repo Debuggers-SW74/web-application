@@ -1,14 +1,34 @@
 <form mat formGroup="registerForm" class="form-register">
   <mat-form-field>
-    <input matInput type="text" placeholder="Email address" formControlName="email" />
+    <input
+      matInput
+      type="text"
+      placeholder="Email address"
+      formControlName="email"
+    />
   </mat-form-field>
   <mat-form-field>
-    <input matInput type="password" placeholder="Password" formControlName="password" />
+    <input
+      matInput
+      type="password"
+      placeholder="Password"
+      formControlName="password"
+    />
   </mat-form-field>
   <mat-form-field>
-    <input matInput type="password" placeholder="Confirm password" formControlName="confirmPassword" />
+    <input
+      matInput
+      type="password"
+      placeholder="Confirm password"
+      formControlName="confirmPassword"
+    />
   </mat-form-field>
 </form>
-<button mat-flat-button color="primary" class="fp-button continue-button" (click)="submit()">
+<button
+  mat-flat-button
+  color="primary"
+  class="fp-button continue-button"
+  (click)="submit()"
+>
   Continue
 </button>
