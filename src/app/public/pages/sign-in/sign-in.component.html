@@ -1,7 +1,12 @@
 <div class="sign-in">
-  <app-title title="Welcome, let's get started!" />
+  <app-title title="Welcome, let's get started!"></app-title>
   <div class="container form-container">
-    <form mat formGroup="signInForm" class="form-sign-in">
+    <form
+      mat
+      [formGroup]="signInForm"
+      class="form-sign-in"
+      (ngSubmit)="signIn()"
+    >
       <mat-form-field>
         <input
           matInput
@@ -18,12 +23,7 @@
           formControlName="password"
         />
       </mat-form-field>
-      <button
-        mat-flat-button
-        color="primary"
-        class="fp-button"
-        (click)="signIn()"
-      >
+      <button mat-flat-button color="primary" class="fp-button" type="submit">
         Login to your account
       </button>
     </form>
