@@ -1,11 +1,21 @@
 <div class="title-container">
-  <img src="assets/forgot-password.png" alt="Forgot Password" width="213" height="241" />
+  <img
+    src="assets/forgot-password.png"
+    alt="Forgot Password"
+    width="213"
+    height="241"
+  />
   <h2>Forgot your password?</h2>
 </div>
 <div class="container form-container">
   <form mat formGroup="forgotPasswordForm" class="form-forgot-password">
     <mat-form-field>
-      <input matInput type="text" placeholder="Email address" formControlName="email" />
+      <input
+        matInput
+        type="text"
+        placeholder="Email address"
+        formControlName="email"
+      />
     </mat-form-field>
   </form>
   <button mat-flat-button color="primary" class="fp-button" (click)="submit()">
