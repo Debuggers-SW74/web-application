@@ -1,0 +1,40 @@
+<div>
+  <div class="top-home">
+    <h1>Welcome,<br>Juan Arona! </h1>
+    <a href="#" class="text-link">View history</a>
+  </div>
+
+  <div class="info-home">
+    <div class="info-home__column">
+      <div class="info-home__subtitle">
+        <div class="divider-vertical"></div>
+        <h2>Your drivers</h2>
+      </div>
+      <div class="card-list">
+        <app-driver-card
+          *ngFor="let driver of drivers.slice(0, 3)"
+          [driverName]="driver.name"
+          [driverPhoto]="driver.img">
+        </app-driver-card>
+      </div>
+    </div>
+
+    <div class="info-home__column">
+      <div class="info-home__subtitle">
+        <!-- Divider vertical -->
+        <div class="divider-vertical"></div>
+        <h2>Recent trips</h2>
+      </div>
+      <div class="card-list">
+        <app-trip-card
+          *ngFor="let driver of drivers.slice(0, 3)"
+          [driverName]="driver.name"
+          [driverPhoto]="driver.img"
+          [from]="driver.from"
+          [to]="driver.to">
+        </app-trip-card>
+      </div>
+    </div>
+
+  </div>
+</div>

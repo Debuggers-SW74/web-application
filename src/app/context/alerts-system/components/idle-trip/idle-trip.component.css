@@ -1,0 +1,37 @@
+.top-home {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: last baseline;
+}
+
+.top-home h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #000;
+}
+
+.text-link {
+  color: var(--mat-primary);
+  cursor: pointer;
+  font-weight: bolder;
+}
+
+.info-home {
+
+  display: flex;
+  justify-content: space-evenly;
+  align-items: start;
+  margin-top: 20px;
+}
+
+.divider-vertical {
+  border-left: 2px solid var(--custom-secondary-color);
+  height: 2vh;
+  margin-right: 10px; 
+}
+
+.info-home__subtitle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
