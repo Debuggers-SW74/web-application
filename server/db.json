@@ -4,7 +4,7 @@
       "id": 1,
       "firstName": "Juan",
       "lastName": "Pérez",
-      "phoneNumber": 981742186,
+      "phoneNumber": "981742186",
       "email": "juan.perez@example.com",
       "password": "password123",
       "role": "supervisor"
@@ -13,7 +13,7 @@
       "id": 2,
       "firstName": "Luis",
       "lastName": "Gómez",
-      "phoneNumber": 981742186,
+      "phoneNumber": "981742186",
       "email": "luis.gomez@example.com",
       "password": "password456",
       "role": "conductor"
@@ -22,7 +22,7 @@
       "id": 3,
       "firstName": "Ana",
       "lastName": "Martínez",
-      "phoneNumber": 981742186,
+      "phoneNumber": "981742186",
       "email": "ana.martinez@example.com",
       "password": "password789",
       "role": "supervisor"
@@ -31,15 +31,16 @@
       "id": 4,
       "firstName": "Carlos",
       "lastName": "López",
-      "phoneNumber": 981742186,
+      "phoneNumber": "981742186",
       "email": "carlos.lopez@example.com",
       "password": "password321",
       "role": "conductor"
     },
     {
       "id": 5,
-      "name": "John",
-      "phoneNumber": 981742186,
+      "firstName": "John",
+      "lastName": "Doe",
+      "phoneNumber": "981742186",
       "email": "testing@gmail.com",
       "password": "fake123",
       "role": "conductor"
