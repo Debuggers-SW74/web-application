@@ -12,6 +12,7 @@ body {
 
 :root {
   --mat-primary: #0f15a3;
+  --custom-secondary-color: #1ACC8D;
 }
 
 .container {
