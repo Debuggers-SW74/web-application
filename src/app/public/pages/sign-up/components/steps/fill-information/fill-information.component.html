@@ -1,37 +1,39 @@
-<div class="form-container">
-  <form mat formGroup="fillInformationForm" class="form-fill-information">
-    <mat-form-field>
-      <input matInput type="text" placeholder="Name" formControlName="name" />
-    </mat-form-field>
-    <mat-form-field>
-      <input
-        matInput
-        type="number"
-        placeholder="Phone Number"
-        formControlName="phoneNumber"
-        maxlength="9"
-      />
-    </mat-form-field>
-    <section>
-      <div class="checkbox-field">
-        <mat-checkbox formControlName="termsCondition" ngSkipHydration>
-          I declare that I have read and accepted the
-          <a href="">terms and conditions</a>
-        </mat-checkbox>
-      </div>
-      <div class="checkbox-field">
-        <mat-checkbox formControlName="information" ngSkipHydration>
-          I agree to the use of my information.
-        </mat-checkbox>
-      </div>
-    </section>
-  </form>
+<form
+  mat
+  [formGroup]="fillInformationForm"
+  class="form-fill-information"
+  (ngSubmit)="submit()"
+  >
+  <mat-form-field>
+    <input matInput type="text" placeholder="Name" formControlName="name" />
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      matInput
+      type="number"
+      placeholder="Phone Number"
+      formControlName="phoneNumber"
+      maxlength="9"
+    />
+  </mat-form-field>
+  <section>
+    <div class="checkbox-field">
+      <mat-checkbox formControlName="termsCondition" ngSkipHydration>
+        I declare that I have read and accepted the
+        <a href="">terms and conditions</a>
+      </mat-checkbox>
+    </div>
+    <div class="checkbox-field">
+      <mat-checkbox formControlName="information" ngSkipHydration>
+        I agree to the use of my information.
+      </mat-checkbox>
+    </div>
+  </section>
   <button
     mat-flat-button
     color="primary"
     class="fp-button continue-button"
-    (click)="submit()"
   >
     Continue
   </button>
-</div>
+</form>
