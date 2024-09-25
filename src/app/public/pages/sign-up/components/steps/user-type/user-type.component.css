@@ -32,6 +32,10 @@
   background-color: transparent;
 }
 
+.selected {
+  background-color: #70a4ff;
+}
+
 .continue-button {
   margin-top: 20px;
   min-width: 336px;
