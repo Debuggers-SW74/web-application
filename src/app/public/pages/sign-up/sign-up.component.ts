@@ -10,12 +10,20 @@ import {
   UserInformation,
   UserRegistration,
 } from '@shared/models/entities/User';
-import { Role } from '@app/shared/models/enum/role';
+import { Role } from '@shared/models/enum/role';
+import { HttpClientModule } from '@angular/common/http';
+import { UserService } from '@shared/services/user/user.service';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [TitleComponent, SensorCodeComponent, UserTypeComponent],
+  imports: [
+    TitleComponent,
+    SensorCodeComponent,
+    UserTypeComponent,
+    HttpClientModule,
+  ],
+  providers: [UserService],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css',
 })
@@ -33,7 +41,8 @@ export class SignUpComponent {
 
   user: User = {
     id: 0,
-    name: '',
+    firstName: '',
+    lastName: '',
     phoneNumber: '',
     email: '',
     password: '',
@@ -46,7 +55,7 @@ export class SignUpComponent {
   })
   container!: ViewContainerRef;
 
-  constructor() {}
+  constructor(private userService: UserService) {}
 
   changeStep(step: SignUpSteps) {
     console.log(step);
@@ -94,9 +103,19 @@ export class SignUpComponent {
     } else if (componentRef.instance instanceof FillInformationComponent) {
       componentRef.instance.onSubmitted.subscribe(
         (userInformation: UserInformation) => {
-          this.user.name = userInformation.name;
+          this.user.firstName = userInformation.firstName;
+          this.user.lastName = userInformation.lastName;
           this.user.phoneNumber = userInformation.phoneNumber;
-          console.log(this.user);
+          // console.log(this.user);
+
+          this.userService.create('users', this.user).subscribe(
+            (user: User) => {
+              console.log(user);
+            },
+            (error: any) => {
+              console.log(error);
+            },
+          );
         },
       );
     }

@@ -2,7 +2,8 @@ import { Role } from '../enum/role';
 
 export interface User {
   id: number;
-  name: string;
+  firstName: string;
+  lastName: string;
   phoneNumber: string;
   email: string;
   password: string;
@@ -16,7 +17,8 @@ export interface UserRegistration {
 }
 
 export interface UserInformation {
-  name: string;
+  firstName: string;
+  lastName: string;
   phoneNumber: string;
   termsConditions: boolean;
   information: boolean;
