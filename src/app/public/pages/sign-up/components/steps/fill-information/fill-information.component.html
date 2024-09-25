@@ -3,7 +3,7 @@
   [formGroup]="fillInformationForm"
   class="form-fill-information"
   (ngSubmit)="submit()"
-  >
+>
   <mat-form-field>
     <input matInput type="text" placeholder="Name" formControlName="name" />
   </mat-form-field>
@@ -18,7 +18,7 @@
   </mat-form-field>
   <section>
     <div class="checkbox-field">
-      <mat-checkbox formControlName="termsCondition" ngSkipHydration>
+      <mat-checkbox formControlName="termsConditions" ngSkipHydration>
         I declare that I have read and accepted the
         <a href="">terms and conditions</a>
       </mat-checkbox>
@@ -29,11 +29,7 @@
       </mat-checkbox>
     </div>
   </section>
-  <button
-    mat-flat-button
-    color="primary"
-    class="fp-button continue-button"
-  >
+  <button mat-flat-button color="primary" class="fp-button continue-button">
     Continue
   </button>
 </form>

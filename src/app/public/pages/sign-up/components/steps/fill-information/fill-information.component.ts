@@ -8,6 +8,7 @@ import {
   FormGroup,
   Validators,
   ReactiveFormsModule,
+  FormsModule,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -20,6 +21,7 @@ import { Router } from '@angular/router';
     MatButtonModule,
     MatCheckboxModule,
     ReactiveFormsModule,
+    FormsModule,
   ],
   templateUrl: './fill-information.component.html',
   styleUrl: './fill-information.component.css',
@@ -30,7 +32,7 @@ export class FillInformationComponent {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-  ) {}
+  ) { }
 
   submit() {
     if (this.fillInformationForm.invalid) {
