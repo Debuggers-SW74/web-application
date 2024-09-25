@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { Role } from '@shared/models/enum/role';
 import { CommonModule } from '@angular/common';
@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class UserTypeComponent {
   @Input() onSubmit!: () => void;
+  @Output() onSubmitted = new EventEmitter<Role>();
 
   userType: Role | null = null;
 
@@ -24,6 +25,7 @@ export class UserTypeComponent {
     }
 
     console.log('User Type Submitted');
+    this.onSubmitted.emit(this.userType);
     this.onSubmit();
   }
 

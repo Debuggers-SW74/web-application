@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,6 +8,7 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { UserRegistration } from '@shared/models/entities/User';
 
 @Component({
   selector: 'app-register',
@@ -23,6 +24,7 @@ import {
 })
 export class RegisterComponent {
   @Input() onSubmit!: () => void;
+  @Output() onSubmitted = new EventEmitter<UserRegistration>();
 
   registerForm!: FormGroup;
 
@@ -40,6 +42,12 @@ export class RegisterComponent {
       alert('Passwords do not match');
       return;
     }
+    this.onSubmitted.emit({
+      email: this.registerForm.value.email,
+      password: this.registerForm.value.password,
+      confirmPassword: this.registerForm.value.confirmPassword,
+    });
+    console.log('Register Submitted');
     this.onSubmit();
   }
 

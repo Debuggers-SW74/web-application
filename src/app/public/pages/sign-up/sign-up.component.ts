@@ -5,7 +5,12 @@ import { SensorCodeComponent } from './components/steps/sensor-code/sensor-code.
 import { UserTypeComponent } from './components/steps/user-type/user-type.component';
 import { RegisterComponent } from './components/steps/register/register.component';
 import { FillInformationComponent } from './components/steps/fill-information/fill-information.component';
-import { User } from '@shared/models/entities/User';
+import {
+  User,
+  UserInformation,
+  UserRegistration,
+} from '@shared/models/entities/User';
+import { Role } from '@app/shared/models/enum/role';
 
 @Component({
   selector: 'app-sign-up',
@@ -24,10 +29,16 @@ export class SignUpComponent {
 
   currentStep = this.steps[0];
   currentStepView: any = SensorCodeComponent;
-  // currentStepView: any = RegisterComponent;
   stepTitle = 'Insert your Sensor Code';
 
-  user: User | null = null;
+  user: User = {
+    id: 0,
+    name: '',
+    phoneNumber: '',
+    email: '',
+    password: '',
+    role: Role.Driver,
+  };
 
   @ViewChild('dynamicComponentContainer', {
     read: ViewContainerRef,
@@ -67,8 +78,27 @@ export class SignUpComponent {
       componentRef.instance.onSubmit = () => this.changeStep(this.steps[1]);
     } else if (componentRef.instance instanceof UserTypeComponent) {
       componentRef.instance.onSubmit = () => this.changeStep(this.steps[2]);
+      componentRef.instance.onSubmitted.subscribe((userType: Role) => {
+        this.user.role = userType;
+        console.log(this.user);
+      });
     } else if (componentRef.instance instanceof RegisterComponent) {
       componentRef.instance.onSubmit = () => this.changeStep(this.steps[3]);
+      componentRef.instance.onSubmitted.subscribe(
+        (userRegistration: UserRegistration) => {
+          this.user.email = userRegistration.email;
+          this.user.password = userRegistration.password;
+          console.log(this.user);
+        },
+      );
+    } else if (componentRef.instance instanceof FillInformationComponent) {
+      componentRef.instance.onSubmitted.subscribe(
+        (userInformation: UserInformation) => {
+          this.user.name = userInformation.name;
+          this.user.phoneNumber = userInformation.phoneNumber;
+          console.log(this.user);
+        },
+      );
     }
   }
 

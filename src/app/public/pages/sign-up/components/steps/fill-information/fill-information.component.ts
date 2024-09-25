@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,6 +11,7 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserInformation } from '@shared/models/entities/User';
 
 @Component({
   selector: 'app-fill-information',
@@ -28,17 +29,24 @@ import { Router } from '@angular/router';
 })
 export class FillInformationComponent {
   fillInformationForm!: FormGroup;
+  @Output() onSubmitted = new EventEmitter<UserInformation>();
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-  ) { }
+  ) {}
 
   submit() {
     if (this.fillInformationForm.invalid) {
       alert('Please fill all the required fields');
       return;
     }
+    this.onSubmitted.emit({
+      name: this.fillInformationForm.value.name,
+      phoneNumber: this.fillInformationForm.value.phoneNumber,
+      termsConditions: this.fillInformationForm.value.termsConditions,
+      information: this.fillInformationForm.value.information,
+    });
     console.log('Fill Information Submitted');
     this.router.navigate(['/home']);
   }
@@ -46,7 +54,7 @@ export class FillInformationComponent {
   ngOnInit(): void {
     this.fillInformationForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
-      phoneNumber: ['', [Validators.required, Validators.minLength(3)]],
+      phoneNumber: ['', [Validators.required, Validators.minLength(9)]],
       termsConditions: [false, [Validators.required]],
       information: [false, [Validators.required]],
     });
