@@ -1,4 +1,9 @@
-<form mat formGroup="registerForm" class="form-register">
+<form
+  mat
+  [formGroup]="registerForm"
+  class="form-register"
+  (ngSubmit)="submit()"
+>
   <mat-form-field>
     <input
       matInput
@@ -23,12 +28,7 @@
       formControlName="confirmPassword"
     />
   </mat-form-field>
+  <button mat-flat-button color="primary" class="fp-button continue-button">
+    Continue
+  </button>
 </form>
-<button
-  mat-flat-button
-  color="primary"
-  class="fp-button continue-button"
-  (click)="submit()"
->
-  Continue
-</button>

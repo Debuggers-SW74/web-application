@@ -5,6 +5,7 @@ import { SensorCodeComponent } from './components/steps/sensor-code/sensor-code.
 import { UserTypeComponent } from './components/steps/user-type/user-type.component';
 import { RegisterComponent } from './components/steps/register/register.component';
 import { FillInformationComponent } from './components/steps/fill-information/fill-information.component';
+import { User } from '@shared/models/entities/User';
 
 @Component({
   selector: 'app-sign-up',
@@ -23,7 +24,10 @@ export class SignUpComponent {
 
   currentStep = this.steps[0];
   currentStepView: any = SensorCodeComponent;
+  // currentStepView: any = RegisterComponent;
   stepTitle = 'Insert your Sensor Code';
+
+  user: User | null = null;
 
   @ViewChild('dynamicComponentContainer', {
     read: ViewContainerRef,
