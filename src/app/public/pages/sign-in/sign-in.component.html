@@ -1,0 +1,38 @@
+<div class="sign-in">
+  <app-title title="Welcome, let's get started!"></app-title>
+  <div class="container form-container">
+    <form
+      mat
+      [formGroup]="signInForm"
+      class="form-sign-in"
+      (ngSubmit)="signIn()"
+    >
+      <mat-form-field>
+        <input
+          matInput
+          type="text"
+          placeholder="Email address"
+          formControlName="email"
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+        />
+      </mat-form-field>
+      <button mat-flat-button color="primary" class="fp-button" type="submit">
+        Login to your account
+      </button>
+    </form>
+    <a class="redirect" routerLink="/forgot-password"
+      ><u>Forgot your password?</u></a
+    >
+    <div class="create-account">
+      <p style="margin: 0">No account yet?</p>
+      <a class="redirect" routerLink="/sign-up"><u>Create an account</u></a>
+    </div>
+  </div>
+</div>

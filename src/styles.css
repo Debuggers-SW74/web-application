@@ -1,4 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", Roboto, "Helvetica Neue", sans-serif;
+}
+
+:root {
+  --mat-primary: #0f15a3;
+  --custom-secondary-color: #1ACC8D;
+  --custom-warning-color: #FF0000;
+}
+
+.container {
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.fp-button {
+  border-radius: 33px !important;
+  padding: 20px 0 !important;
+}
