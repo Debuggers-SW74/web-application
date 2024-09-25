@@ -1,3 +1,9 @@
+.form-sensor-code {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .sensor-code {
   display: flex;
   flex-direction: column;
