@@ -1,17 +1,18 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActiveTripComponent } from "../../components/active-trip/active-trip.component";
 import { IdleTripComponent } from "../../components/idle-trip/idle-trip.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, IdleTripComponent],
+  imports: [CommonModule, ActiveTripComponent, IdleTripComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
 
-  alert: number = 0;
+  alert: number = 1;
 
   constructor() { }
 

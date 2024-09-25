@@ -1,0 +1,115 @@
+.top-home {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: last baseline;
+}
+
+.top-home h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #000;
+}
+
+.text-link {
+  color: var(--mat-primary);
+  cursor: pointer;
+  font-weight: bolder;
+}
+
+.info-home {
+
+  display: flex;
+  justify-content: space-evenly;
+  align-items: start;
+  margin-top: 20px;
+}
+
+.divider-vertical {
+  border-left: 2px solid var(--custom-secondary-color);
+  height: 2.5vh;
+  margin-right: 10px; 
+}
+
+.info-home__subtitle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+/* CARDS */
+
+.card {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 350px;
+  height: 200px;
+  text-align: center;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+.card h3 {
+  margin: 0px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.card p {
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 0;
+}
+
+.card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+.card .content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.content .row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 320px;
+}
+
+.row div {
+  width: 40%;
+}
+
+.row div p {
+  width: 100%;
+  text-align: left;
+}
+
+.spacer {
+  margin: 1vh;
+}
+
+.card button {
+
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  width: 90%;
+}
+
+.sensor-info {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
