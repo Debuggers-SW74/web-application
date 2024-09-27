@@ -1,0 +1,44 @@
+<mat-toolbar color="primary" class="header">
+  <div class="account">
+    <img
+      class="logo"
+      src="../../../../../assets/fastporte-logo.png"
+      alt="Logo"
+    />
+    <span>FastPorte</span>
+    <span class="spacer"></span>
+    <button class="account-button">
+      <div class="profile">
+        <p>{{ nameInitials }}</p>
+      </div>
+      <p>{{ userName }}</p>
+    </button>
+  </div>
+  <div class="views">
+    <button class="view-button" aria-label="Button to Home view">
+      <a routerLink="/home"> Home </a>
+      <span [ngClass]="{ active: currentUrl === '/home' }"></span>
+    </button>
+    <button class="view-button" aria-label="Button to Drivers view">
+      <a routerLink="/drivers"> Drivers </a>
+      <span [ngClass]="{ active: currentUrl === '/drivers' }"></span>
+    </button>
+    <button class="view-button" aria-label="Button to Trips view">
+      <a routerLink="/trips"> Trips </a>
+      <span [ngClass]="{ active: currentUrl === '/trips' }"></span>
+    </button>
+    <button class="view-button" aria-label="Button to Support view">
+      <a routerLink="/support"> Support </a>
+      <span [ngClass]="{ active: currentUrl === '/support' }"></span>
+    </button>
+    <span class="spacer"></span>
+    <button class="notification-button">
+      <img
+        src="assets/svg/notification.svg"
+        alt="Notification"
+        width="24"
+        height="24"
+      />
+    </button>
+  </div>
+</mat-toolbar>

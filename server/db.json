@@ -1,0 +1,65 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "firstName": "Juan",
+      "lastName": "Pérez",
+      "phoneNumber": "981742186",
+      "email": "juan.perez@example.com",
+      "password": "password123",
+      "role": "supervisor"
+    },
+    {
+      "id": "2",
+      "firstName": "Luis",
+      "lastName": "Gómez",
+      "phoneNumber": "981742186",
+      "email": "luis.gomez@example.com",
+      "password": "password456",
+      "role": "conductor"
+    },
+    {
+      "id": "3",
+      "firstName": "Ana",
+      "lastName": "Martínez",
+      "phoneNumber": "981742186",
+      "email": "ana.martinez@example.com",
+      "password": "password789",
+      "role": "supervisor"
+    },
+    {
+      "id": "4",
+      "firstName": "Carlos",
+      "lastName": "López",
+      "phoneNumber": "981742186",
+      "email": "carlos.lopez@example.com",
+      "password": "password321",
+      "role": "conductor"
+    },
+    {
+      "id": "5",
+      "firstName": "John",
+      "lastName": "Doe",
+      "phoneNumber": "981742186",
+      "email": "testing@gmail.com",
+      "password": "fake123",
+      "role": "conductor"
+    }
+  ],
+  "trips": [
+    {
+      "id": "1",
+      "from": "Comas",
+      "to": "Pte Piedra",
+      "type": "OIL",
+      "amount": "100",
+      "weight": "100",
+      "date": "2024-09-28T05:00:00.000Z",
+      "departureTime": "12:03",
+      "arrivalTime": "16:03",
+      "subject": "",
+      "description": "",
+      "status": "pending"
+    }
+  ]
+}

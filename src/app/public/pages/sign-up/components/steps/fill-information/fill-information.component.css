@@ -1,0 +1,27 @@
+.form-fill-information {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-fill-information mat-form-field {
+  min-width: 336px;
+}
+
+.continue-button {
+  margin-top: 20px;
+  min-width: 336px;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+input[type=number] { -moz-appearance:textfield; }
+
+.checkbox-field {
+  max-width: 336px;
+}

@@ -1,0 +1,112 @@
+<form class="book-trip-form" [formGroup]="bookTripForm" (ngSubmit)="submit()">
+  <section class="left-side">
+    <div class="container-field">
+      <p>From</p>
+      <mat-form-field appearance="outline">
+        <mat-select formControlName="from">
+          <mat-option *ngFor="let location of locationList" [value]="location">
+            {{ location }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="container-field">
+      <p>Type</p>
+      <mat-form-field appearance="outline">
+        <mat-select formControlName="type">
+          <mat-option
+            *ngFor="let hazardousMaterial of hazardousMaterialList"
+            [value]="hazardousMaterial"
+          >
+            {{ hazardousMaterial }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="container-field">
+      <p>Date</p>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          [matDatepicker]="datepicker"
+          [min]="minDate"
+          formControlName="date"
+        />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="datepicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #datepicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </section>
+
+  <section>
+    <div class="container-field">
+      <p>To</p>
+      <mat-form-field appearance="outline">
+        <mat-select formControlName="to">
+          <mat-option *ngFor="let location of locationList" [value]="location">
+            {{ location }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="group-field">
+      <div class="container-field-2">
+        <p>Amount</p>
+        <mat-form-field appearance="outline">
+          <input matInput formControlName="amount" />
+        </mat-form-field>
+      </div>
+      <div class="container-field-2">
+        <p>Weight</p>
+        <mat-form-field appearance="outline">
+          <input matInput formControlName="weight" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="group-field">
+      <div class="time">
+        <p>Time</p>
+        <div class="container-field-2">
+          <mat-form-field appearance="outline">
+            <input matInput formControlName="departureTime" type="time" />
+          </mat-form-field>
+        </div>
+      </div>
+      <p>-</p>
+      <div class="container-field-2">
+        <mat-form-field appearance="outline">
+          <input matInput formControlName="arrivalTime" type="time" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="description-container">
+      <p>Description</p>
+      <div class="container information-container">
+        <div class="container-field subject">
+          <p>Subject</p>
+          <mat-form-field appearance="outline">
+            <input matInput formControlName="subject" />
+          </mat-form-field>
+        </div>
+        <mat-form-field class="description" appearance="outline">
+          <textarea matInput formControlName="description"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <button
+      class="submit-button"
+      mat-raised-button
+      color="accent"
+      type="submit"
+    >
+      <p>SUBMIT</p>
+    </button>
+  </section>
+</form>

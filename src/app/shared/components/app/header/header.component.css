@@ -1,0 +1,82 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20%;
+  padding-bottom: 20px;
+  height: auto;
+}
+
+.logo {
+  width: 57px;
+  height: 57px;
+  margin-right: 20px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.account {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.views {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  background-color: var(--mat-primary) 0.9;
+  width: 100%;
+}
+
+.active {
+  background-color: var(--mat-accent);
+  width: 100%;
+  height: 3px;
+  margin-top: 10px;
+}
+
+.view-button,
+.notification-button,
+.account-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.account-button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.account-button p {
+  color: white;
+}
+
+.profile {
+  background-color: #fbfbfc;
+  border-radius: 999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile p {
+  color: black;
+  margin: 0;
+  padding: 5px;
+}
+
+.view-button a {
+  color: white;
+  font-size: 16px;
+  text-decoration: none;
+}

@@ -1,0 +1,89 @@
+.book-trip-form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+  gap: 40px;
+  margin: 50px 0;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.left-side {
+  align-self: flex-start;
+}
+
+.group-field {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.container-field,
+.container-field-2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+p {
+  opacity: 0.6;
+  margin-bottom: 30px;
+}
+
+.container-field mat-form-field {
+  min-width: 475px;
+}
+
+.container-field-2 mat-form-field {
+  max-width: 120px;
+}
+
+.time {
+  display: flex;
+  flex-direction: row;
+  gap: 42px;
+}
+
+.description-container {
+  width: 100%;
+}
+
+.information-container {
+  padding: 20px;
+  border-radius: 45px;
+}
+
+.subject {
+  justify-content: space-between;
+}
+
+.subject mat-form-field {
+  min-width: 70%;
+}
+
+.description {
+  width: 100%;
+}
+
+.submit-button {
+  margin-top: 50px;
+  min-width: 240px;
+  border-radius: 33px;
+}
+
+.submit-button p {
+  font-size: 20px;
+  font-weight: 600;
+  color: white;
+  margin: 0;
+  opacity: 1;
+}
