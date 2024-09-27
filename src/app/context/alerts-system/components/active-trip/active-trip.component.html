@@ -1,13 +1,7 @@
-<div style="height: 100vh">
+<div class="active-trip">
+  <h2>Trip Report</h2>
   <div class="info-home">
     <div class="info-home__column">
-      <div class="top-home">
-        <h1>Trip Report</h1>
-        <!--
-        <a href="#" class="text-link">View history</a>
-        -->
-        <div class="text-link"></div>
-      </div>
       <div class="info-home__subtitle">
         <div class="divider-vertical"></div>
         <h2>Trip Information</h2>
@@ -75,12 +69,7 @@
           </div>
           <div class="row">
             <div class="chart">
-              <canvas
-                baseChart
-                [data]="lineChartData"
-                [options]="lineChartOptions"
-                [type]="lineChartType"
-              >
+              <canvas baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="lineChartType">
               </canvas>
             </div>
           </div>
@@ -102,12 +91,7 @@
           </div>
           <div class="row">
             <div class="chart">
-              <canvas
-                baseChart
-                [data]="barChartData"
-                [options]="barChartOptions"
-                [type]="barChartType"
-              >
+              <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="barChartType">
               </canvas>
             </div>
           </div>

@@ -1,23 +1,13 @@
-.top-home {
+.active-trip {
   display: flex;
-  justify-content: space-evenly;
-  align-items: last baseline;
-}
-
-.top-home h1 {
-  font-size: 2.5rem;
-  font-weight: 600;
-  color: #000;
-}
-
-.text-link {
-  color: var(--mat-primary);
-  cursor: pointer;
-  font-weight: bolder;
+  flex-direction: column;
+  align-items: center;
 }
 
 .info-home {
   display: flex;
+  flex-direction: row;
+  width: 100%;
   justify-content: space-evenly;
   align-items: start;
   margin-top: 20px;
@@ -190,5 +180,13 @@
 
   .sensor-info button {
     width: 100%;
+  }
+
+  .info-home {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
+    margin: 50px 0;
   }
 }
