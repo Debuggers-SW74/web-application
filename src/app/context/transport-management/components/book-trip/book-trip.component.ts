@@ -13,11 +13,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-book-trip',
   standalone: true,
   imports: [
+    CommonModule,
     MatInputModule,
     MatFormFieldModule,
     MatSelectModule,
