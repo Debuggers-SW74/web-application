@@ -54,6 +54,14 @@ export const routes: Routes = [
             (m) => m.HomeComponent
           ),
       },
+      {
+        path: 'drivers',
+        //title: 'Dashboard',
+        loadComponent: () =>
+          import(
+            './context/transport-management/pages/drivers/drivers.component'
+          ).then((m) => m.DriversComponent),
+      },
     ],
   },
   {
