@@ -1,6 +1,4 @@
-<div style="height: 100vh;">
-
-
+<div style="height: 100vh">
   <div class="info-home">
     <div class="info-home__column">
       <div class="top-home">
@@ -8,28 +6,28 @@
         <!--
         <a href="#" class="text-link">View history</a>
         -->
-        <div class="text-link">    </div>
+        <div class="text-link"></div>
       </div>
       <div class="info-home__subtitle">
         <div class="divider-vertical"></div>
         <h2>Trip Information</h2>
       </div>
       <div class="card">
-        <img [src]="driver.img" [alt]="driver.name">
+        <img [src]="driver.img" [alt]="driver.name" />
         <div class="spacer"></div>
         <div class="content">
           <div class="row">
             <div>
               <p>
                 <b>Driver:</b>
-                <br>
+                <br />
                 {{ driver.name }}
               </p>
             </div>
             <div>
               <p>
                 <b>Phone Number:</b>
-                <br>{{ driver.phone }}
+                <br />{{ driver.phone }}
               </p>
             </div>
           </div>
@@ -37,14 +35,14 @@
             <div>
               <p>
                 <b>From:</b>
-                <br>
+                <br />
                 {{ driver.from }}
               </p>
             </div>
             <div>
               <p>
                 <b>To:</b>
-                <br>
+                <br />
                 {{ driver.to }}
               </p>
             </div>
@@ -64,14 +62,14 @@
             <div>
               <p>
                 <b>Temperature:</b>
-                <br>
+                <br />
                 16°C
               </p>
             </div>
             <div>
               <p>
                 <b>Humidity</b>
-                <br>Dry
+                <br />Dry
               </p>
             </div>
           </div>
@@ -81,7 +79,8 @@
                 baseChart
                 [data]="lineChartData"
                 [options]="lineChartOptions"
-                [type]="lineChartType">
+                [type]="lineChartType"
+              >
               </canvas>
             </div>
           </div>
@@ -89,14 +88,14 @@
             <div>
               <p>
                 <b>Preasure:</b>
-                <br>
+                <br />
                 1.2 bar
               </p>
             </div>
             <div>
               <p>
                 <b>Gas leak:</b>
-                <br>
+                <br />
                 No
               </p>
             </div>
@@ -107,17 +106,17 @@
                 baseChart
                 [data]="barChartData"
                 [options]="barChartOptions"
-                [type]="barChartType">
+                [type]="barChartType"
+              >
               </canvas>
             </div>
           </div>
         </div>
-        <button
-          mat-flat-button disabled color="primary"> <!-- TODO -->
+        <button mat-flat-button disabled color="primary">
+          <!-- TODO -->
           Send alert
         </button>
       </div>
     </div>
-
   </div>
 </div>
