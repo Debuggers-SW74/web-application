@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "firstName": "Juan",
       "lastName": "Pérez",
       "phoneNumber": "981742186",
@@ -10,7 +10,7 @@
       "role": "supervisor"
     },
     {
-      "id": 2,
+      "id": "2",
       "firstName": "Luis",
       "lastName": "Gómez",
       "phoneNumber": "981742186",
@@ -19,7 +19,7 @@
       "role": "conductor"
     },
     {
-      "id": 3,
+      "id": "3",
       "firstName": "Ana",
       "lastName": "Martínez",
       "phoneNumber": "981742186",
@@ -28,7 +28,7 @@
       "role": "supervisor"
     },
     {
-      "id": 4,
+      "id": "4",
       "firstName": "Carlos",
       "lastName": "López",
       "phoneNumber": "981742186",
@@ -37,7 +37,7 @@
       "role": "conductor"
     },
     {
-      "id": 5,
+      "id": "5",
       "firstName": "John",
       "lastName": "Doe",
       "phoneNumber": "981742186",
@@ -49,22 +49,16 @@
   "trips": [
     {
       "id": "1",
-      "driverId": 2,
-      "supervisorId": 1,
-      "date": "2024-09-25",
-      "time": "10:30",
-      "from": "Lima",
-      "to": "Huancayo",
-      "status": "pending"
-    },
-    {
-      "id": "2",
-      "driverId": 4,
-      "supervisorId": 3,
-      "date": "2024-09-26",
-      "time": "14:00",
-      "from": "Lima",
-      "to": "Puno",
+      "from": "Comas",
+      "to": "Pte Piedra",
+      "type": "OIL",
+      "amount": "100",
+      "weight": "100",
+      "date": "2024-09-28T05:00:00.000Z",
+      "departureTime": "12:03",
+      "arrivalTime": "16:03",
+      "subject": "",
+      "description": "",
       "status": "pending"
     }
   ]
