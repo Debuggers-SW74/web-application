@@ -17,7 +17,6 @@
 }
 
 .info-home {
-
   display: flex;
   justify-content: space-evenly;
   align-items: start;
@@ -25,7 +24,7 @@
 }
 
 .divider-vertical {
-  border-left: 2px solid var(--custom-secondary-color);
+  border-left: 2px solid var(--mat-accent);
   height: 2.5vh;
   margin-right: 10px;
 }
@@ -100,7 +99,6 @@
 }
 
 .card button {
-
   color: white;
   border: none;
   border-radius: 5px;
