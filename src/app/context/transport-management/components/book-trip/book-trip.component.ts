@@ -7,8 +7,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
 
 @Component({
@@ -17,10 +20,13 @@ import { Router } from '@angular/router';
   imports: [
     MatInputModule,
     MatFormFieldModule,
+    MatSelectModule,
+    MatDatepickerModule,
     MatButtonModule,
     ReactiveFormsModule,
     FormsModule,
   ],
+  providers: [provideNativeDateAdapter()],
   templateUrl: './book-trip.component.html',
   styleUrl: './book-trip.component.css',
 })
@@ -29,11 +35,34 @@ export class BookTripComponent {
 
   constructor(private formBuilder: FormBuilder, private router: Router) {}
 
+  locationList: string[] = [
+    'Carabayllo',
+    'Pte Piedra',
+    'Comas',
+    'Los Olivos',
+    'San Isidro',
+    'San Miguel',
+    'Miraflores',
+  ];
+
+  hazardousMaterialList: string[] = [
+    'GNV',
+    'DIESEL',
+    'GAS',
+    'OIL',
+    'PROPANE',
+    'PETROL',
+    'OTHER',
+  ];
+
+  minDate: Date = new Date();
+
   submit() {
     if (this.bookTripForm.invalid) {
       alert('Please fill all the required fields');
       return;
     }
+    console.log(this.bookTripForm.value);
     this.router.navigate(['/home']);
   }
 
@@ -46,15 +75,15 @@ export class BookTripComponent {
   ngOnInit(): void {
     this.bookTripForm = this.formBuilder.group({
       from: ['', [Validators.required]],
-      To: ['', [Validators.required]],
+      to: ['', [Validators.required]],
       type: ['', [Validators.required]],
-      amount: [0, [Validators.required]],
-      weight: [0, [Validators.required]],
-      date: [new Date(), [Validators.required]], // Asignando la fecha actual
-      departureTime: [this.formatTime(new Date()), [Validators.required]], // Hora de salida
-      arrivalTime: [this.formatTime(new Date()), [Validators.required]], // Hora de llegada
-      subject: ['', [Validators.required]],
-      description: ['', [Validators.required]],
+      amount: [0, [Validators.required, Validators.min(1)]],
+      weight: [0, [Validators.required, Validators.min(50)]],
+      date: [null, [Validators.required]], // Asignando la fecha actual
+      departureTime: ['', [Validators.required]], // Hora de salida
+      arrivalTime: ['', [Validators.required]], // Hora de llegada
+      subject: [''],
+      description: [''],
     });
   }
 }
