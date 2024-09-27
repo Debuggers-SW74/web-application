@@ -37,3 +37,17 @@
   justify-content: center;
   align-items: center;
 }
+
+@media screen and (max-width: 768px) {
+  .footer {
+    justify-content: center;
+  }
+
+  .left-side {
+    display: none;
+  }
+
+  .spacer {
+    display: none;
+  }
+}

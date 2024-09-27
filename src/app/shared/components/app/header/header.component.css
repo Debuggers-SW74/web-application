@@ -80,3 +80,24 @@
   font-size: 16px;
   text-decoration: none;
 }
+
+@media screen and (max-width: 768px) {
+  .logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+
+  .views {
+    gap: 20px;
+    padding: 0 10px;
+    background-color: var(--mat-primary) 0.9;
+    width: 100%;
+  }
+
+  .view-button,
+  .notification-button,
+  .account-button {
+    display: none;
+  }
+}

@@ -41,3 +41,30 @@
   min-width: 336px;
   margin-top: 50px;
 }
+
+@media screen and (max-width: 768px) {
+  .user-type-container {
+    gap: 50px;
+    align-items: center;
+  }
+
+  .user-type-option {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .user-type-option span {
+    font-size: 16px;
+  }
+
+  .user-type-button {
+    padding: 20px;
+  }
+
+  .continue-button {
+    max-width: 100%;
+    margin-top: 20px;
+    min-width: 100%;
+  }
+}
