@@ -1,3 +1,5 @@
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import {
   FormBuilder,
@@ -13,7 +15,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { Trip } from '@app/shared/models/entities/Trip';
+import { TripStatus } from '@app/shared/models/enum/trip-status';
+import { TripService } from '@app/shared/services/trip/trip.service';
 
 @Component({
   selector: 'app-book-trip',
@@ -27,15 +31,20 @@ import { CommonModule } from '@angular/common';
     MatButtonModule,
     ReactiveFormsModule,
     FormsModule,
+    HttpClientModule,
   ],
-  providers: [provideNativeDateAdapter()],
+  providers: [provideNativeDateAdapter(), TripService],
   templateUrl: './book-trip.component.html',
   styleUrl: './book-trip.component.css',
 })
 export class BookTripComponent {
   bookTripForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private tripService: TripService
+  ) {}
 
   locationList: string[] = [
     'Carabayllo',
@@ -59,20 +68,35 @@ export class BookTripComponent {
 
   minDate: Date = new Date();
 
-  submit() {
+  submit(): void {
     if (this.bookTripForm.invalid) {
       alert('Please fill all the required fields');
       return;
     }
-    console.log(this.bookTripForm.value);
-    this.router.navigate(['/home']);
+
+    this.tripService
+      .create('trips', {
+        ...this.bookTripForm.value,
+        status: TripStatus.Pending,
+      })
+      .subscribe(
+        (trip: Trip) => {
+          console.log('Trip created successfully:', trip);
+          this.router.navigate(['/home']);
+        },
+        (error) => {
+          console.log('Error creating trip:', error);
+          alert('Error creating trip, please try again later');
+        }
+      );
   }
 
-  formatTime(date: Date): string {
-    const hours = date.getHours().toString().padStart(2, '0'); // Devuelve el formato de horas
-    const minutes = date.getMinutes().toString().padStart(2, '0'); // Devuelve el formato de minutos
-    return `${hours}:${minutes}`; // Formato HH:mm
-  }
+  // TODO: Check if this is needed
+  // formatTime(date: Date): string {
+  //   const hours = date.getHours().toString().padStart(2, '0'); // Devuelve el formato de horas
+  //   const minutes = date.getMinutes().toString().padStart(2, '0'); // Devuelve el formato de minutos
+  //   return `${hours}:${minutes}`; // Formato HH:mm
+  // }
 
   ngOnInit(): void {
     this.bookTripForm = this.formBuilder.group({
