@@ -27,13 +27,14 @@
 .divider-vertical {
   border-left: 2px solid var(--custom-secondary-color);
   height: 2.5vh;
-  margin-right: 10px; 
+  margin-right: 10px;
 }
 
 .info-home__subtitle {
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-top: 10px;
 }
 
 /* CARDS */
@@ -110,6 +111,86 @@
 
 .sensor-info {
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
   align-items: center;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.sensor-info .chart {
+  margin: 20px 0;
+  width: 100%;
+  max-width: 400px;
+}
+
+.sensor-info h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.sensor-info button {
+  background-color: #f45b5b;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 16px;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+}
+
+.sensor-info button:hover {
+  background-color: #e04848;
+}
+
+.sensor-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.chart {
+  max-width: 100%;
+  height: auto;
+}
+
+.sensor-info .info-section span {
+  font-size: 14px;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .sensor-info {
+    padding: 15px;
+  }
+
+  .sensor-info .info-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sensor-info .chart {
+    width: 90%;
+  }
+
+  .sensor-info button {
+    width: 100%;
+  }
 }
