@@ -35,7 +35,7 @@ export const routes: Routes = [
         loadComponent: () =>
           import(
             './public/pages/forgot-password/forgot-password.component'
-          ).then((m) => m.ForgotPasswordComponent),
+            ).then((m) => m.ForgotPasswordComponent),
       },
     ],
   },
@@ -60,7 +60,15 @@ export const routes: Routes = [
         loadComponent: () =>
           import(
             './context/transport-management/pages/drivers/drivers.component'
-          ).then((m) => m.DriversComponent),
+            ).then((m) => m.DriversComponent),
+      },
+      {
+        path: 'support',
+        //title: 'Support',
+        loadComponent: () =>
+          import(
+            './context/profile-management/pages/support/support.component'
+            ).then((m) => m.SupportComponent),
       },
     ],
   },
