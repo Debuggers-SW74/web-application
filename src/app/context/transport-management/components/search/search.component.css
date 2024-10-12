@@ -1,0 +1,28 @@
+.search {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.search-form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+::ng-deep .search-form>mat-form-field>.mat-mdc-form-field-subscript-wrapper {
+  display: none !important;
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 200px;
+}
+
+.results>p {
+  font-size: 30px;
+  font-weight: bold;
+}
