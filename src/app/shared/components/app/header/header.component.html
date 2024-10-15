@@ -1,10 +1,6 @@
 <mat-toolbar color="primary" class="header">
   <div class="account">
-    <img
-      class="logo"
-      src="../../../../../assets/fastporte-logo.png"
-      alt="Logo"
-    />
+    <img class="logo" src="../../../../../assets/fastporte-logo.png" alt="Logo" />
     <span>FastPorte</span>
     <span class="spacer"></span>
     <button class="account-button">
@@ -32,13 +28,8 @@
       <span [ngClass]="{ active: currentUrl === '/support' }"></span>
     </button>
     <span class="spacer"></span>
-    <button class="notification-button">
-      <img
-        src="assets/svg/notification.svg"
-        alt="Notification"
-        width="24"
-        height="24"
-      />
+    <button class="notification-button" (click)="openNotifications()">
+      <img src="assets/svg/notification.svg" alt="Notification" width="24" height="24" />
     </button>
   </div>
 </mat-toolbar>
