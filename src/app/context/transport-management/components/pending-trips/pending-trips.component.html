@@ -1,1 +1,5 @@
 <p>pending-trips works!</p>
+
+<div *ngFor="let trip of pendingTrips">
+  <app-resume-trip-card [trip]="trip" [action]="true"></app-resume-trip-card>
+</div>

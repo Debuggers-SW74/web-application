@@ -1,1 +1,5 @@
 <p>history works!</p>
+
+<div *ngFor="let trip of historyTrips">
+  <app-resume-trip-card [trip]="trip"></app-resume-trip-card>
+</div>

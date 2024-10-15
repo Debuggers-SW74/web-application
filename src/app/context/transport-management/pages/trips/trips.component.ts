@@ -10,4 +10,4 @@ import { HistoryComponent } from '../../components/history/history.component';
   templateUrl: './trips.component.html',
   styleUrl: './trips.component.css',
 })
-export class TripsComponent { }
+export class TripsComponent {}

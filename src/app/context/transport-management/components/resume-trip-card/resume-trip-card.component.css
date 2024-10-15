@@ -1,0 +1,10 @@
+.trip-card {
+  margin: 10px;
+  max-width: 411px;
+  padding: 20px;
+  border-radius: 50px;
+}
+
+p {
+  margin: 0;
+}
