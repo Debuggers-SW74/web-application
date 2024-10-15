@@ -10,7 +10,7 @@ export const routes: Routes = [
     path: '',
     loadComponent: () =>
       import('./shared/pages/auth-layout/auth-layout.component').then(
-        (m) => m.AuthLayoutComponent
+        (m) => m.AuthLayoutComponent,
       ),
     children: [
       {
@@ -18,7 +18,7 @@ export const routes: Routes = [
         //title: 'Sign In',
         loadComponent: () =>
           import('./public/pages/sign-in/sign-in.component').then(
-            (m) => m.SignInComponent
+            (m) => m.SignInComponent,
           ),
       },
       {
@@ -26,7 +26,7 @@ export const routes: Routes = [
         //title: 'Sign Up',
         loadComponent: () =>
           import('./public/pages/sign-up/sign-up.component').then(
-            (m) => m.SignUpComponent
+            (m) => m.SignUpComponent,
           ),
       },
       {
@@ -35,7 +35,7 @@ export const routes: Routes = [
         loadComponent: () =>
           import(
             './public/pages/forgot-password/forgot-password.component'
-            ).then((m) => m.ForgotPasswordComponent),
+          ).then((m) => m.ForgotPasswordComponent),
       },
     ],
   },
@@ -43,7 +43,7 @@ export const routes: Routes = [
     path: '',
     loadComponent: () =>
       import('./shared/pages/app-layout/app-layout.component').then(
-        (m) => m.AppLayoutComponent
+        (m) => m.AppLayoutComponent,
       ),
     children: [
       {
@@ -51,7 +51,7 @@ export const routes: Routes = [
         //title: 'Home',
         loadComponent: () =>
           import('./context/alerts-system/pages/home/home.component').then(
-            (m) => m.HomeComponent
+            (m) => m.HomeComponent,
           ),
       },
       {
@@ -60,7 +60,15 @@ export const routes: Routes = [
         loadComponent: () =>
           import(
             './context/transport-management/pages/drivers/drivers.component'
-            ).then((m) => m.DriversComponent),
+          ).then((m) => m.DriversComponent),
+      },
+      {
+        path: 'trips',
+        //title: 'Trips',
+        loadComponent: () =>
+          import(
+            './context/transport-management/pages/trips/trips.component'
+          ).then((m) => m.TripsComponent),
       },
       {
         path: 'support',
@@ -68,7 +76,7 @@ export const routes: Routes = [
         loadComponent: () =>
           import(
             './context/profile-management/pages/support/support.component'
-            ).then((m) => m.SupportComponent),
+          ).then((m) => m.SupportComponent),
       },
     ],
   },
