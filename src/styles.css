@@ -25,3 +25,21 @@ body {
   border-radius: 33px !important;
   padding: 20px 0 !important;
 }
+
+.notification-dialog>mat-dialog-container {
+  position: absolute;
+  top: 10%;
+  left: 60%;
+  width: 420px !important;
+  height: auto !important;
+}
+
+@media screen and (max-width: 768px) {
+  .notification-dialog>mat-dialog-container {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80% !important;
+    height: auto !important;
+  }
+}

@@ -1,0 +1,14 @@
+<mat-dialog-content class="notification-content">
+  <div *ngFor="let notification of notifications">
+    <mat-card class="notification-card">
+      <img [src]="defineImg(notification.type)" alt="Notification" width="80" />
+      <div class="notification-information">
+        <h3>{{ defineTitle(notification.type) }}</h3>
+        <p>Click below to see details</p>
+        <button mat-flat-button color="primary" mat-dialog-close class="fp-button details">
+          Details
+        </button>
+      </div>
+    </mat-card>
+  </div>
+</mat-dialog-content>

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { BookTripComponent } from '../../components/book-trip/book-trip.component';
 import { DriverSteps } from '@shared/models/enum/driver-steps';
+import {SearchComponent} from "@app/context/transport-management/components/search/search.component";
 
 @Component({
   selector: 'app-drivers',
@@ -13,7 +14,7 @@ export class DriversComponent implements OnInit {
   steps = [DriverSteps.SearchDriver, DriverSteps.BookTrip];
 
   currentStep = this.steps[0];
-  currentStepView: any = BookTripComponent; // TODO: change to SearchDriverComponent
+  currentStepView: any = SearchComponent;
   stepTitle = 'Search Drivers';
 
   @ViewChild('dynamicComponentContainer', {
@@ -45,6 +46,6 @@ export class DriversComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadComponent(this.currentStepView);
-    this.changeStep(this.steps[1]); // TODO: change to SearchDriverComponent
+    this.changeStep(this.steps[0]);
   }
 }
