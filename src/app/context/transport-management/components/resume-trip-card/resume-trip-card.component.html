@@ -1,5 +1,30 @@
 <mat-card appearance="outlined" class="trip-card">
   <mat-card-content>
-    <p>Trip ID: {{ trip.id }}</p>
+    <div class="trip-card-header">
+      <b>Resume</b>
+      <button class="view-more-button">View more</button>
+    </div>
+
+    <div class="trip-card-body">
+      <b>Subject: {{ trip.subject }}</b>
+      <p>
+        From: <b>{{ trip.from }}</b>
+      </p>
+      <p>
+        To: <b>{{ trip.to }}</b>
+      </p>
+      <p>
+        Date: <b>{{ trip.date }}</b>
+      </p>
+      <p>
+        Time: <b>{{ trip.departureTime }} - {{ trip.arrivalTime }}</b>
+      </p>
+    </div>
   </mat-card-content>
+  <mat-card-actions *ngIf="action">
+    <button mat-flat-button color="primary" class="fp-button" (click)="finishTrip()">
+      Finish
+    </button>
+    <button mat-flat-button color="warn" class="fp-button" (click)="cancelTrip()">Cancel</button>
+  </mat-card-actions>
 </mat-card>

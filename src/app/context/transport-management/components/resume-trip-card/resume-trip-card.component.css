@@ -8,3 +8,32 @@
 p {
   margin: 0;
 }
+
+.trip-card-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.view-more-button {
+  background-color: transparent;
+  border:none;
+  color: var(--mat-primary);
+  border-bottom: 1px solid var(--mat-primary);
+  cursor: pointer;
+}
+
+.trip-card-body {
+  margin-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #000;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  min-width: 170px;
+  font-size: 20px;
+}
