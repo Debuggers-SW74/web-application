@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -22,6 +22,8 @@ import { ResultDriver } from '../../models/ResultDriver';
   styleUrl: './search.component.css',
 })
 export class SearchComponent {
+  @Output() changeStep = new EventEmitter<void>();
+
   results: ResultDriver[] = [
     {
       id: 1,
@@ -36,4 +38,8 @@ export class SearchComponent {
       phoneNumber: '987654321',
     },
   ];
+
+  onBookTrip() {
+    this.changeStep.emit();
+  }
 }

@@ -1,5 +1,5 @@
 <mat-card class="result-card">
-  <img src="assets/svg/user/driver.svg" alt="Driver" />
+  <img src="assets/svg/user/avatar.svg" alt="Avatar" />
   <div>
     <b>Driver:</b>
     <p>{{ resultDriver.firstName }} {{ resultDriver.lastName }}</p>
@@ -8,5 +8,7 @@
     <b>Phone Number:</b>
     <p>{{ resultDriver.phoneNumber }}</p>
   </div>
-  <mat-icon class="arrow">chevron_right</mat-icon>
+  <button class="to-book-trip" (click)="onBookTrip()">
+    <mat-icon class="arrow">chevron_right</mat-icon>
+  </button>
 </mat-card>

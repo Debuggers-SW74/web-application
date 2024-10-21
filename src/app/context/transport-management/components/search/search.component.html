@@ -11,7 +11,7 @@
   <div class="results">
     <p>Results:</p>
     <div *ngFor="let result of results">
-      <app-result-card [resultDriver]="result"></app-result-card>
+      <app-result-card [resultDriver]="result" (bookTrip)="onBookTrip()"></app-result-card>
     </div>
   </div>
 </div>

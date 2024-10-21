@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,4 +15,11 @@ import { CommonModule } from '@angular/common';
 })
 export class ResultCardComponent {
   @Input() resultDriver!: ResultDriver;
+  @Output() bookTrip = new EventEmitter<void>();
+
+  constructor() {}
+
+  onBookTrip() {
+    this.bookTrip.emit();
+  }
 }

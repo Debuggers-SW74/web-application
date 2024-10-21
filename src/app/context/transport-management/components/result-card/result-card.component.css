@@ -9,9 +9,19 @@
   padding: 20px 10px;
 }
 
+.to-book-trip {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
 .arrow {
   color: #0f15a3;
   font-size: 64px;
   width: 64px;
   height: 64px;
+}
+
+p {
+  margin-bottom: 0;
 }
