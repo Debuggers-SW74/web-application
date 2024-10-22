@@ -23,3 +23,11 @@ export interface UserInformation {
   termsConditions: boolean;
   information: boolean;
 }
+
+export interface Profile {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phoneNumber: string;
+}

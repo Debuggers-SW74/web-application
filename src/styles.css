@@ -26,7 +26,12 @@ body {
   padding: 20px 0 !important;
 }
 
-.notification-dialog>mat-dialog-container {
+.title {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.notification-dialog > mat-dialog-container {
   position: absolute;
   top: 10%;
   left: 60%;
@@ -35,7 +40,7 @@ body {
 }
 
 @media screen and (max-width: 768px) {
-  .notification-dialog>mat-dialog-container {
+  .notification-dialog > mat-dialog-container {
     position: absolute;
     top: 10%;
     left: 10%;
