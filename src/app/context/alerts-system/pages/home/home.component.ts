@@ -11,7 +11,7 @@ import { IdleTripComponent } from '../../components/idle-trip/idle-trip.componen
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
-  activeTrip: boolean = false;
+  activeTrip: boolean = true;
 
   constructor() { }
 
