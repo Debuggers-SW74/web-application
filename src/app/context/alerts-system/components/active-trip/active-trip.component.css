@@ -4,11 +4,15 @@
   align-items: center;
 }
 
+.active-trip-title {
+  margin-bottom: 20px;
+  align-self: flex-start;
+}
+
 .info-home {
   display: flex;
   flex-direction: row;
-  width: 100%;
-  justify-content: space-evenly;
+  gap: 200px;
   align-items: start;
   margin-top: 20px;
 }
