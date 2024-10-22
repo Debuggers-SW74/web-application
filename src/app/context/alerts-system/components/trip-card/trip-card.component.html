@@ -1,10 +1,13 @@
-<div class="card">
-  <img [src]="driverPhoto" [alt]="driverName">
-  <div class="spacer"></div>
-  <div class="content">
-    <h3>Trip</h3>
-    <p><b>Driver: </b>{{ driverName }}</p>
-    <p><b>From: </b> {{ from }}</p>
-    <p><b>To: </b>{{ to }}</p>
+<div *ngFor="let trip of trips">
+  <div class="card">
+    <!-- <img [src]="driverPhoto" [alt]="driverName"> -->
+    <img src="assets/svg/user/avatar.svg" alt="Avatar" />
+    <div class="spacer"></div>
+    <div class="content">
+      <h3>Trip</h3>
+      <p><b>Driver: </b>{{ trip.driverId }}</p>
+      <p><b>From: </b> {{ trip.from }}</p>
+      <p><b>To: </b>{{ trip.to }}</p>
+    </div>
   </div>
 </div>
