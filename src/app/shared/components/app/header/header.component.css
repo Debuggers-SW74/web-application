@@ -40,7 +40,7 @@
 
 .view-button,
 .notification-button,
-.account-button {
+.account-dropdown {
   background-color: transparent;
   border: none;
   cursor: pointer;
@@ -50,14 +50,14 @@
   justify-content: center;
 }
 
-.account-button {
+.account-dropdown {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 10px;
 }
 
-.account-button p {
+.account-dropdown p {
   color: white;
 }
 
@@ -97,7 +97,7 @@
 
   .view-button,
   .notification-button,
-  .account-button {
+  .account-dropdown {
     display: none;
   }
 }
