@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -24,12 +24,17 @@ import { DialogNotificationsComponent } from './components/dialog-notifications/
   styleUrl: './header.component.css',
 })
 export class HeaderComponent implements OnInit {
+  @Output() toggleSidenav = new EventEmitter<void>();
+
   userName = 'John Doe';
   nameInitials = 'JD';
 
   currentUrl: string = '';
 
-  constructor(private router: Router, private dialog: MatDialog) {}
+  constructor(
+    private router: Router,
+    private dialog: MatDialog,
+  ) { }
 
   ngOnInit() {
     this.currentUrl = this.router.url;
@@ -37,8 +42,8 @@ export class HeaderComponent implements OnInit {
     this.router.events
       .pipe(
         filter(
-          (event): event is NavigationEnd => event instanceof NavigationEnd
-        )
+          (event): event is NavigationEnd => event instanceof NavigationEnd,
+        ),
       )
       .subscribe((event: NavigationEnd) => {
         this.currentUrl = event.urlAfterRedirects;
@@ -61,5 +66,9 @@ export class HeaderComponent implements OnInit {
 
   logOut(): void {
     this.router.navigate(['/sign-in']);
+  }
+
+  openSidenav() {
+    this.toggleSidenav.emit();
   }
 }
