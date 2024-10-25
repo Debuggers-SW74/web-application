@@ -6,6 +6,10 @@
   height: auto;
 }
 
+.menu-button {
+  display: none;
+}
+
 .logo {
   width: 57px;
   height: 57px;
@@ -96,5 +100,9 @@
   .notification-button,
   .username {
     display: none;
+  }
+
+  .menu-button {
+    display: block;
   }
 }

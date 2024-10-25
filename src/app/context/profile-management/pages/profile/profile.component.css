@@ -40,7 +40,7 @@
   min-width: 320px;
 }
 
-::ng-deep mat-form-field > .mat-mdc-form-field-subscript-wrapper {
+::ng-deep mat-form-field>.mat-mdc-form-field-subscript-wrapper {
   display: none !important;
 }
 
@@ -51,4 +51,26 @@
 .save-button {
   margin-top: 40px;
   min-width: 348px;
+}
+
+@media (max-width: 768px) {
+  .profile {
+    padding: 20px;
+    width: 90%;
+    margin: 20px auto;
+  }
+
+  .profile-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .edit-profile-field {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .edit-profile-field p {
+    align-self: flex-start;
+  }
 }

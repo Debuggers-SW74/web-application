@@ -11,7 +11,14 @@
   gap: 10px;
 }
 
-::ng-deep .search-form>mat-form-field>.mat-mdc-form-field-subscript-wrapper {
+.search-input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
   display: none !important;
 }
 
@@ -25,4 +32,28 @@
 .results>p {
   font-size: 30px;
   font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .search {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .search-form {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .results {
+    flex-direction: column;
+    gap: 10px;
+    min-height: unset;
+  }
+
+  mat-card {
+    margin: 0;
+  }
 }

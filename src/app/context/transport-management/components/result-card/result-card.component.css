@@ -5,6 +5,8 @@
   align-items: center;
   gap: 10px;
   border-radius: 10px;
+  box-sizing: border-box;
+  width: 100%;
   min-width: 634px;
   padding: 20px 10px;
 }
@@ -24,4 +26,16 @@
 
 p {
   margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .result-card {
+    min-width: unset;
+  }
+
+  .arrow {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+  }
 }

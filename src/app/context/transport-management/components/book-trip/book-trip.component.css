@@ -18,7 +18,8 @@ section {
   align-self: flex-start;
 }
 
-.group-field {
+.group-field,
+.group-field-2 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -88,6 +89,10 @@ p {
   opacity: 1;
 }
 
+.time-title-mobile {
+  display: none;
+}
+
 @media screen and (max-width: 768px) {
   .book-trip-form {
     flex-direction: column;
@@ -119,14 +124,27 @@ p {
 
   .container-field,
   .container-field-2 {
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+    justify-content: space-between;
+    /* gap: 10px; */
   }
 
-  .container-field mat-form-field,
-  .container-field-2 mat-form-field {
-    min-width: 100%;
+  .container-field>p,
+  .container-field-2>p {
+    font-size: 12px;
+  }
+
+  .time-title,
+  .time-sep {
+    display: none;
+  }
+
+  .time-title-mobile {
+    display: block;
+    font-size: 12px;
+  }
+
+  .container-field mat-form-field {
+    min-width: 330px;
   }
 
   .time {
@@ -135,22 +153,31 @@ p {
   }
 
   .information-container {
-    padding: 10px;
+    padding: 20px;
     border-radius: 10px;
   }
 
+  .description-container {
+    width: 90%;
+  }
+
   .subject {
-    flex-direction: column;
     gap: 10px;
+  }
+
+  .subject mat-form-field {
+    min-width: unset;
+    width: 70%;
   }
 
   .description {
     width: 100%;
+    margin-top: 10px;
   }
 
   .submit-button {
     margin-top: 20px;
-    min-width: 100%;
+    width: 240px;
     border-radius: 10px;
   }
 
