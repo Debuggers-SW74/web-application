@@ -1,5 +1,8 @@
 <mat-toolbar color="primary" class="header">
   <div class="account">
+    <button mat-icon-button (click)="openSidenav()" class="menu-button">
+      <mat-icon>menu</mat-icon>
+    </button>
     <img
       class="logo"
       src="../../../../../assets/fastporte-logo.png"
@@ -7,12 +10,34 @@
     />
     <span>FastPorte</span>
     <span class="spacer"></span>
-    <button class="account-button">
+    <div class="account-dropdown">
       <div class="profile">
         <p>{{ nameInitials }}</p>
       </div>
-      <p>{{ userName }}</p>
-    </button>
+      <p class="username">{{ userName }}</p>
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="menu"
+        aria-label="Example icon-button with a menu"
+        ngSkipHydration
+      >
+        <mat-icon style="color: white">keyboard_arrow_down</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="goToProfile()">
+          <span style="color: var(--mat-primary)">Profile</span>
+          <mat-icon color="primary">person</mat-icon>
+        </button>
+        <button mat-menu-item (click)="goToSupport()">
+          <span style="color: var(--mat-primary)">Help</span>
+          <mat-icon color="primary">help_outline</mat-icon>
+        </button>
+        <button mat-menu-item (click)="logOut()">
+          <span style="color: var(--mat-primary)">Log Out</span>
+          <mat-icon color="primary">keyboard_tab</mat-icon>
+        </button>
+      </mat-menu>
+    </div>
   </div>
   <div class="views">
     <button class="view-button" aria-label="Button to Home view">
@@ -32,7 +57,7 @@
       <span [ngClass]="{ active: currentUrl === '/support' }"></span>
     </button>
     <span class="spacer"></span>
-    <button class="notification-button">
+    <button class="notification-button" (click)="openNotifications()">
       <img
         src="assets/svg/notification.svg"
         alt="Notification"

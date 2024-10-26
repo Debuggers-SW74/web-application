@@ -1,5 +1,39 @@
-<app-header></app-header>
-<div>
-  <router-outlet></router-outlet>
-</div>
-<app-footer></app-footer>
+<mat-drawer-container autosize>
+  <mat-drawer #drawer class="sidenav" mode="over">
+    <div class="sidenav-content">
+      <button
+        class="view-button"
+        aria-label="Button to Home view"
+        (click)="drawer.toggle()"
+      >
+        <a routerLink="/home"> Home </a>
+      </button>
+      <button
+        class="view-button"
+        aria-label="Button to Drivers view"
+        (click)="drawer.toggle()"
+      >
+        <a routerLink="/drivers"> Drivers </a>
+      </button>
+      <button
+        class="view-button"
+        aria-label="Button to Trips view"
+        (click)="drawer.toggle()"
+      >
+        <a routerLink="/trips"> Trips </a>
+      </button>
+      <button
+        class="view-button"
+        aria-label="Button to Support view"
+        (click)="drawer.toggle()"
+      >
+        <a routerLink="/support"> Support </a>
+      </button>
+    </div>
+  </mat-drawer>
+  <app-header (toggleSidenav)="drawer.toggle()"></app-header>
+  <div class="layout">
+    <router-outlet></router-outlet>
+  </div>
+  <app-footer></app-footer>
+</mat-drawer-container>

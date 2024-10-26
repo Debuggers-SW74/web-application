@@ -1,0 +1,5 @@
+<h2>Pending Trips</h2>
+
+<div *ngFor="let trip of pendingTrips">
+  <app-resume-trip-card [trip]="trip" [action]="true"></app-resume-trip-card>
+</div>

@@ -1,0 +1,82 @@
+<div class="profile">
+  <div>
+    <p class="profile-title title">Edit Profile</p>
+    <div class="profile-container">
+      <div class="profile-image">
+        <img
+          src="assets/svg/user/avatar.svg"
+          alt="Avatar"
+          width="240px"
+          height="240px"
+        />
+      </div>
+      <form
+        mat
+        [formGroup]="editProfileForm"
+        class="edit-profile-form"
+        (ngSubmit)="submit()"
+      >
+        <div class="edit-profile-field">
+          <p>First Name</p>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              type="text"
+              [placeholder]="user.firstName"
+              formControlName="firstName"
+            />
+          </mat-form-field>
+        </div>
+        <div class="edit-profile-field">
+          <p>Last Name</p>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              type="text"
+              [placeholder]="user.lastName"
+              formControlName="lastName"
+            />
+          </mat-form-field>
+        </div>
+        <div class="edit-profile-field">
+          <p>Email</p>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              type="text"
+              [placeholder]="user.email"
+              formControlName="email"
+            />
+          </mat-form-field>
+        </div>
+        <div class="edit-profile-field">
+          <p>Password</p>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              type="password"
+              placeholder="************"
+              formControlName="password"
+            />
+          </mat-form-field>
+        </div>
+        <div class="edit-profile-field">
+          <p>Phone Number</p>
+          <mat-form-field appearance="outline">
+            <input
+              matInput
+              type="text"
+              [placeholder]="user.phoneNumber"
+              formControlName="phoneNumber"
+              maxlength="9"
+            />
+          </mat-form-field>
+        </div>
+      </form>
+    </div>
+  </div>
+  <button mat-flat-button color="primary" class="fp-button save-button">
+    <p>Save changes</p>
+    <mat-icon>edit</mat-icon>
+  </button>
+</div>

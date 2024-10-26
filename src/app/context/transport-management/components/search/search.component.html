@@ -1,0 +1,22 @@
+<div class="search">
+  <div class="search-form">
+    <p>Name or Sensor ID</p>
+    <div class="search-input">
+      <mat-form-field appearance="outline">
+        <input matInput type="text" placeholder="Search drivers" />
+      </mat-form-field>
+      <button mat-button>
+        <mat-icon fontIcon="search"></mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="results">
+    <p>Results:</p>
+    <div *ngFor="let result of results">
+      <app-result-card
+        [resultDriver]="result"
+        (bookTrip)="onBookTrip()"
+      ></app-result-card>
+    </div>
+  </div>
+</div>

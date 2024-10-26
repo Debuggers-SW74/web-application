@@ -1,0 +1,14 @@
+<mat-card class="result-card">
+  <img src="assets/svg/user/avatar.svg" alt="Avatar" />
+  <div>
+    <b>Driver:</b>
+    <p>{{ resultDriver.firstName }} {{ resultDriver.lastName }}</p>
+  </div>
+  <div>
+    <b>Phone Number:</b>
+    <p>{{ resultDriver.phoneNumber }}</p>
+  </div>
+  <button class="to-book-trip" (click)="onBookTrip()">
+    <mat-icon class="arrow">chevron_right</mat-icon>
+  </button>
+</mat-card>

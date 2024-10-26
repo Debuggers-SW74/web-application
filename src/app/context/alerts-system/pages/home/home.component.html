@@ -1,2 +1,2 @@
-<app-active-trip *ngIf="alert == 1"></app-active-trip>
-<app-idle-trip *ngIf="alert == 0"></app-idle-trip>
+<app-active-trip *ngIf="activeTrip"></app-active-trip>
+<app-idle-trip *ngIf="!activeTrip"></app-idle-trip>

@@ -62,6 +62,30 @@ export const routes: Routes = [
             './context/transport-management/pages/drivers/drivers.component'
           ).then((m) => m.DriversComponent),
       },
+      {
+        path: 'trips',
+        //title: 'Trips',
+        loadComponent: () =>
+          import(
+            './context/transport-management/pages/trips/trips.component'
+          ).then((m) => m.TripsComponent),
+      },
+      {
+        path: 'support',
+        //title: 'Support',
+        loadComponent: () =>
+          import(
+            './context/profile-management/pages/support/support.component'
+          ).then((m) => m.SupportComponent),
+      },
+      {
+        path: 'profile',
+        //title: 'Profile',
+        loadComponent: () =>
+          import(
+            './context/profile-management/pages/profile/profile.component'
+          ).then((m) => m.ProfileComponent),
+      },
     ],
   },
   {
