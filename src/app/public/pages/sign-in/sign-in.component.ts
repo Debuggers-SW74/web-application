@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button';
-import { Router, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { AuthService } from '@shared/services/auth/auth.service';
-import { Authenticate } from '@shared/models/entities/User';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { Router, RouterModule } from '@angular/router';
 import { TitleComponent } from '@shared/components/auth/title/title.component';
+import { Authenticate } from '@shared/models/entities/User';
+import { UserService } from '@shared/services/user/user.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -26,7 +26,7 @@ import { TitleComponent } from '@shared/components/auth/title/title.component';
     TitleComponent,
     HttpClientModule,
   ],
-  providers: [AuthService],
+  providers: [UserService],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.css',
 })
@@ -40,7 +40,7 @@ export class SignInComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService,
+    private userService: UserService,
     private router: Router
   ) {}
 
@@ -59,7 +59,7 @@ export class SignInComponent implements OnInit {
 
     this.authenticate = this.signInForm.value;
 
-    this.authService.authenticate(this.authenticate).subscribe(
+    this.userService.authenticate(this.authenticate).subscribe(
       (response: any) => {
         const token = response.token;
 

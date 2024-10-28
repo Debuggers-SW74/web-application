@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class BaseService<T> {
   protected baseUrl = environment.apiUrl;
+  protected authUrl = environment.authUrl;
 
   constructor(protected http: HttpClient) {}
 

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from '@shared/models/entities/User';
+import { Authenticate, User } from '@shared/models/entities/User';
 import { Observable } from 'rxjs';
 import { BaseService } from '../base/base.service';
 
@@ -16,6 +16,10 @@ export class UserService extends BaseService<User> {
 
   setEndpoint(endpoint: string): void {
     this.endpoint = endpoint;
+  }
+
+  authenticate(authenticate: Authenticate): Observable<Authenticate> {
+    return this.http.post<Authenticate>(this.authUrl, authenticate);
   }
 
   register(user: User): Observable<User> {
