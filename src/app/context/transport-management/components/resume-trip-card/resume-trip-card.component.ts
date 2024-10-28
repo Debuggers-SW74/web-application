@@ -5,7 +5,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { User } from '@shared/models/entities/User';
-import { Role } from '@shared/models/enum/role';
 
 @Component({
   selector: 'app-resume-trip-card',
@@ -20,12 +19,13 @@ export class ResumeTripCardComponent {
 
   driver: User = {
     id: 1,
-    firstName: 'John',
-    lastName: 'Doe',
-    phoneNumber: '982421231',
+    name: 'John',
+    firstLastName: 'Doe',
+    secondLastName: 'Doe',
+    phone: '982421231',
     email: 'john.doe@gmail.com',
     password: '123456',
-    role: Role.Driver,
+    username: 'john.doe',
   };
 
   finishTrip() {

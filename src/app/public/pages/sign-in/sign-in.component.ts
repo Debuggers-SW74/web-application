@@ -4,8 +4,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { UserService } from '@shared/services/user/user.service';
-import { User } from '@app/shared/models/entities/User';
+import { AuthService } from '@shared/services/auth/auth.service';
+import { Authenticate } from '@shared/models/entities/User';
 import {
   FormBuilder,
   FormGroup,
@@ -26,22 +26,27 @@ import { TitleComponent } from '@shared/components/auth/title/title.component';
     TitleComponent,
     HttpClientModule,
   ],
-  providers: [UserService],
+  providers: [AuthService],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.css',
 })
 export class SignInComponent implements OnInit {
   signInForm!: FormGroup;
 
+  authenticate: Authenticate = {
+    username: '',
+    password: '',
+  };
+
   constructor(
     private formBuilder: FormBuilder,
-    private userService: UserService,
+    private authService: AuthService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.signInForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
   }
@@ -52,11 +57,13 @@ export class SignInComponent implements OnInit {
       return;
     }
 
-    const { email, password } = this.signInForm.value;
+    this.authenticate = this.signInForm.value;
 
-    this.userService.signIn(email, password).subscribe(
-      (user: User) => {
-        console.log('User signed in successfully:', user);
+    this.authService.authenticate(this.authenticate).subscribe(
+      (response: any) => {
+        const token = response.token;
+
+        localStorage.setItem('authToken', token);
         this.router.navigate(['/home']);
       },
       (error) => {

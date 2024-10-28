@@ -5,17 +5,20 @@
   (ngSubmit)="submit()"
 >
   <mat-form-field>
-    <input matInput type="text" placeholder="Firstname" formControlName="firstName" />
+    <input matInput type="text" placeholder="Name" formControlName="name" />
   </mat-form-field>
   <mat-form-field>
-    <input matInput type="text" placeholder="Lastname" formControlName="lastName" />
+    <input matInput type="text" placeholder="First Last Name" formControlName="firstLastName" />
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="text" placeholder="Second Last Name" formControlName="firstLastName" />
   </mat-form-field>
   <mat-form-field>
     <input
       matInput
       type="number"
       placeholder="Phone Number"
-      formControlName="phoneNumber"
+      formControlName="phone"
       maxlength="9"
     />
   </mat-form-field>

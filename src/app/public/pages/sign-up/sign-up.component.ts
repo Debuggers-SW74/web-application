@@ -41,12 +41,13 @@ export class SignUpComponent {
 
   user: User = {
     id: 0,
-    firstName: '',
-    lastName: '',
-    phoneNumber: '',
+    name: '',
+    firstLastName: '',
+    secondLastName: '',
+    phone: '',
     email: '',
+    username: '',
     password: '',
-    role: Role.Driver,
   };
 
   @ViewChild('dynamicComponentContainer', {
@@ -56,6 +57,10 @@ export class SignUpComponent {
   container!: ViewContainerRef;
 
   constructor(private userService: UserService) {}
+
+  ngOnInit(): void {
+    this.loadComponent(this.currentStepView);
+  }
 
   changeStep(step: SignUpSteps) {
     console.log(step);
@@ -88,8 +93,12 @@ export class SignUpComponent {
     } else if (componentRef.instance instanceof UserTypeComponent) {
       componentRef.instance.onSubmit = () => this.changeStep(this.steps[2]);
       componentRef.instance.onSubmitted.subscribe((userType: Role) => {
-        this.user.role = userType;
-        console.log(this.user);
+        // this.user.role = userType;
+        // console.log(this.user);
+
+        this.userService.setEndpoint(
+          userType === Role.Driver ? 'drivers' : 'supervisors',
+        );
       });
     } else if (componentRef.instance instanceof RegisterComponent) {
       componentRef.instance.onSubmit = () => this.changeStep(this.steps[3]);
@@ -97,18 +106,19 @@ export class SignUpComponent {
         (userRegistration: UserRegistration) => {
           this.user.email = userRegistration.email;
           this.user.password = userRegistration.password;
-          console.log(this.user);
+          // console.log(this.user);
         },
       );
     } else if (componentRef.instance instanceof FillInformationComponent) {
       componentRef.instance.onSubmitted.subscribe(
         (userInformation: UserInformation) => {
-          this.user.firstName = userInformation.firstName;
-          this.user.lastName = userInformation.lastName;
-          this.user.phoneNumber = userInformation.phoneNumber;
+          this.user.name = userInformation.name;
+          this.user.firstLastName = userInformation.firstLastName;
+          this.user.secondLastName = userInformation.secondLastName;
+          this.user.phone = userInformation.phone;
           // console.log(this.user);
 
-          this.userService.create('users', this.user).subscribe(
+          this.userService.register(this.user).subscribe(
             (user: User) => {
               console.log(user);
             },
@@ -119,9 +129,5 @@ export class SignUpComponent {
         },
       );
     }
-  }
-
-  ngOnInit(): void {
-    this.loadComponent(this.currentStepView);
   }
 }

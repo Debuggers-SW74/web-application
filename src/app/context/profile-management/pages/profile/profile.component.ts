@@ -9,7 +9,6 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Role } from '@app/shared/models/enum/role';
 import { Profile, User } from '@shared/models/entities/User';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -32,12 +31,13 @@ export class ProfileComponent {
 
   user: User = {
     id: 1,
-    firstName: 'John',
-    lastName: 'Doe',
-    phoneNumber: '+51 987654321',
+    name: 'John',
+    firstLastName: 'Doe',
+    secondLastName: '',
+    phone: '+51 987654321',
     email: 'john.doe@gmail.com',
+    username: 'john.doe',
     password: '123456',
-    role: Role.Driver,
   };
 
   constructor(private formBuilder: FormBuilder) {}
@@ -49,8 +49,9 @@ export class ProfileComponent {
     }
 
     let profile: Profile = {
-      firstName: this.editProfileForm.value.firstName,
-      lastName: this.editProfileForm.value.lastName,
+      name: this.editProfileForm.value.name,
+      firstLastName: this.editProfileForm.value.firstLastName,
+      secondLastName: this.editProfileForm.value.secondLastName,
       email: this.editProfileForm.value.email,
       password: this.editProfileForm.value.password,
       phoneNumber: this.editProfileForm.value.phoneNumber,
@@ -61,11 +62,12 @@ export class ProfileComponent {
 
   ngOnInit(): void {
     this.editProfileForm = this.formBuilder.group({
-      firstName: ['', [Validators.required, Validators.minLength(3)]],
-      lastName: ['', [Validators.required, Validators.minLength(3)]],
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      firstLastName: ['', [Validators.required, Validators.minLength(3)]],
+      secondLastName: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      phoneNumber: ['', [Validators.required, Validators.minLength(9)]],
+      phone: ['', [Validators.required, Validators.minLength(9)]],
     });
   }
 }

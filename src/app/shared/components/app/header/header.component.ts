@@ -8,6 +8,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { DialogNotificationsComponent } from './components/dialog-notifications/dialog-notifications.component';
+import { AuthService } from '@app/shared/services/auth/auth.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-header',
@@ -19,7 +21,9 @@ import { DialogNotificationsComponent } from './components/dialog-notifications/
     RouterModule,
     CommonModule,
     MatMenuModule,
+    HttpClientModule,
   ],
+  providers: [AuthService],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
@@ -34,7 +38,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private dialog: MatDialog,
-  ) { }
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.currentUrl = this.router.url;
@@ -42,8 +47,8 @@ export class HeaderComponent implements OnInit {
     this.router.events
       .pipe(
         filter(
-          (event): event is NavigationEnd => event instanceof NavigationEnd,
-        ),
+          (event): event is NavigationEnd => event instanceof NavigationEnd
+        )
       )
       .subscribe((event: NavigationEnd) => {
         this.currentUrl = event.urlAfterRedirects;
@@ -65,7 +70,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logOut(): void {
-    this.router.navigate(['/sign-in']);
+    this.authService.logout();
   }
 
   openSidenav() {
