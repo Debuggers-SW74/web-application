@@ -1,6 +1,7 @@
 export interface ResultDriver {
   id: number;
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
+  name: string;
+  firstLastName: string;
+  secondLastName: string;
+  phone: string;
 }

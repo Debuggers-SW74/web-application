@@ -9,16 +9,16 @@
       <b class="subject">Subject: {{ trip.subject }}</b>
       <div class="trip-info">
         <p>
-          From: <b>{{ trip.from }}</b>
+          From: <b>{{ trip.origin }}</b>
         </p>
         <p>
-          To: <b>{{ trip.to }}</b>
+          To: <b>{{ trip.destination }}</b>
         </p>
         <p>
           Date: <b>{{ trip.date }}</b>
         </p>
         <p>
-          Time: <b>{{ trip.departureTime }} - {{ trip.arrivalTime }}</b>
+          Time: <b>{{ trip.startTime }} - {{ trip.endTime }}</b>
         </p>
       </div>
     </div>
@@ -33,8 +33,8 @@
           height="40"
         />
         <div>
-          <p>{{ driver.name }} {{ driver.firstLastName }}</p>
-          <p>Phone: {{ driver.phone }}</p>
+          <p>{{ trip.driverName }}</p>
+          <p>Phone: {{ trip.driverPhone }}</p>
         </div>
       </div>
     </div>

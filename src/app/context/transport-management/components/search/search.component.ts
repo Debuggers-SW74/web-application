@@ -27,15 +27,17 @@ export class SearchComponent {
   results: ResultDriver[] = [
     {
       id: 1,
-      firstName: 'John',
-      lastName: 'Doe',
-      phoneNumber: '123456789',
+      name: 'John',
+      firstLastName: 'Doe',
+      secondLastName: 'Doe',
+      phone: '123456789',
     },
     {
       id: 2,
-      firstName: 'Jane',
-      lastName: 'Doe',
-      phoneNumber: '987654321',
+      name: 'Jane',
+      firstLastName: 'Doe',
+      secondLastName: 'Doe',
+      phone: '987654321',
     },
   ];
 

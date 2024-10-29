@@ -2,11 +2,11 @@
   <img src="assets/svg/user/avatar.svg" alt="Avatar" />
   <div>
     <b>Driver:</b>
-    <p>{{ resultDriver.firstName }} {{ resultDriver.lastName }}</p>
+    <p>{{ resultDriver.name }} {{ resultDriver.firstLastName }}</p>
   </div>
   <div>
     <b>Phone Number:</b>
-    <p>{{ resultDriver.phoneNumber }}</p>
+    <p>{{ resultDriver.phone }}</p>
   </div>
   <button class="to-book-trip" (click)="onBookTrip()">
     <mat-icon class="arrow">chevron_right</mat-icon>
