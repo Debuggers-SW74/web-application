@@ -1,10 +1,15 @@
-<div *ngFor="let driver of drivers">
-  <div class="card">
-    <!-- <img [src]="driverPhoto" [alt]="driverName"> -->
-    <img src="assets/svg/user/avatar.svg" alt="Avatar" />
-    <div class="spacer"></div>
-    <div class="content">
-      <h3>{{ driver.name }} {{ driver.firstLastName }}</h3>
+<ng-container *ngIf="drivers && drivers.length > 0; else noDrivers">
+  <div *ngFor="let driver of drivers">
+    <div class="card">
+      <!-- <img [src]="driverPhoto" [alt]="driverName"> -->
+      <img src="assets/svg/user/avatar.svg" alt="Avatar" />
+      <div class="spacer"></div>
+      <div class="content">
+        <h3>{{ driver.name }} {{ driver.firstLastName }}</h3>
+      </div>
     </div>
   </div>
-</div>
+</ng-container>
+<ng-template #noDrivers>
+  <p>There are no Drivers</p>
+</ng-template>

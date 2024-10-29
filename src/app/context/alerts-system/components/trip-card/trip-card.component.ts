@@ -1,36 +1,30 @@
-import { Component } from '@angular/core';
-import { Trip } from '@shared/models/entities/Trip';
-import { TripStatus } from '@shared/models/enum/trip-status';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { TripService } from '@app/shared/services/trip/trip.service';
+import { Trip } from '@shared/models/entities/Trip';
 
 @Component({
   selector: 'app-trip-card',
   standalone: true,
   imports: [CommonModule],
+  providers: [TripService],
   templateUrl: './trip-card.component.html',
   styleUrl: './trip-card.component.css',
 })
-export class TripCardComponent {
-  trips: Trip[] = [
-    {
-      id: 1,
-      driverId: 1,
-      driverName: 'Juan',
-      driverPhone: '123456789',
-      supervisorId: 1,
-      supervisorName: 'Carlos',
-      supervisorPhone: '987654321',
-      origin: 'Ubicación inicial',
-      destination: 'Ubicación final',
-      type: 'GNV',
-      amount: 230,
-      weight: 1000,
-      date: new Date(),
-      startTime: '10:00',
-      endTime: '12:00',
-      subject: '',
-      description: '',
-      status: TripStatus.Completed,
-    },
-  ];
+export class TripCardComponent implements OnInit {
+  trips: Trip[] = [];
+
+  constructor(private tripService: TripService) {}
+
+  ngOnInit(): void {
+    this.tripService.getAll('trips').subscribe({
+      next: (response: Trip[]) => {
+        console.log('Trips obtenidos:', response);
+        if (this.trips) this.trips = response.slice(0, 2);
+      },
+      error: (err) => {
+        console.error('Error fetching trips data:', err);
+      },
+    });
+  }
 }
