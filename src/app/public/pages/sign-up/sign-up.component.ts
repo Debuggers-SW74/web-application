@@ -97,7 +97,7 @@ export class SignUpComponent {
         // console.log(this.user);
 
         this.userService.setEndpoint(
-          userType === Role.Driver ? 'drivers' : 'supervisors',
+          userType === Role.Driver ? 'drivers' : 'supervisors'
         );
       });
     } else if (componentRef.instance instanceof RegisterComponent) {
@@ -107,7 +107,7 @@ export class SignUpComponent {
           this.user.email = userRegistration.email;
           this.user.password = userRegistration.password;
           // console.log(this.user);
-        },
+        }
       );
     } else if (componentRef.instance instanceof FillInformationComponent) {
       componentRef.instance.onSubmitted.subscribe(
@@ -124,9 +124,9 @@ export class SignUpComponent {
             },
             (error: any) => {
               console.log(error);
-            },
+            }
           );
-        },
+        }
       );
     }
   }
