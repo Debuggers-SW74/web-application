@@ -1,4 +1,3 @@
-import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -24,7 +23,6 @@ import { UserService } from '@shared/services/user/user.service';
     MatButtonModule,
     RouterModule,
     TitleComponent,
-    HttpClientModule,
   ],
   providers: [UserService],
   templateUrl: './sign-in.component.html',
@@ -46,8 +44,8 @@ export class SignInComponent implements OnInit {
 
   ngOnInit(): void {
     this.signInForm = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      username: ['testing@gmail.com', [Validators.required, Validators.email]],
+      password: ['password123', Validators.required],
     });
   }
 
@@ -64,6 +62,7 @@ export class SignInComponent implements OnInit {
         const token = response.token;
 
         localStorage.setItem('authToken', token);
+
         this.router.navigate(['/home']);
       },
       (error) => {

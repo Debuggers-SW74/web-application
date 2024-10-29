@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import {
   FormBuilder,
@@ -31,7 +30,6 @@ import { TripService } from '@app/shared/services/trip/trip.service';
     MatButtonModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule,
   ],
   providers: [provideNativeDateAdapter(), TripService],
   templateUrl: './book-trip.component.html',

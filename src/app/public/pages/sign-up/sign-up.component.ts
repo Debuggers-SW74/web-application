@@ -1,28 +1,22 @@
 import { Component, ViewChild, ViewContainerRef } from '@angular/core';
-import { SignUpSteps } from '@shared/models/enum/sign-up-steps';
 import { TitleComponent } from '@shared/components/auth/title/title.component';
-import { SensorCodeComponent } from './components/steps/sensor-code/sensor-code.component';
-import { UserTypeComponent } from './components/steps/user-type/user-type.component';
-import { RegisterComponent } from './components/steps/register/register.component';
-import { FillInformationComponent } from './components/steps/fill-information/fill-information.component';
 import {
   User,
   UserInformation,
   UserRegistration,
 } from '@shared/models/entities/User';
 import { Role } from '@shared/models/enum/role';
-import { HttpClientModule } from '@angular/common/http';
+import { SignUpSteps } from '@shared/models/enum/sign-up-steps';
 import { UserService } from '@shared/services/user/user.service';
+import { FillInformationComponent } from './components/steps/fill-information/fill-information.component';
+import { RegisterComponent } from './components/steps/register/register.component';
+import { SensorCodeComponent } from './components/steps/sensor-code/sensor-code.component';
+import { UserTypeComponent } from './components/steps/user-type/user-type.component';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [
-    TitleComponent,
-    SensorCodeComponent,
-    UserTypeComponent,
-    HttpClientModule,
-  ],
+  imports: [TitleComponent, SensorCodeComponent, UserTypeComponent],
   providers: [UserService],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css',

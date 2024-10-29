@@ -1,4 +1,4 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import {
   FormBuilder,
@@ -14,7 +14,6 @@ import { MatInputModule } from '@angular/material/input';
 import { Profile, User } from '@shared/models/entities/User';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { UserService } from '@shared/services/user/user.service';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
@@ -28,7 +27,7 @@ import { CommonModule } from '@angular/common';
     MatIconModule,
     CommonModule,
   ],
-  providers: [UserService, HttpClient, HttpClientModule],
+  providers: [UserService],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
 })

@@ -6,10 +6,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { User } from '@shared/models/entities/User';
+import { AuthService } from '@shared/services/auth/auth.service';
+import { UserService } from '@shared/services/user/user.service';
 import { filter } from 'rxjs/operators';
 import { DialogNotificationsComponent } from './components/dialog-notifications/dialog-notifications.component';
-import { AuthService } from '@app/shared/services/auth/auth.service';
-import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-header',
@@ -21,7 +22,6 @@ import { HttpClientModule } from '@angular/common/http';
     RouterModule,
     CommonModule,
     MatMenuModule,
-    HttpClientModule,
   ],
   providers: [AuthService],
   templateUrl: './header.component.html',
@@ -30,15 +30,16 @@ import { HttpClientModule } from '@angular/common/http';
 export class HeaderComponent implements OnInit {
   @Output() toggleSidenav = new EventEmitter<void>();
 
-  userName = 'John Doe';
-  nameInitials = 'JD';
-
+  userName: string | undefined = undefined;
+  nameInitials: string | undefined = undefined;
   currentUrl: string = '';
+  showDrivers: boolean = false;
 
   constructor(
     private router: Router,
     private dialog: MatDialog,
-    private authService: AuthService
+    private authService: AuthService,
+    private userService: UserService
   ) {}
 
   ngOnInit() {
@@ -53,6 +54,26 @@ export class HeaderComponent implements OnInit {
       .subscribe((event: NavigationEnd) => {
         this.currentUrl = event.urlAfterRedirects;
       });
+
+    const userId = this.authService.getUserIdFromToken() ?? 0;
+    const userTypeFromToken = this.authService.getUserTypeFromToken();
+
+    const endpoint =
+      userTypeFromToken === 'ROLE_DRIVER' ? 'drivers' : 'supervisors';
+    this.showDrivers = userTypeFromToken === 'ROLE_DRIVER';
+
+    this.userService.getById(endpoint, userId).subscribe({
+      next: (response: User) => {
+        console.log('Usuario obtenido:', response);
+        this.userName = response.name + ' ' + response.firstLastName;
+        this.nameInitials =
+          response.name.split(' ')[0].charAt(0) +
+          response.firstLastName.split(' ')[0].charAt(0);
+      },
+      error: (err) => {
+        console.error('Error fetching user data:', err);
+      },
+    });
   }
 
   openNotifications(): void {

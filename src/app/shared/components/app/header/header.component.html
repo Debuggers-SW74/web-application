@@ -44,7 +44,11 @@
       <a routerLink="/home"> Home </a>
       <span [ngClass]="{ active: currentUrl === '/home' }"></span>
     </button>
-    <button class="view-button" aria-label="Button to Drivers view">
+    <button
+      *ngIf="showDrivers"
+      class="view-button"
+      aria-label="Button to Drivers view"
+    >
       <a routerLink="/drivers"> Drivers </a>
       <span [ngClass]="{ active: currentUrl === '/drivers' }"></span>
     </button>
