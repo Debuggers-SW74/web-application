@@ -60,7 +60,9 @@ export class HeaderComponent implements OnInit {
 
     const endpoint =
       userTypeFromToken === 'ROLE_DRIVER' ? 'drivers' : 'supervisors';
-    this.showDrivers = userTypeFromToken === 'ROLE_DRIVER';
+    this.showDrivers = userTypeFromToken === 'ROLE_SUPERVISOR';
+    console.log(userTypeFromToken);
+    console.log(this.showDrivers);
 
     this.userService.getById(endpoint, userId).subscribe({
       next: (response: User) => {

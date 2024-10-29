@@ -20,7 +20,7 @@ export class DriverCardComponent implements OnInit {
     this.userService.getAll('drivers').subscribe({
       next: (response: User[]) => {
         console.log('Drivers obtenidos:', response);
-        this.drivers = response.slice(0, 2);
+        if (this.drivers) this.drivers = response.slice(0, 2);
       },
       error: (err) => {
         console.error('Error fetching drivers data:', err);

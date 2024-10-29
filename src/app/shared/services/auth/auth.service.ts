@@ -11,15 +11,22 @@ export class AuthService {
   constructor(private router: Router) {}
 
   getToken(): string | null {
-    return localStorage.getItem(this.TOKEN_KEY);
+    if (typeof window !== 'undefined' && localStorage) {
+      return localStorage.getItem(this.TOKEN_KEY);
+    }
+    return null;
   }
 
   setToken(token: string): void {
-    localStorage.setItem(this.TOKEN_KEY, token);
+    if (typeof window !== 'undefined' && localStorage) {
+      localStorage.setItem(this.TOKEN_KEY, token);
+    }
   }
 
   removeToken(): void {
-    localStorage.removeItem(this.TOKEN_KEY);
+    if (typeof window !== 'undefined' && localStorage) {
+      localStorage.removeItem(this.TOKEN_KEY);
+    }
   }
 
   isAuthenticated(): boolean {
@@ -27,7 +34,7 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem(this.TOKEN_KEY);
+    this.removeToken();
     this.router.navigate(['/sign-in']);
   }
 

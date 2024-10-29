@@ -33,6 +33,7 @@ export class SignUpComponent {
   currentStepView: any = SensorCodeComponent;
   stepTitle = 'Insert your Sensor Code';
 
+  userType: Role = Role.Driver;
   user: User = {
     id: 0,
     name: '',
@@ -87,12 +88,7 @@ export class SignUpComponent {
     } else if (componentRef.instance instanceof UserTypeComponent) {
       componentRef.instance.onSubmit = () => this.changeStep(this.steps[2]);
       componentRef.instance.onSubmitted.subscribe((userType: Role) => {
-        // this.user.role = userType;
-        // console.log(this.user);
-
-        this.userService.setEndpoint(
-          userType === Role.Driver ? 'drivers' : 'supervisors'
-        );
+        this.userType = userType;
       });
     } else if (componentRef.instance instanceof RegisterComponent) {
       componentRef.instance.onSubmit = () => this.changeStep(this.steps[3]);
@@ -111,6 +107,9 @@ export class SignUpComponent {
           this.user.secondLastName = userInformation.secondLastName;
           this.user.phone = userInformation.phone;
           // console.log(this.user);
+          this.userService.setEndpoint(
+            this.userType === Role.Driver ? 'drivers' : 'supervisors'
+          );
 
           this.userService.register(this.user).subscribe(
             (user: User) => {
