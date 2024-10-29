@@ -40,9 +40,9 @@ export class UserService extends BaseService<User> {
     return this.http.get<User[]>(this.endpoint + '/supervisors');
   }
 
-  getUserByNameOrSensorCode(nameOrSensorCode: string): Observable<User> {
+  getUserByNameOrSensorCode(nameOrSensorCode: string): Observable<User[]> {
     // Se requiere autenticación para obtener el usuario por ID
-    return this.http.get<User>(
+    return this.http.get<User[]>(
       this.endpoint + '?nameOrSensorCode=' + nameOrSensorCode
     );
   }
