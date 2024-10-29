@@ -14,9 +14,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
-import { Trip } from '@app/shared/models/entities/Trip';
+import { Trip, TripCreate } from '@app/shared/models/entities/Trip';
 import { TripStatus } from '@app/shared/models/enum/trip-status';
 import { TripService } from '@app/shared/services/trip/trip.service';
+import { LocationAutocompleteComponent } from '@app/context/transport-management/components/location-autocomplete/location-autocomplete.component';
 
 @Component({
   selector: 'app-book-trip',
@@ -30,6 +31,7 @@ import { TripService } from '@app/shared/services/trip/trip.service';
     MatButtonModule,
     ReactiveFormsModule,
     FormsModule,
+    LocationAutocompleteComponent,
   ],
   providers: [provideNativeDateAdapter(), TripService],
   templateUrl: './book-trip.component.html',
@@ -41,18 +43,8 @@ export class BookTripComponent {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private tripService: TripService
+    private tripService: TripService,
   ) {}
-
-  locationList: string[] = [
-    'Carabayllo',
-    'Pte Piedra',
-    'Comas',
-    'Los Olivos',
-    'San Isidro',
-    'San Miguel',
-    'Miraflores',
-  ];
 
   hazardousMaterialList: string[] = [
     'GNV',
@@ -72,21 +64,23 @@ export class BookTripComponent {
       return;
     }
 
+    // console.log(this.bookTripForm.value);
+
     this.tripService
-      .create('trips', {
+      .createTrip({
         ...this.bookTripForm.value,
         status: TripStatus.Pending,
       })
-      .subscribe(
-        (trip: Trip) => {
-          console.log('Trip created successfully:', trip);
+      .subscribe({
+        next: (trip: TripCreate) => {
           this.router.navigate(['/home']);
+          console.log('Trip created successfully: ', trip);
         },
-        (error) => {
+        error: (error) => {
           console.log('Error creating trip:', error);
           alert('Error creating trip, please try again later');
-        }
-      );
+        },
+      });
   }
 
   // TODO: Check if this is needed
@@ -98,14 +92,14 @@ export class BookTripComponent {
 
   ngOnInit(): void {
     this.bookTripForm = this.formBuilder.group({
-      from: ['', [Validators.required]],
-      to: ['', [Validators.required]],
+      origin: ['', [Validators.required]],
+      destination: ['', [Validators.required]],
       type: ['', [Validators.required]],
       amount: [0, [Validators.required, Validators.min(1)]],
       weight: [0, [Validators.required, Validators.min(50)]],
       date: [null, [Validators.required]], // Asignando la fecha actual
-      departureTime: ['', [Validators.required]], // Hora de salida
-      arrivalTime: ['', [Validators.required]], // Hora de llegada
+      startTime: ['', [Validators.required]], // Hora de salida
+      endTime: ['', [Validators.required]], // Hora de llegada
       subject: [''],
       description: [''],
     });

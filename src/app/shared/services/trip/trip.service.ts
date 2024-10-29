@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Trip } from '@shared/models/entities/Trip';
+import { Trip, TripCreate } from '@shared/models/entities/Trip';
 import { BaseService } from '../base/base.service';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
@@ -16,6 +16,10 @@ export class TripService extends BaseService<Trip> {
     super(http, new AuthService(new Router()));
   }
 
+  createTrip(trip: TripCreate): Observable<TripCreate> {
+    return this.http.post<TripCreate>(this.endpoint + '/create', trip);
+  }
+
   getTripsByDriverId(driverId: number): Observable<Trip[]> {
     return this.http.get<Trip[]>(this.endpoint + '/driver/' + driverId);
   }
@@ -26,25 +30,25 @@ export class TripService extends BaseService<Trip> {
 
   getPendingTripsByDriverId(driverId: number): Observable<Trip[]> {
     return this.http.get<Trip[]>(
-      this.endpoint + '/driver/' + driverId + '/status/PENDING'
+      this.endpoint + '/driver/' + driverId + '/status/PENDING',
     );
   }
 
   getPendingTripsBySupervisorId(supervisorId: number): Observable<Trip[]> {
     return this.http.get<Trip[]>(
-      this.endpoint + '/pending/' + supervisorId + '/status/PENDING'
+      this.endpoint + '/pending/' + supervisorId + '/status/PENDING',
     );
   }
 
   getHistoryTripsByDriverId(driverId: number): Observable<Trip[]> {
     return this.http.get<Trip[]>(
-      this.endpoint + '/driver/' + driverId + '/status/FINISHED'
+      this.endpoint + '/driver/' + driverId + '/status/FINISHED',
     );
   }
 
   getHistoryTripsBySupervisorId(supervisorId: number): Observable<Trip[]> {
     return this.http.get<Trip[]>(
-      this.endpoint + '/supervisor/' + supervisorId + '/status/FINISHED'
+      this.endpoint + '/supervisor/' + supervisorId + '/status/FINISHED',
     );
   }
 }

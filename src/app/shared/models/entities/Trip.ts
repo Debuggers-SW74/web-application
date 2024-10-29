@@ -20,3 +20,18 @@ export interface Trip {
   description: string;
   status: TripStatus;
 }
+
+export interface TripCreate {
+  driverId: number;
+  supervisorId: number;
+  origin: string;
+  destination: string;
+  type: string;
+  amount: number;
+  weight: number;
+  date: Date;
+  startTime: string;
+  endTime: string;
+  subject: string;
+  description: string;
+}

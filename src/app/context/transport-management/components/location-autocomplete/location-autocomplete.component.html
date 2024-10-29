@@ -1,0 +1,15 @@
+<mat-form-field appearance="outline" class="w-full">
+  <input type="text" matInput [formControl]="searchControl" [matAutocomplete]="auto" />
+
+  <mat-progress-spinner *ngIf="loading" matSuffix diameter="20" mode="indeterminate"></mat-progress-spinner>
+
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onSelected($event)">
+    <mat-option *ngFor="let location of suggestions" [value]="location">
+      <span class="location-name">{{ location.display_name }}</span>
+    </mat-option>
+  </mat-autocomplete>
+
+  <mat-error *ngIf="searchControl.hasError('minlength')">
+    Ingresa al menos 3 caracteres
+  </mat-error>
+</mat-form-field>
