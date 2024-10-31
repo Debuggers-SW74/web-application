@@ -11,6 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - run: npm install -g @angular/cli
+      - run: npm install
       - run: ng build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
