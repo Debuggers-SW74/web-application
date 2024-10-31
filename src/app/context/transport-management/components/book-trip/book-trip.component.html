@@ -2,14 +2,19 @@
   <section class="left-side">
     <div class="container-field">
       <p>From</p>
-      <app-location-autocomplete formControlName="origin"></app-location-autocomplete>
+      <app-location-autocomplete
+        formControlName="origin"
+      ></app-location-autocomplete>
     </div>
 
     <div class="container-field">
       <p>Type</p>
       <mat-form-field appearance="outline">
         <mat-select formControlName="type">
-          <mat-option *ngFor="let hazardousMaterial of hazardousMaterialList" [value]="hazardousMaterial">
+          <mat-option
+            *ngFor="let hazardousMaterial of hazardousMaterialList"
+            [value]="hazardousMaterial"
+          >
             {{ hazardousMaterial }}
           </mat-option>
         </mat-select>
@@ -19,9 +24,17 @@
     <div class="container-field">
       <p>Date</p>
       <mat-form-field appearance="outline">
-        <input matInput [matDatepicker]="datepicker" [min]="minDate" formControlName="date" />
+        <input
+          matInput
+          [matDatepicker]="datepicker"
+          [min]="minDate"
+          formControlName="date"
+        />
         <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="datepicker"
+        ></mat-datepicker-toggle>
         <mat-datepicker #datepicker></mat-datepicker>
       </mat-form-field>
     </div>
@@ -30,7 +43,9 @@
   <section>
     <div class="container-field">
       <p>To</p>
-      <app-location-autocomplete formControlName="destination"></app-location-autocomplete>
+      <app-location-autocomplete
+        formControlName="destination"
+      ></app-location-autocomplete>
     </div>
     <div class="group-field-2">
       <div class="container-field-2">
@@ -78,7 +93,12 @@
       </div>
     </div>
 
-    <button class="submit-button" mat-raised-button color="accent" type="submit">
+    <button
+      class="submit-button"
+      mat-raised-button
+      color="accent"
+      type="submit"
+    >
       <p>SUBMIT</p>
     </button>
   </section>

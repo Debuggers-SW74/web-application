@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -14,10 +14,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Router } from '@angular/router';
-import { Trip, TripCreate } from '@app/shared/models/entities/Trip';
-import { TripStatus } from '@app/shared/models/enum/trip-status';
-import { TripService } from '@app/shared/services/trip/trip.service';
 import { LocationAutocompleteComponent } from '@app/context/transport-management/components/location-autocomplete/location-autocomplete.component';
+import { TripCreate } from '@app/shared/models/entities/Trip';
+import { TripStatus } from '@shared/models/enum/trip-status';
+import { TripService } from '@shared/services/trip/trip.service';
+import { ResultDriver } from '../../models/ResultDriver';
+import { AuthService } from '@shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-book-trip',
@@ -38,12 +40,15 @@ import { LocationAutocompleteComponent } from '@app/context/transport-management
   styleUrl: './book-trip.component.css',
 })
 export class BookTripComponent {
+  @Input() resultDriver: ResultDriver | null = null;
+
   bookTripForm!: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private tripService: TripService,
+    private authService: AuthService
   ) {}
 
   hazardousMaterialList: string[] = [
@@ -70,6 +75,8 @@ export class BookTripComponent {
       .createTrip({
         ...this.bookTripForm.value,
         status: TripStatus.Pending,
+        supervisorId: this.authService.getUserIdFromToken(),
+        driverId: this?.resultDriver?.id,
       })
       .subscribe({
         next: (trip: TripCreate) => {

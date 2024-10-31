@@ -101,4 +101,28 @@ export class TripService extends BaseService<Trip> {
       }
     );
   }
+
+  finishTrip(tripId: number): Observable<void> {
+    const headers = this.getAuthHeaders();
+
+    return this.http.put<void>(
+      this.baseUrl + this.endpoint + '/finish/' + tripId,
+      null,
+      {
+        headers,
+      }
+    );
+  }
+
+  cancelTrip(tripId: number): Observable<void> {
+    const headers = this.getAuthHeaders();
+
+    return this.http.put<void>(
+      this.baseUrl + this.endpoint + '/cancel/' + tripId,
+      null,
+      {
+        headers,
+      }
+    );
+  }
 }

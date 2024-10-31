@@ -28,13 +28,13 @@ export class HistoryComponent {
 
     if (userType === 'ROLE_SUPERVISOR') {
       this.tripService
-        .getPendingTripsBySupervisorId(userId as number)
+        .getHistoryTripsBySupervisorId(userId as number)
         .subscribe((trips: Trip[]) => {
           if (this.historyTrips) this.historyTrips = trips;
         });
     } else {
       this.tripService
-        .getPendingTripsByDriverId(userId as number)
+        .getHistoryTripsByDriverId(userId as number)
         .subscribe((trips: Trip[]) => {
           if (this.historyTrips) this.historyTrips = trips;
         });

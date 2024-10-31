@@ -3,7 +3,12 @@
     <p>Name or Sensor ID</p>
     <div class="search-input">
       <mat-form-field appearance="outline">
-        <input matInput [(ngModel)]="nameOrSensorCode" type="text" placeholder="Search drivers" />
+        <input
+          matInput
+          [(ngModel)]="nameOrSensorCode"
+          type="text"
+          placeholder="Search drivers"
+        />
       </mat-form-field>
       <button mat-button (click)="searchDrivers()">
         <mat-icon fontIcon="search"></mat-icon>
@@ -14,7 +19,10 @@
     <p>Results:</p>
     <ng-container *ngIf="results && results.length > 0; else noResults">
       <div *ngFor="let result of results">
-        <app-result-card [resultDriver]="result" (bookTrip)="onBookTrip()"></app-result-card>
+        <app-result-card
+          [resultDriver]="result"
+          (bookTrip)="onBookTrip($event)"
+        ></app-result-card>
       </div>
     </ng-container>
     <ng-template #noResults>

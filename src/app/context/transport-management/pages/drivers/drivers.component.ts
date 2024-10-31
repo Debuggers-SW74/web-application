@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { BookTripComponent } from '../../components/book-trip/book-trip.component';
 import { SearchComponent } from '@app/context/transport-management/components/search/search.component';
 import { DriverSteps } from '@shared/models/enum/driver-steps';
+import { ResultDriver } from '../../models/ResultDriver';
 
 @Component({
   selector: 'app-drivers',
@@ -17,6 +18,7 @@ export class DriversComponent implements OnInit {
       ? SearchComponent
       : BookTripComponent;
   stepTitle = 'Search Drivers';
+  resultDriver: ResultDriver | null = null;
 
   @ViewChild('dynamicComponentContainer', {
     read: ViewContainerRef,
@@ -48,9 +50,13 @@ export class DriversComponent implements OnInit {
 
     if (component === SearchComponent) {
       const instance = componentRef.instance as SearchComponent;
-      instance.changeStep.subscribe(() =>
-        this.changeStep(DriverSteps.BookTrip)
-      );
+      instance.changeStep.subscribe((driver: ResultDriver) => {
+        this.resultDriver = driver;
+        this.changeStep(DriverSteps.BookTrip);
+      });
+    } else if (component === BookTripComponent) {
+      const instance = componentRef.instance as BookTripComponent;
+      instance.resultDriver = this.resultDriver;
     }
   }
 }

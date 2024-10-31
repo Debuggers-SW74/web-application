@@ -15,11 +15,11 @@ import { CommonModule } from '@angular/common';
 })
 export class ResultCardComponent {
   @Input() resultDriver!: ResultDriver;
-  @Output() bookTrip = new EventEmitter<void>();
+  @Output() bookTrip = new EventEmitter<ResultDriver>();
 
   constructor() {}
 
   onBookTrip() {
-    this.bookTrip.emit();
+    this.bookTrip.emit(this.resultDriver);
   }
 }

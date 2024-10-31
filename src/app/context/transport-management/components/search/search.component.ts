@@ -28,9 +28,10 @@ import { AuthService } from '@app/shared/services/auth/auth.service';
   styleUrl: './search.component.css',
 })
 export class SearchComponent implements OnInit {
-  @Output() changeStep = new EventEmitter<void>();
+  @Output() changeStep = new EventEmitter<ResultDriver>();
 
   nameOrSensorCode: string = '';
+  resultDriver: ResultDriver | null = null;
 
   results: ResultDriver[] = [];
 
@@ -53,8 +54,9 @@ export class SearchComponent implements OnInit {
       });
   }
 
-  onBookTrip() {
-    this.changeStep.emit();
+  onBookTrip(cardResultDriver: ResultDriver) {
+    this.resultDriver = cardResultDriver;
+    this.changeStep.emit(this.resultDriver);
   }
 
   searchDrivers() {
