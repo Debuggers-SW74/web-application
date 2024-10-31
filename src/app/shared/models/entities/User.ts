@@ -9,6 +9,10 @@ export interface User {
   password: string;
 }
 
+export interface Driver extends User {
+  supervisorId: number;
+}
+
 export interface UserRegistration {
   email: string;
   password: string;

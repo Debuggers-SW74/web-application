@@ -13,7 +13,7 @@ import { DriverSteps } from '@shared/models/enum/driver-steps';
 export class DriversComponent implements OnInit {
   steps = [DriverSteps.SearchDriver, DriverSteps.BookTrip];
   currentStepView: any =
-    this.steps[1] === DriverSteps.SearchDriver
+    this.steps[0] === DriverSteps.SearchDriver
       ? SearchComponent
       : BookTripComponent;
   stepTitle = 'Search Drivers';
@@ -49,7 +49,7 @@ export class DriversComponent implements OnInit {
     if (component === SearchComponent) {
       const instance = componentRef.instance as SearchComponent;
       instance.changeStep.subscribe(() =>
-        this.changeStep(DriverSteps.BookTrip),
+        this.changeStep(DriverSteps.BookTrip)
       );
     }
   }

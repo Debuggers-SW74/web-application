@@ -4,6 +4,7 @@ import {
   User,
   UserInformation,
   UserRegistration,
+  Driver,
 } from '@shared/models/entities/User';
 import { Role } from '@shared/models/enum/role';
 import { SignUpSteps } from '@shared/models/enum/sign-up-steps';
@@ -111,14 +112,30 @@ export class SignUpComponent {
             this.userType === Role.Driver ? 'drivers' : 'supervisors'
           );
 
-          this.userService.register(this.user).subscribe(
-            (user: User) => {
-              console.log(user);
-            },
-            (error: any) => {
-              console.log(error);
-            }
-          );
+          if (this.userType === Role.Driver) {
+            let driver: Driver = {
+              ...this.user,
+              supervisorId: 0,
+            };
+
+            this.userService.registerDriver(driver).subscribe({
+              next: (response: Driver) => {
+                console.log('Driver created:', response);
+              },
+              error: (err) => {
+                console.error('Error creating driver:', err);
+              },
+            });
+          } else {
+            this.userService.registerSupervisor(this.user).subscribe({
+              next: (response: User) => {
+                console.log('Supervisor created:', response);
+              },
+              error: (err) => {
+                console.error('Error creating supervisor:', err);
+              },
+            });
+          }
         }
       );
     }
