@@ -10,72 +10,94 @@
           height="240px"
         />
       </div>
-      <form
-        mat
-        [formGroup]="editProfileForm"
-        class="edit-profile-form"
-        (ngSubmit)="submit()"
-      >
-        <div class="edit-profile-field">
-          <p>First Name</p>
-          <mat-form-field appearance="outline">
-            <input
-              matInput
-              type="text"
-              [placeholder]="user.firstName"
-              formControlName="firstName"
-            />
-          </mat-form-field>
-        </div>
-        <div class="edit-profile-field">
-          <p>Last Name</p>
-          <mat-form-field appearance="outline">
-            <input
-              matInput
-              type="text"
-              [placeholder]="user.lastName"
-              formControlName="lastName"
-            />
-          </mat-form-field>
-        </div>
-        <div class="edit-profile-field">
-          <p>Email</p>
-          <mat-form-field appearance="outline">
-            <input
-              matInput
-              type="text"
-              [placeholder]="user.email"
-              formControlName="email"
-            />
-          </mat-form-field>
-        </div>
-        <div class="edit-profile-field">
-          <p>Password</p>
-          <mat-form-field appearance="outline">
-            <input
-              matInput
-              type="password"
-              placeholder="************"
-              formControlName="password"
-            />
-          </mat-form-field>
-        </div>
-        <div class="edit-profile-field">
-          <p>Phone Number</p>
-          <mat-form-field appearance="outline">
-            <input
-              matInput
-              type="text"
-              [placeholder]="user.phoneNumber"
-              formControlName="phoneNumber"
-              maxlength="9"
-            />
-          </mat-form-field>
-        </div>
-      </form>
+      <div *ngIf="user; else noUser">
+        <form
+          mat
+          [formGroup]="editProfileForm"
+          class="edit-profile-form"
+          (ngSubmit)="submit()"
+        >
+          <div class="edit-profile-field">
+            <p>First Name</p>
+            <mat-form-field appearance="outline">
+              <input
+                matInput
+                type="text"
+                [value]="user!.name"
+                formControlName="name"
+              />
+            </mat-form-field>
+          </div>
+          <div class="edit-profile-field">
+            <p>First Last Name</p>
+            <mat-form-field appearance="outline">
+              <input
+                matInput
+                type="text"
+                [value]="user!.firstLastName"
+                formControlName="firstLastName"
+              />
+            </mat-form-field>
+          </div>
+          <div class="edit-profile-field">
+            <p>Second Last Name</p>
+            <mat-form-field appearance="outline">
+              <input
+                matInput
+                type="text"
+                [value]="user!.secondLastName"
+                formControlName="secondLastName"
+              />
+            </mat-form-field>
+          </div>
+          <div class="edit-profile-field">
+            <p>Email</p>
+            <mat-form-field appearance="outline">
+              <input
+                matInput
+                type="text"
+                [value]="user!.email"
+                formControlName="email"
+              />
+            </mat-form-field>
+          </div>
+          <div class="edit-profile-field">
+            <p>Password</p>
+            <mat-form-field appearance="outline">
+              <input
+                matInput
+                type="password"
+                password="************"
+                formControlName="password"
+              />
+            </mat-form-field>
+          </div>
+          <div class="edit-profile-field">
+            <p>Phone Number</p>
+            <mat-form-field appearance="outline">
+              <input
+                matInput
+                type="text"
+                [value]="user!.phone"
+                formControlName="phone"
+                maxlength="9"
+              />
+            </mat-form-field>
+          </div>
+        </form>
+      </div>
+      <ng-template #noUser>
+        <p>Loading...</p>
+      </ng-template>
     </div>
   </div>
-  <button mat-flat-button color="primary" class="fp-button save-button">
+  <button
+    mat-flat-button
+    type="submit"
+    color="primary"
+    class="fp-button save-button"
+    (click)="submit()"
+  >
     <p>Save changes</p>
     <mat-icon>edit</mat-icon>
   </button>

@@ -1,0 +1,26 @@
+:host {
+  display: block;
+  width: 100%;
+  max-width: 500px;
+}
+
+mat-form-field {
+  min-width: 475px;
+}
+
+.location-name {
+  white-space: normal;
+  line-height: 1.2;
+}
+
+::ng-deep .mat-mdc-option {
+  height: auto !important;
+  line-height: 1.2 !important;
+  padding: 10px 16px !important;
+}
+
+@media (max-width: 768px) {
+  mat-form-field {
+    min-width: 330px;
+  }
+}

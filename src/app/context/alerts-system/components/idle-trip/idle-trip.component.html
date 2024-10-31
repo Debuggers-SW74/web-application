@@ -1,11 +1,14 @@
 <div>
   <div class="top-home">
-    <h1>Welcome,<br />Juan Arona!</h1>
+    <h1>
+      Welcome,<br />
+      {{ userName }}
+    </h1>
     <a routerLink="/trips" class="text-link">View history</a>
   </div>
 
   <div class="info-home">
-    <div>
+    <div *ngIf="showDrivers">
       <div class="info-home__subtitle">
         <div class="divider-vertical"></div>
         <h2>Your drivers</h2>

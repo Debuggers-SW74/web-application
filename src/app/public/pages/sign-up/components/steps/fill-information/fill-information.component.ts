@@ -42,9 +42,10 @@ export class FillInformationComponent {
       return;
     }
     this.onSubmitted.emit({
-      firstName: this.fillInformationForm.value.firstName,
-      lastName: this.fillInformationForm.value.lastName,
-      phoneNumber: this.fillInformationForm.value.phoneNumber,
+      name: this.fillInformationForm.value.name,
+      firstLastName: this.fillInformationForm.value.firstLastName,
+      secondLastName: this.fillInformationForm.value.secondLastName,
+      phone: this.fillInformationForm.value.phone,
       termsConditions: this.fillInformationForm.value.termsConditions,
       information: this.fillInformationForm.value.information,
     });
@@ -54,9 +55,10 @@ export class FillInformationComponent {
 
   ngOnInit(): void {
     this.fillInformationForm = this.formBuilder.group({
-      firstName: ['', [Validators.required, Validators.minLength(3)]],
-      lastName: ['', [Validators.required, Validators.minLength(3)]],
-      phoneNumber: ['', [Validators.required, Validators.minLength(9)]],
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      firstLastName: ['', [Validators.required, Validators.minLength(3)]],
+      secondLastName: ['', [Validators.minLength(3)]],
+      phone: ['', [Validators.required, Validators.minLength(9)]],
       termsConditions: [false, [Validators.required]],
       information: [false, [Validators.required]],
     });

@@ -6,6 +6,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { User } from '@shared/models/entities/User';
+import { AuthService } from '@shared/services/auth/auth.service';
+import { UserService } from '@shared/services/user/user.service';
 import { filter } from 'rxjs/operators';
 import { DialogNotificationsComponent } from './components/dialog-notifications/dialog-notifications.component';
 
@@ -20,21 +23,24 @@ import { DialogNotificationsComponent } from './components/dialog-notifications/
     CommonModule,
     MatMenuModule,
   ],
+  providers: [AuthService],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
 export class HeaderComponent implements OnInit {
   @Output() toggleSidenav = new EventEmitter<void>();
 
-  userName = 'John Doe';
-  nameInitials = 'JD';
-
+  userName: string | undefined = undefined;
+  nameInitials: string | undefined = undefined;
   currentUrl: string = '';
+  showDrivers: boolean = false;
 
   constructor(
     private router: Router,
     private dialog: MatDialog,
-  ) { }
+    private authService: AuthService,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
     this.currentUrl = this.router.url;
@@ -42,12 +48,34 @@ export class HeaderComponent implements OnInit {
     this.router.events
       .pipe(
         filter(
-          (event): event is NavigationEnd => event instanceof NavigationEnd,
-        ),
+          (event): event is NavigationEnd => event instanceof NavigationEnd
+        )
       )
       .subscribe((event: NavigationEnd) => {
         this.currentUrl = event.urlAfterRedirects;
       });
+
+    const userId = this.authService.getUserIdFromToken();
+    const userTypeFromToken = this.authService.getUserTypeFromToken();
+
+    const endpoint =
+      userTypeFromToken === 'ROLE_DRIVER' ? 'drivers' : 'supervisors';
+    this.showDrivers = userTypeFromToken === 'ROLE_SUPERVISOR';
+    // console.log(userTypeFromToken);
+    // console.log(this.showDrivers);
+
+    this.userService.getById(endpoint, userId as number).subscribe({
+      next: (response: User) => {
+        // console.log('Usuario obtenido:', response);
+        this.userName = response.name + ' ' + response.firstLastName;
+        this.nameInitials =
+          response.name.split(' ')[0].charAt(0) +
+          response.firstLastName.split(' ')[0].charAt(0);
+      },
+      error: (err) => {
+        console.error('Error fetching user data:', err);
+      },
+    });
   }
 
   openNotifications(): void {
@@ -65,7 +93,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logOut(): void {
-    this.router.navigate(['/sign-in']);
+    this.authService.logout();
   }
 
   openSidenav() {

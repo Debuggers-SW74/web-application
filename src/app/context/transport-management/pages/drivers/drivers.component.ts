@@ -12,8 +12,10 @@ import { DriverSteps } from '@shared/models/enum/driver-steps';
 })
 export class DriversComponent implements OnInit {
   steps = [DriverSteps.SearchDriver, DriverSteps.BookTrip];
-  currentStep = this.steps[0];
-  currentStepView: any = SearchComponent;
+  currentStepView: any =
+    this.steps[0] === DriverSteps.SearchDriver
+      ? SearchComponent
+      : BookTripComponent;
   stepTitle = 'Search Drivers';
 
   @ViewChild('dynamicComponentContainer', {
@@ -24,9 +26,11 @@ export class DriversComponent implements OnInit {
 
   constructor() {}
 
-  changeStep(step: DriverSteps) {
-    this.currentStep = step;
+  ngOnInit(): void {
+    this.loadComponent(this.currentStepView);
+  }
 
+  changeStep(step: DriverSteps) {
     if (step === DriverSteps.SearchDriver) {
       this.currentStepView = SearchComponent;
       this.stepTitle = 'Search Drivers';
@@ -45,12 +49,8 @@ export class DriversComponent implements OnInit {
     if (component === SearchComponent) {
       const instance = componentRef.instance as SearchComponent;
       instance.changeStep.subscribe(() =>
-        this.changeStep(DriverSteps.BookTrip),
+        this.changeStep(DriverSteps.BookTrip)
       );
     }
-  }
-
-  ngOnInit(): void {
-    this.loadComponent(this.currentStepView);
   }
 }

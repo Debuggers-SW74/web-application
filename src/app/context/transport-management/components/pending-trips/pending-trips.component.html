@@ -1,5 +1,10 @@
 <h2>Pending Trips</h2>
 
-<div *ngFor="let trip of pendingTrips">
-  <app-resume-trip-card [trip]="trip" [action]="true"></app-resume-trip-card>
-</div>
+<ng-container *ngIf="pendingTrips && pendingTrips.length > 0; else noTrips">
+  <div *ngFor="let trip of pendingTrips">
+    <app-resume-trip-card [trip]="trip" [action]="true"></app-resume-trip-card>
+  </div>
+</ng-container>
+<ng-template #noTrips>
+  <p>There are no Pending Trips</p>
+</ng-template>

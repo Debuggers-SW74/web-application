@@ -1,13 +1,16 @@
-import { Role } from '../enum/role';
-
 export interface User {
   id: number;
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
+  name: string;
+  firstLastName: string;
+  secondLastName: string;
+  phone: string;
   email: string;
+  username: string;
   password: string;
-  role: Role;
+}
+
+export interface Driver extends User {
+  supervisorId: number;
 }
 
 export interface UserRegistration {
@@ -16,18 +19,25 @@ export interface UserRegistration {
   confirmPassword: string;
 }
 
+export interface Authenticate {
+  email: string;
+  password: string;
+}
+
 export interface UserInformation {
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
+  name: string;
+  firstLastName: string;
+  secondLastName: string;
+  phone: string;
   termsConditions: boolean;
   information: boolean;
 }
 
 export interface Profile {
-  firstName: string;
-  lastName: string;
+  name: string;
+  firstLastName: string;
+  secondLastName: string;
   email: string;
   password: string;
-  phoneNumber: string;
+  phone: string;
 }

@@ -13,9 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: npm run build
+      - run: ng build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_DEBUGGERS_D82CD }}
-          projectId: debuggers-d82cd
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_FASTPORTE_653D5 }}
+          projectId: fastporte-653d5

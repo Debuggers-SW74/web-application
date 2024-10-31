@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button';
-import { Router, RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
-import { UserService } from '@shared/services/user/user.service';
-import { User } from '@app/shared/models/entities/User';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { Router, RouterModule } from '@angular/router';
 import { TitleComponent } from '@shared/components/auth/title/title.component';
+import { Authenticate } from '@shared/models/entities/User';
+import { UserService } from '@shared/services/user/user.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -24,7 +23,6 @@ import { TitleComponent } from '@shared/components/auth/title/title.component';
     MatButtonModule,
     RouterModule,
     TitleComponent,
-    HttpClientModule,
   ],
   providers: [UserService],
   templateUrl: './sign-in.component.html',
@@ -32,6 +30,11 @@ import { TitleComponent } from '@shared/components/auth/title/title.component';
 })
 export class SignInComponent implements OnInit {
   signInForm!: FormGroup;
+
+  authenticate: Authenticate = {
+    email: '',
+    password: '',
+  };
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,8 +44,8 @@ export class SignInComponent implements OnInit {
 
   ngOnInit(): void {
     this.signInForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      email: ['oca@gm.com', [Validators.required, Validators.email]],
+      password: ['ocanellas', Validators.required],
     });
   }
 
@@ -52,11 +55,14 @@ export class SignInComponent implements OnInit {
       return;
     }
 
-    const { email, password } = this.signInForm.value;
+    this.authenticate = this.signInForm.value;
 
-    this.userService.signIn(email, password).subscribe(
-      (user: User) => {
-        console.log('User signed in successfully:', user);
+    this.userService.authenticate(this.authenticate).subscribe(
+      (response: any) => {
+        const token = response.token;
+
+        localStorage.setItem('authToken', token);
+
         this.router.navigate(['/home']);
       },
       (error) => {

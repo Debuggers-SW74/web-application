@@ -3,20 +3,22 @@
     <p>Name or Sensor ID</p>
     <div class="search-input">
       <mat-form-field appearance="outline">
-        <input matInput type="text" placeholder="Search drivers" />
+        <input matInput [(ngModel)]="nameOrSensorCode" type="text" placeholder="Search drivers" />
       </mat-form-field>
-      <button mat-button>
+      <button mat-button (click)="searchDrivers()">
         <mat-icon fontIcon="search"></mat-icon>
       </button>
     </div>
   </div>
   <div class="results">
     <p>Results:</p>
-    <div *ngFor="let result of results">
-      <app-result-card
-        [resultDriver]="result"
-        (bookTrip)="onBookTrip()"
-      ></app-result-card>
-    </div>
+    <ng-container *ngIf="results && results.length > 0; else noResults">
+      <div *ngFor="let result of results">
+        <app-result-card [resultDriver]="result" (bookTrip)="onBookTrip()"></app-result-card>
+      </div>
+    </ng-container>
+    <ng-template #noResults>
+      There are no results for this search.
+    </ng-template>
   </div>
 </div>

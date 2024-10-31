@@ -1,28 +1,23 @@
 import { Component, ViewChild, ViewContainerRef } from '@angular/core';
-import { SignUpSteps } from '@shared/models/enum/sign-up-steps';
 import { TitleComponent } from '@shared/components/auth/title/title.component';
-import { SensorCodeComponent } from './components/steps/sensor-code/sensor-code.component';
-import { UserTypeComponent } from './components/steps/user-type/user-type.component';
-import { RegisterComponent } from './components/steps/register/register.component';
-import { FillInformationComponent } from './components/steps/fill-information/fill-information.component';
 import {
   User,
   UserInformation,
   UserRegistration,
+  Driver,
 } from '@shared/models/entities/User';
 import { Role } from '@shared/models/enum/role';
-import { HttpClientModule } from '@angular/common/http';
+import { SignUpSteps } from '@shared/models/enum/sign-up-steps';
 import { UserService } from '@shared/services/user/user.service';
+import { FillInformationComponent } from './components/steps/fill-information/fill-information.component';
+import { RegisterComponent } from './components/steps/register/register.component';
+import { SensorCodeComponent } from './components/steps/sensor-code/sensor-code.component';
+import { UserTypeComponent } from './components/steps/user-type/user-type.component';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [
-    TitleComponent,
-    SensorCodeComponent,
-    UserTypeComponent,
-    HttpClientModule,
-  ],
+  imports: [TitleComponent, SensorCodeComponent, UserTypeComponent],
   providers: [UserService],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css',
@@ -39,14 +34,16 @@ export class SignUpComponent {
   currentStepView: any = SensorCodeComponent;
   stepTitle = 'Insert your Sensor Code';
 
+  userType: Role = Role.Driver;
   user: User = {
     id: 0,
-    firstName: '',
-    lastName: '',
-    phoneNumber: '',
+    name: '',
+    firstLastName: '',
+    secondLastName: '',
+    phone: '',
     email: '',
+    username: '',
     password: '',
-    role: Role.Driver,
   };
 
   @ViewChild('dynamicComponentContainer', {
@@ -56,6 +53,10 @@ export class SignUpComponent {
   container!: ViewContainerRef;
 
   constructor(private userService: UserService) {}
+
+  ngOnInit(): void {
+    this.loadComponent(this.currentStepView);
+  }
 
   changeStep(step: SignUpSteps) {
     console.log(step);
@@ -88,8 +89,7 @@ export class SignUpComponent {
     } else if (componentRef.instance instanceof UserTypeComponent) {
       componentRef.instance.onSubmit = () => this.changeStep(this.steps[2]);
       componentRef.instance.onSubmitted.subscribe((userType: Role) => {
-        this.user.role = userType;
-        console.log(this.user);
+        this.userType = userType;
       });
     } else if (componentRef.instance instanceof RegisterComponent) {
       componentRef.instance.onSubmit = () => this.changeStep(this.steps[3]);
@@ -97,31 +97,47 @@ export class SignUpComponent {
         (userRegistration: UserRegistration) => {
           this.user.email = userRegistration.email;
           this.user.password = userRegistration.password;
-          console.log(this.user);
-        },
+          // console.log(this.user);
+        }
       );
     } else if (componentRef.instance instanceof FillInformationComponent) {
       componentRef.instance.onSubmitted.subscribe(
         (userInformation: UserInformation) => {
-          this.user.firstName = userInformation.firstName;
-          this.user.lastName = userInformation.lastName;
-          this.user.phoneNumber = userInformation.phoneNumber;
+          this.user.name = userInformation.name;
+          this.user.firstLastName = userInformation.firstLastName;
+          this.user.secondLastName = userInformation.secondLastName;
+          this.user.phone = userInformation.phone;
           // console.log(this.user);
-
-          this.userService.create('users', this.user).subscribe(
-            (user: User) => {
-              console.log(user);
-            },
-            (error: any) => {
-              console.log(error);
-            },
+          this.userService.setEndpoint(
+            this.userType === Role.Driver ? 'drivers' : 'supervisors'
           );
-        },
+
+          if (this.userType === Role.Driver) {
+            let driver: Driver = {
+              ...this.user,
+              supervisorId: 0,
+            };
+
+            this.userService.registerDriver(driver).subscribe({
+              next: (response: Driver) => {
+                console.log('Driver created:', response);
+              },
+              error: (err) => {
+                console.error('Error creating driver:', err);
+              },
+            });
+          } else {
+            this.userService.registerSupervisor(this.user).subscribe({
+              next: (response: User) => {
+                console.log('Supervisor created:', response);
+              },
+              error: (err) => {
+                console.error('Error creating supervisor:', err);
+              },
+            });
+          }
+        }
       );
     }
-  }
-
-  ngOnInit(): void {
-    this.loadComponent(this.currentStepView);
   }
 }

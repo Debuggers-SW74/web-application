@@ -1,11 +1,8 @@
-import { Component, Input } from '@angular/core';
-import { Trip } from '@shared/models/entities/Trip';
-import { TripStatus } from '@shared/models/enum/trip-status';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { User } from '@shared/models/entities/User';
-import { Role } from '@shared/models/enum/role';
+import { Component, Input } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { Trip } from '@shared/models/entities/Trip';
 
 @Component({
   selector: 'app-resume-trip-card',
@@ -17,16 +14,6 @@ import { Role } from '@shared/models/enum/role';
 export class ResumeTripCardComponent {
   @Input() trip!: Trip;
   @Input() action!: boolean;
-
-  driver: User = {
-    id: 1,
-    firstName: 'John',
-    lastName: 'Doe',
-    phoneNumber: '982421231',
-    email: 'john.doe@gmail.com',
-    password: '123456',
-    role: Role.Driver,
-  };
 
   finishTrip() {
     console.log('Finish trip');

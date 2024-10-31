@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import {
   FormBuilder,
@@ -8,10 +9,11 @@ import {
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { Role } from '@app/shared/models/enum/role';
-import { Profile, User } from '@shared/models/entities/User';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { Profile, User, Driver } from '@shared/models/entities/User';
+import { AuthService } from '@shared/services/auth/auth.service';
+import { UserService } from '@shared/services/user/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -23,24 +25,72 @@ import { MatIconModule } from '@angular/material/icon';
     ReactiveFormsModule,
     FormsModule,
     MatIconModule,
+    CommonModule,
   ],
+  providers: [UserService],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
 })
 export class ProfileComponent {
   editProfileForm!: FormGroup;
 
-  user: User = {
-    id: 1,
-    firstName: 'John',
-    lastName: 'Doe',
-    phoneNumber: '+51 987654321',
-    email: 'john.doe@gmail.com',
-    password: '123456',
-    role: Role.Driver,
-  };
+  user: User | null = null;
+  driver: Driver | null = null;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private userService: UserService
+  ) {}
+
+  ngOnInit(): void {
+    const userId = this.authService.getUserIdFromToken();
+    const userType = this.authService.getUserTypeFromToken();
+
+    const endpoint = userType === 'ROLE_DRIVER' ? 'drivers' : 'supervisors';
+
+    if (userType === 'ROLE_DRIVER') {
+      this.userService.getDriverById(userId as number).subscribe({
+        next: (response: Driver) => {
+          console.log('Driver obtenido:', response);
+          this.user = response;
+          this.driver = response;
+          this.initForm();
+        },
+        error: (err) => {
+          console.error('Error fetching driver data:', err);
+        },
+      });
+    } else {
+      this.userService.getById(endpoint, userId as number).subscribe({
+        next: (response: User) => {
+          console.log('Usuario obtenido:', response);
+          this.user = response;
+          this.initForm();
+        },
+        error: (err) => {
+          console.error('Error fetching user data:', err);
+        },
+      });
+    }
+  }
+
+  initForm(): void {
+    this.editProfileForm = this.formBuilder.group({
+      name: [this.user?.name || '', [Validators.minLength(3)]],
+      firstLastName: [
+        this.user?.firstLastName || '',
+        [Validators.minLength(3)],
+      ],
+      secondLastName: [
+        this.user?.secondLastName || '',
+        [Validators.minLength(3)],
+      ],
+      email: [this.user?.email || '', [Validators.email]],
+      password: [this.user?.password || '', [Validators.minLength(8)]],
+      phone: [this.user?.phone || '', [Validators.minLength(9)]],
+    });
+  }
 
   submit() {
     if (this.editProfileForm.invalid) {
@@ -48,24 +98,45 @@ export class ProfileComponent {
       return;
     }
 
-    let profile: Profile = {
-      firstName: this.editProfileForm.value.firstName,
-      lastName: this.editProfileForm.value.lastName,
-      email: this.editProfileForm.value.email,
-      password: this.editProfileForm.value.password,
-      phoneNumber: this.editProfileForm.value.phoneNumber,
-    };
+    const profile: Profile = this.editProfileForm.value;
 
-    console.log('Edit Profile Successfully');
-  }
+    const userType = this.authService.getUserTypeFromToken();
 
-  ngOnInit(): void {
-    this.editProfileForm = this.formBuilder.group({
-      firstName: ['', [Validators.required, Validators.minLength(3)]],
-      lastName: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      phoneNumber: ['', [Validators.required, Validators.minLength(9)]],
-    });
+    const endpoint = userType === 'ROLE_DRIVER' ? 'drivers' : 'supervisors';
+
+    if (userType === 'ROLE_DRIVER') {
+      const updateDriver: Driver = {
+        ...profile,
+        username: this.driver?.username as string,
+        id: this.driver?.id as number,
+        supervisorId: this.driver?.supervisorId as number,
+      };
+
+      this.userService.updateDriver(updateDriver).subscribe({
+        next: (response: Driver) => {
+          console.log('Driver updated:', response);
+        },
+        error: (err) => {
+          console.error('Error updating driver:', err);
+        },
+      });
+    } else {
+      const updateUser: User = {
+        ...profile,
+        username: this.user?.username as string,
+        id: this.user?.id as number,
+      };
+
+      this.userService.update(endpoint, updateUser, true).subscribe({
+        next: (response: User) => {
+          console.log('Supervisor updated:', response);
+        },
+        error: (err) => {
+          console.error('Error updating driver:', err);
+        },
+      });
+    }
+
+    alert('Edit Profile Successfully');
   }
 }
