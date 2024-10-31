@@ -115,7 +115,7 @@ export class SignUpComponent {
           if (this.userType === Role.Driver) {
             let driver: Driver = {
               ...this.user,
-              supervisorId: 0,
+              supervisorId: 1,
             };
 
             this.userService.registerDriver(driver).subscribe({
