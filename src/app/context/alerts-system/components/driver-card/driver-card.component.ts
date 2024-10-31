@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '@shared/models/entities/User';
 import { CommonModule } from '@angular/common';
 import { UserService } from '@app/shared/services/user/user.service';
+import { AuthService } from '@app/shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-driver-card',
@@ -14,10 +15,15 @@ import { UserService } from '@app/shared/services/user/user.service';
 export class DriverCardComponent implements OnInit {
   drivers: User[] = [];
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
-    this.userService.getAll('drivers').subscribe({
+    const userId = this.authService.getUserIdFromToken();
+
+    this.userService.getDriversBySupervisorId(userId as number).subscribe({
       next: (response: User[]) => {
         console.log('Drivers obtenidos:', response);
         if (this.drivers) this.drivers = response.slice(0, 2);

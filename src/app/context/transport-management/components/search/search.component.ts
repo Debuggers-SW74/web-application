@@ -36,7 +36,7 @@ export class SearchComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private authService: AuthService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -49,7 +49,7 @@ export class SearchComponent implements OnInit {
       .subscribe((drivers: User[]) => {
         if (this.results.length > 0) {
           this.results = drivers.map((driver: User) =>
-            this.mapUserToResultDriver(driver),
+            this.mapUserToResultDriver(driver)
           );
         }
       });
@@ -71,11 +71,11 @@ export class SearchComponent implements OnInit {
 
   searchDrivers() {
     this.userService
-      .getUserByNameOrSensorCode(this.nameOrSensorCode)
+      .getDriverByNameOrSensorCode(this.nameOrSensorCode)
       .subscribe((drivers: User[] | null) => {
         if (drivers) {
           this.results = drivers.map((driver: User) =>
-            this.mapUserToResultDriver(driver),
+            this.mapUserToResultDriver(driver)
           );
         } else {
           this.results = [];
