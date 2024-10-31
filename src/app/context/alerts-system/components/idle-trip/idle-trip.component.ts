@@ -26,7 +26,7 @@ export class IdleTripComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const userId = this.authService.getUserIdFromToken() ?? 0;
+    const userId = this.authService.getUserIdFromToken();
     const userTypeFromToken = this.authService.getUserTypeFromToken();
 
     this.userType = userTypeFromToken as string;
@@ -36,8 +36,10 @@ export class IdleTripComponent implements OnInit {
 
     this.showDrivers = this.userType !== 'ROLE_DRIVER';
 
-    this.userService.getById(endpoint, userId).subscribe((user: User) => {
-      this.userName = user.name + ' ' + user.firstLastName;
-    });
+    this.userService
+      .getById(endpoint, userId as number)
+      .subscribe((user: User) => {
+        this.userName = user.name + ' ' + user.firstLastName;
+      });
   }
 }

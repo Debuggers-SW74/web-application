@@ -17,38 +17,88 @@ export class TripService extends BaseService<Trip> {
   }
 
   createTrip(trip: TripCreate): Observable<TripCreate> {
-    return this.http.post<TripCreate>(this.endpoint + '/create', trip);
+    const headers = this.getAuthHeaders();
+
+    return this.http.post<TripCreate>(
+      this.baseUrl + this.endpoint + '/create',
+      trip,
+      {
+        headers,
+      }
+    );
   }
 
   getTripsByDriverId(driverId: number): Observable<Trip[]> {
-    return this.http.get<Trip[]>(this.endpoint + '/driver/' + driverId);
+    const headers = this.getAuthHeaders();
+
+    return this.http.get<Trip[]>(
+      this.baseUrl + this.endpoint + '/driver/' + driverId,
+      {
+        headers,
+      }
+    );
   }
 
   getTripsBySupervisorId(supervisorId: number): Observable<Trip[]> {
-    return this.http.get<Trip[]>(this.endpoint + '/supervisor/' + supervisorId);
+    const headers = this.getAuthHeaders();
+
+    return this.http.get<Trip[]>(
+      this.baseUrl + this.endpoint + '/supervisor/' + supervisorId,
+      {
+        headers,
+      }
+    );
   }
 
   getPendingTripsByDriverId(driverId: number): Observable<Trip[]> {
+    const headers = this.getAuthHeaders();
+
     return this.http.get<Trip[]>(
-      this.endpoint + '/driver/' + driverId + '/status/PENDING',
+      this.baseUrl + this.endpoint + '/driver/' + driverId + '/status/1',
+      {
+        headers,
+      }
     );
   }
 
   getPendingTripsBySupervisorId(supervisorId: number): Observable<Trip[]> {
+    const headers = this.getAuthHeaders();
+
     return this.http.get<Trip[]>(
-      this.endpoint + '/pending/' + supervisorId + '/status/PENDING',
+      this.baseUrl +
+        this.endpoint +
+        '/supervisor/' +
+        supervisorId +
+        '/status/1',
+      {
+        headers,
+      }
     );
   }
 
   getHistoryTripsByDriverId(driverId: number): Observable<Trip[]> {
+    const headers = this.getAuthHeaders();
+
     return this.http.get<Trip[]>(
-      this.endpoint + '/driver/' + driverId + '/status/FINISHED',
+      this.baseUrl + this.endpoint + '/driver/' + driverId + '/status/2',
+      {
+        headers,
+      }
     );
   }
 
   getHistoryTripsBySupervisorId(supervisorId: number): Observable<Trip[]> {
+    const headers = this.getAuthHeaders();
+
     return this.http.get<Trip[]>(
-      this.endpoint + '/supervisor/' + supervisorId + '/status/FINISHED',
+      this.baseUrl +
+        this.endpoint +
+        '/supervisor/' +
+        supervisorId +
+        '/status/2',
+      {
+        headers,
+      }
     );
   }
 }

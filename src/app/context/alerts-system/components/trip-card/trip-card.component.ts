@@ -23,13 +23,13 @@ export class TripCardComponent implements OnInit {
   ngOnInit(): void {
     const userId = this.authService.getUserIdFromToken();
     const userType = this.authService.getUserTypeFromToken();
-    console.log(userType);
+    // console.log(userType);
 
     if (userType === 'ROLE_SUPERVISOR') {
       this.tripService.getTripsBySupervisorId(userId as number).subscribe({
         next: (response: Trip[]) => {
           console.log('Trips obtenidos:', response);
-          if (this.trips) this.trips = response.slice(0, 2);
+          if (response) this.trips = response.slice(0, 2);
         },
         error: (err) => {
           console.error('Error fetching trips data:', err);
@@ -39,7 +39,7 @@ export class TripCardComponent implements OnInit {
       this.tripService.getTripsByDriverId(userId as number).subscribe({
         next: (response: Trip[]) => {
           console.log('Trips obtenidos:', response);
-          if (this.trips) this.trips = response.slice(0, 2);
+          if (response) this.trips = response.slice(0, 2);
         },
         error: (err) => {
           console.error('Error fetching trips data:', err);

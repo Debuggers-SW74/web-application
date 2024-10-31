@@ -14,7 +14,7 @@ export class BaseService<T> {
   constructor(protected http: HttpClient, private authService: AuthService) {}
 
   // Método para construir headers con el token JWT si está disponible
-  private getAuthHeaders(): HttpHeaders {
+  protected getAuthHeaders(): HttpHeaders {
     const token = this.authService.getToken();
     let headers = new HttpHeaders();
     if (token) {
@@ -52,12 +52,11 @@ export class BaseService<T> {
   // Método PUT genérico
   update(
     endpoint: string,
-    id: number | string,
     data: T,
     requireAuth: boolean = true
   ): Observable<T> {
     const headers = requireAuth ? this.getAuthHeaders() : new HttpHeaders();
-    return this.http.put<T>(`${this.baseUrl + endpoint}/${id}`, data, {
+    return this.http.put<T>(`${this.baseUrl + endpoint}/update`, data, {
       headers,
     });
   }

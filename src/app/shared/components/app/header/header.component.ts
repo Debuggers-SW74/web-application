@@ -55,18 +55,18 @@ export class HeaderComponent implements OnInit {
         this.currentUrl = event.urlAfterRedirects;
       });
 
-    const userId = this.authService.getUserIdFromToken() ?? 0;
+    const userId = this.authService.getUserIdFromToken();
     const userTypeFromToken = this.authService.getUserTypeFromToken();
 
     const endpoint =
       userTypeFromToken === 'ROLE_DRIVER' ? 'drivers' : 'supervisors';
     this.showDrivers = userTypeFromToken === 'ROLE_SUPERVISOR';
-    console.log(userTypeFromToken);
-    console.log(this.showDrivers);
+    // console.log(userTypeFromToken);
+    // console.log(this.showDrivers);
 
-    this.userService.getById(endpoint, userId).subscribe({
+    this.userService.getById(endpoint, userId as number).subscribe({
       next: (response: User) => {
-        console.log('Usuario obtenido:', response);
+        // console.log('Usuario obtenido:', response);
         this.userName = response.name + ' ' + response.firstLastName;
         this.nameInitials =
           response.name.split(' ')[0].charAt(0) +

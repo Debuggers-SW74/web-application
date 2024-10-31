@@ -30,23 +30,46 @@ export class UserService extends BaseService<User> {
   }
 
   registerDriver(driver: Driver): Observable<Driver> {
-    return this.http.post<Driver>(`${this.endpoint}/register`, driver);
+    return this.http.post<Driver>(
+      this.baseUrl + `${this.endpoint}/register`,
+      driver
+    );
+  }
+
+  updateDriver(driver: Driver): Observable<Driver> {
+    const headers = this.getAuthHeaders();
+    return this.http.put<Driver>(
+      this.baseUrl + `${this.endpoint}/update`,
+      driver,
+      {
+        headers,
+      }
+    );
+  }
+
+  getDriverById(driverId: number): Observable<Driver> {
+    return this.http.get<Driver>(this.baseUrl + `${this.endpoint}/${driverId}`);
   }
 
   getDriversBySupervisorId(supervisorId: number): Observable<Driver[]> {
+    const headers = this.getAuthHeaders();
+
     return this.http.get<Driver[]>(
-      this.endpoint + '/supervisors/' + supervisorId
+      this.baseUrl + this.endpoint + '/supervisor/' + supervisorId,
+      { headers }
     );
   }
 
   getSupervisors(): Observable<User[]> {
-    return this.http.get<User[]>(this.endpoint + '/supervisors');
+    return this.http.get<User[]>(this.baseUrl + this.endpoint + '/supervisors');
   }
 
   getDriverByNameOrSensorCode(nameOrSensorCode: string): Observable<Driver[]> {
-    // Se requiere autenticación para obtener el usuario por ID
+    const headers = this.getAuthHeaders();
+
     return this.http.get<Driver[]>(
-      this.endpoint + '?nameOrSensorCode=' + nameOrSensorCode
+      this.baseUrl + this.endpoint + '?nameOrSensorCode=' + nameOrSensorCode,
+      { headers }
     );
   }
 }

@@ -23,6 +23,8 @@ export class DriverCardComponent implements OnInit {
   ngOnInit(): void {
     const userId = this.authService.getUserIdFromToken();
 
+    this.userService.setEndpoint('drivers');
+
     this.userService.getDriversBySupervisorId(userId as number).subscribe({
       next: (response: User[]) => {
         console.log('Drivers obtenidos:', response);

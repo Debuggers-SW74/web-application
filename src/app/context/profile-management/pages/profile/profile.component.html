@@ -29,13 +29,24 @@
             </mat-form-field>
           </div>
           <div class="edit-profile-field">
-            <p>Last Name</p>
+            <p>First Last Name</p>
             <mat-form-field appearance="outline">
               <input
                 matInput
                 type="text"
                 [placeholder]="user!.firstLastName"
                 formControlName="firstLastName"
+              />
+            </mat-form-field>
+          </div>
+          <div class="edit-profile-field">
+            <p>Second Last Name</p>
+            <mat-form-field appearance="outline">
+              <input
+                matInput
+                type="text"
+                [placeholder]="user!.secondLastName"
+                formControlName="secondLastName"
               />
             </mat-form-field>
           </div>

@@ -39,5 +39,5 @@ export interface Profile {
   secondLastName: string;
   email: string;
   password: string;
-  phoneNumber: string;
+  phone: string;
 }
