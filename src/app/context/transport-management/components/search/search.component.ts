@@ -46,11 +46,9 @@ export class SearchComponent implements OnInit {
 
     this.userService
       .getDriversBySupervisorId(userId as number)
-      .subscribe((drivers: User[]) => {
-        if (this.results.length > 0) {
-          this.results = drivers.map((driver: User) =>
-            this.mapUserToResultDriver(driver)
-          );
+      .subscribe((drivers: ResultDriver[]) => {
+        if (drivers) {
+          this.results = drivers;
         }
       });
   }
@@ -59,27 +57,31 @@ export class SearchComponent implements OnInit {
     this.changeStep.emit();
   }
 
-  mapUserToResultDriver(user: User): ResultDriver {
-    return {
-      id: user.id,
-      name: user.name,
-      firstLastName: user.firstLastName,
-      secondLastName: user.secondLastName,
-      phone: user.phone,
-    };
-  }
-
   searchDrivers() {
-    this.userService
-      .getDriverByNameOrSensorCode(this.nameOrSensorCode)
-      .subscribe((drivers: User[] | null) => {
-        if (drivers) {
-          this.results = drivers.map((driver: User) =>
-            this.mapUserToResultDriver(driver)
-          );
-        } else {
-          this.results = [];
-        }
-      });
+    this.userService.setEndpoint('drivers');
+
+    this.userService.getAllDrivers().subscribe((response: ResultDriver[]) => {
+      if (this.results.length > 0) {
+        this.results = response.filter((resultDriver: ResultDriver) => {
+          return resultDriver.name
+            .toLowerCase()
+            .includes(this.nameOrSensorCode.toLowerCase());
+        });
+        console.log('Resultados:', this.results);
+      }
+    });
+
+    // TODO: Replace for this
+    // this.userService
+    //   .getDriverByNameOrSensorCode(this.nameOrSensorCode)
+    //   .subscribe((drivers: User[] | null) => {
+    //     if (drivers) {
+    //       this.results = drivers.map((driver: User) =>
+    //         this.mapUserToResultDriver(driver)
+    //       );
+    //     } else {
+    //       this.results = [];
+    //     }
+    //   });
   }
 }

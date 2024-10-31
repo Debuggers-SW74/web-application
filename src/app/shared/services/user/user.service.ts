@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { BaseService } from '../base/base.service';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
+import { ResultDriver } from '@app/context/transport-management/models/ResultDriver';
 
 @Injectable({
   providedIn: 'root',
@@ -45,6 +46,14 @@ export class UserService extends BaseService<User> {
         headers,
       }
     );
+  }
+
+  getAllDrivers(): Observable<ResultDriver[]> {
+    const headers = this.getAuthHeaders();
+
+    return this.http.get<ResultDriver[]>(this.baseUrl + this.endpoint, {
+      headers,
+    });
   }
 
   getDriverById(driverId: number): Observable<Driver> {

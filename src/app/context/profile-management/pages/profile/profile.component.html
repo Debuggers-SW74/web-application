@@ -23,7 +23,7 @@
               <input
                 matInput
                 type="text"
-                [placeholder]="user!.name"
+                [value]="user!.name"
                 formControlName="name"
               />
             </mat-form-field>
@@ -34,7 +34,7 @@
               <input
                 matInput
                 type="text"
-                [placeholder]="user!.firstLastName"
+                [value]="user!.firstLastName"
                 formControlName="firstLastName"
               />
             </mat-form-field>
@@ -45,7 +45,7 @@
               <input
                 matInput
                 type="text"
-                [placeholder]="user!.secondLastName"
+                [value]="user!.secondLastName"
                 formControlName="secondLastName"
               />
             </mat-form-field>
@@ -56,7 +56,7 @@
               <input
                 matInput
                 type="text"
-                [placeholder]="user!.email"
+                [value]="user!.email"
                 formControlName="email"
               />
             </mat-form-field>
@@ -67,7 +67,7 @@
               <input
                 matInput
                 type="password"
-                placeholder="************"
+                password="************"
                 formControlName="password"
               />
             </mat-form-field>
@@ -78,7 +78,7 @@
               <input
                 matInput
                 type="text"
-                [placeholder]="user!.phone"
+                [value]="user!.phone"
                 formControlName="phone"
                 maxlength="9"
               />
@@ -91,7 +91,13 @@
       </ng-template>
     </div>
   </div>
-  <button mat-flat-button color="primary" class="fp-button save-button">
+  <button
+    mat-flat-button
+    type="submit"
+    color="primary"
+    class="fp-button save-button"
+    (click)="submit()"
+  >
     <p>Save changes</p>
     <mat-icon>edit</mat-icon>
   </button>

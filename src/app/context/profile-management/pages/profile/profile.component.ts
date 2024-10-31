@@ -44,8 +44,6 @@ export class ProfileComponent {
   ) {}
 
   ngOnInit(): void {
-    this.initForm();
-
     const userId = this.authService.getUserIdFromToken();
     const userType = this.authService.getUserTypeFromToken();
 
@@ -57,6 +55,7 @@ export class ProfileComponent {
           console.log('Driver obtenido:', response);
           this.user = response;
           this.driver = response;
+          this.initForm();
         },
         error: (err) => {
           console.error('Error fetching driver data:', err);
@@ -67,6 +66,7 @@ export class ProfileComponent {
         next: (response: User) => {
           console.log('Usuario obtenido:', response);
           this.user = response;
+          this.initForm();
         },
         error: (err) => {
           console.error('Error fetching user data:', err);
@@ -77,12 +77,18 @@ export class ProfileComponent {
 
   initForm(): void {
     this.editProfileForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
-      firstLastName: ['', [Validators.required, Validators.minLength(3)]],
-      secondLastName: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      phone: ['', [Validators.required, Validators.minLength(9)]],
+      name: [this.user?.name || '', [Validators.minLength(3)]],
+      firstLastName: [
+        this.user?.firstLastName || '',
+        [Validators.minLength(3)],
+      ],
+      secondLastName: [
+        this.user?.secondLastName || '',
+        [Validators.minLength(3)],
+      ],
+      email: [this.user?.email || '', [Validators.email]],
+      password: [this.user?.password || '', [Validators.minLength(8)]],
+      phone: [this.user?.phone || '', [Validators.minLength(9)]],
     });
   }
 
@@ -94,7 +100,6 @@ export class ProfileComponent {
 
     const profile: Profile = this.editProfileForm.value;
 
-    const userId = this.authService.getUserIdFromToken();
     const userType = this.authService.getUserTypeFromToken();
 
     const endpoint = userType === 'ROLE_DRIVER' ? 'drivers' : 'supervisors';
@@ -132,6 +137,6 @@ export class ProfileComponent {
       });
     }
 
-    console.log('Edit Profile Successfully');
+    alert('Edit Profile Successfully');
   }
 }
