@@ -33,6 +33,7 @@ export class SignUpComponent {
   currentStep = this.steps[0];
   currentStepView: any = SensorCodeComponent;
   stepTitle = 'Insert your Sensor Code';
+  enteredCode = '';
 
   userType: Role = Role.Driver;
   user: User = {
@@ -86,6 +87,9 @@ export class SignUpComponent {
 
     if (componentRef.instance instanceof SensorCodeComponent) {
       componentRef.instance.onSubmit = () => this.changeStep(this.steps[1]);
+      componentRef.instance.onSubmitted.subscribe((enteredCode: string) => {
+        this.enteredCode = enteredCode;
+      });
     } else if (componentRef.instance instanceof UserTypeComponent) {
       componentRef.instance.onSubmit = () => this.changeStep(this.steps[2]);
       componentRef.instance.onSubmitted.subscribe((userType: Role) => {
@@ -115,7 +119,8 @@ export class SignUpComponent {
           if (this.userType === Role.Driver) {
             let driver: Driver = {
               ...this.user,
-              supervisorId: 1,
+              username: this.user.name + this.user.firstLastName,
+              supervisorId: parseInt(this.enteredCode[0]),
             };
 
             this.userService.registerDriver(driver).subscribe({
