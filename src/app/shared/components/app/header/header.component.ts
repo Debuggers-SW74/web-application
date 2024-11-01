@@ -67,10 +67,16 @@ export class HeaderComponent implements OnInit {
     this.userService.getById(endpoint, userId as number).subscribe({
       next: (response: User) => {
         // console.log('Usuario obtenido:', response);
-        this.userName = response.name + ' ' + response.firstLastName;
-        this.nameInitials =
-          response.name.split(' ')[0].charAt(0) +
-          response.firstLastName.split(' ')[0].charAt(0);
+        // this.userName = response.name + ' ' + response.firstLastName;
+        this.userName = response.name;
+
+        const nameInitial = response.name
+          ? response.name.split(' ')[0].charAt(0)
+          : '';
+        const lastNameInitial = response.firstLastName
+          ? response.firstLastName.split(' ')[0].charAt(0)
+          : '';
+        this.nameInitials = nameInitial + lastNameInitial;
       },
       error: (err) => {
         console.error('Error fetching user data:', err);
