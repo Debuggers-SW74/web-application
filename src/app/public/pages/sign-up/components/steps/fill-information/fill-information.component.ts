@@ -31,10 +31,7 @@ export class FillInformationComponent {
   fillInformationForm!: FormGroup;
   @Output() onSubmitted = new EventEmitter<UserInformation>();
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private router: Router,
-  ) {}
+  constructor(private formBuilder: FormBuilder, private router: Router) {}
 
   submit() {
     if (this.fillInformationForm.invalid) {

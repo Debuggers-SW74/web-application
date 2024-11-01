@@ -57,7 +57,14 @@ export class UserService extends BaseService<User> {
   }
 
   getDriverById(driverId: number): Observable<Driver> {
-    return this.http.get<Driver>(this.baseUrl + `${this.endpoint}/${driverId}`);
+    const headers = this.getAuthHeaders();
+
+    return this.http.get<Driver>(
+      this.baseUrl + `${this.endpoint}/${driverId}`,
+      {
+        headers,
+      }
+    );
   }
 
   getDriversBySupervisorId(supervisorId: number): Observable<Driver[]> {
@@ -70,7 +77,14 @@ export class UserService extends BaseService<User> {
   }
 
   getSupervisors(): Observable<User[]> {
-    return this.http.get<User[]>(this.baseUrl + this.endpoint + '/supervisors');
+    const headers = this.getAuthHeaders();
+
+    return this.http.get<User[]>(
+      this.baseUrl + this.endpoint + '/supervisors',
+      {
+        headers,
+      }
+    );
   }
 
   getDriverByNameOrSensorCode(nameOrSensorCode: string): Observable<Driver[]> {

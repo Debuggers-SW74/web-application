@@ -39,7 +39,7 @@ export class IdleTripComponent implements OnInit {
     this.userService
       .getById(endpoint, userId as number)
       .subscribe((user: User) => {
-        this.userName = user.name + ' ' + user.firstLastName;
+        this.userName = user.name;
       });
   }
 }
