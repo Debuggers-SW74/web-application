@@ -87,7 +87,7 @@ export class ProfileComponent {
         [Validators.minLength(3)],
       ],
       email: [this.user?.email || '', [Validators.email]],
-      password: [this.user?.password || '', [Validators.minLength(8)]],
+      password: ['', [Validators.minLength(8)]],
       phone: [this.user?.phone || '', [Validators.minLength(9)]],
     });
   }
@@ -98,7 +98,7 @@ export class ProfileComponent {
       return;
     }
 
-    const profile: Profile = this.editProfileForm.value;
+    const { password, ...profile } = this.editProfileForm.value;
 
     const userType = this.authService.getUserTypeFromToken();
 
@@ -107,6 +107,9 @@ export class ProfileComponent {
     if (userType === 'ROLE_DRIVER') {
       const updateDriver: Driver = {
         ...profile,
+        ...(this.editProfileForm.value.password !== ''
+          ? { password: this.editProfileForm.value.password }
+          : {}),
         username: this.driver?.username as string,
         id: this.driver?.id as number,
         supervisorId: this.driver?.supervisorId as number,
@@ -123,6 +126,9 @@ export class ProfileComponent {
     } else {
       const updateUser: User = {
         ...profile,
+        ...(this.editProfileForm.value.password !== ''
+          ? { password: this.editProfileForm.value.password }
+          : {}),
         username: this.user?.username as string,
         id: this.user?.id as number,
       };

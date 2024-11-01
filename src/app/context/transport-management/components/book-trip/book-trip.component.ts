@@ -80,8 +80,8 @@ export class BookTripComponent {
       })
       .subscribe({
         next: (trip: TripCreate) => {
-          this.router.navigate(['/home']);
           console.log('Trip created successfully: ', trip);
+          this.router.navigate(['/home']);
         },
         error: (error) => {
           console.log('Error creating trip:', error);

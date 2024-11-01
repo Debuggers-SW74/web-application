@@ -10,7 +10,6 @@ import {
   ReactiveFormsModule,
   FormsModule,
 } from '@angular/forms';
-import { Router } from '@angular/router';
 import { UserInformation } from '@shared/models/entities/User';
 
 @Component({
@@ -31,7 +30,7 @@ export class FillInformationComponent {
   fillInformationForm!: FormGroup;
   @Output() onSubmitted = new EventEmitter<UserInformation>();
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {}
+  constructor(private formBuilder: FormBuilder) {}
 
   submit() {
     if (this.fillInformationForm.invalid) {
@@ -47,14 +46,13 @@ export class FillInformationComponent {
       information: this.fillInformationForm.value.information,
     });
     console.log('Fill Information Submitted');
-    this.router.navigate(['/home']);
   }
 
   ngOnInit(): void {
     this.fillInformationForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       firstLastName: ['', [Validators.required, Validators.minLength(3)]],
-      secondLastName: ['', [Validators.minLength(3)]],
+      secondLastName: ['', [Validators.required, Validators.minLength(3)]],
       phone: ['', [Validators.required, Validators.minLength(9)]],
       termsConditions: [false, [Validators.required]],
       information: [false, [Validators.required]],
