@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -17,9 +17,10 @@ import { AutoTabDirective } from '@shared/lib/auto-tab.directive';
 })
 export class SensorCodeComponent implements OnInit {
   @Input() onSubmit!: () => void;
+  @Output() onSubmitted: EventEmitter<string> = new EventEmitter();
   sensorCodeForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this.sensorCodeForm = this.formBuilder.group({
@@ -41,6 +42,7 @@ export class SensorCodeComponent implements OnInit {
     const enteredCode = Object.values(this.sensorCodeForm.value).join('');
 
     console.log('Entered Code:', enteredCode);
+    this.onSubmitted.emit(enteredCode);
     this.onSubmit();
   }
 }
