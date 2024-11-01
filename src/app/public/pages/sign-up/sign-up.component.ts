@@ -13,6 +13,7 @@ import { FillInformationComponent } from './components/steps/fill-information/fi
 import { RegisterComponent } from './components/steps/register/register.component';
 import { SensorCodeComponent } from './components/steps/sensor-code/sensor-code.component';
 import { UserTypeComponent } from './components/steps/user-type/user-type.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -53,7 +54,7 @@ export class SignUpComponent {
   })
   container!: ViewContainerRef;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadComponent(this.currentStepView);
@@ -126,18 +127,36 @@ export class SignUpComponent {
             this.userService.registerDriver(driver).subscribe({
               next: (response: Driver) => {
                 console.log('Driver created:', response);
+                this.router.navigate(['/sing-in']);
               },
               error: (err) => {
-                console.error('Error creating driver:', err);
+                if (err.status === 400) {
+                  console.error('Bad Request: The data sent is invalid.', err);
+                  alert('Please check your information and try again.');
+                } else {
+                  console.error('Error creating driver:', err);
+                  alert(
+                    'An unexpected error occurred. Please try again later.'
+                  );
+                }
               },
             });
           } else {
             this.userService.registerSupervisor(this.user).subscribe({
               next: (response: User) => {
                 console.log('Supervisor created:', response);
+                this.router.navigate(['/sing-in']);
               },
               error: (err) => {
-                console.error('Error creating supervisor:', err);
+                if (err.status === 400) {
+                  console.error('Bad Request: The data sent is invalid.', err);
+                  alert('Please check your information and try again.');
+                } else {
+                  console.error('Error creating supervisor:', err);
+                  alert(
+                    'An unexpected error occurred. Please try again later.'
+                  );
+                }
               },
             });
           }
