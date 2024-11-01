@@ -6,7 +6,7 @@ export interface User {
   phone: string;
   email: string;
   username: string;
-  password: string;
+  password?: string;
 }
 
 export interface Driver extends User {
@@ -38,6 +38,5 @@ export interface Profile {
   firstLastName: string;
   secondLastName: string;
   email: string;
-  password: string;
   phone: string;
 }
