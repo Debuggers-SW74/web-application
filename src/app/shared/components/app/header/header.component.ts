@@ -8,7 +8,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { User } from '@shared/models/entities/User';
 import { AuthService } from '@shared/services/auth/auth.service';
-import { UserService } from '@shared/services/user/user.service';
+import { UserService } from '@app/shared/services/user/user/user.service';
 import { filter } from 'rxjs/operators';
 import { DialogNotificationsComponent } from './components/dialog-notifications/dialog-notifications.component';
 

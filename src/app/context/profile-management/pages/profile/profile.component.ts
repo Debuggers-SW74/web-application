@@ -13,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { Profile, User, Driver } from '@shared/models/entities/User';
 import { AuthService } from '@shared/services/auth/auth.service';
-import { UserService } from '@shared/services/user/user.service';
+import { UserService } from '@app/shared/services/user/user/user.service';
 
 @Component({
   selector: 'app-profile',

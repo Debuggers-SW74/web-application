@@ -8,7 +8,8 @@ import {
 } from '@shared/models/entities/User';
 import { Role } from '@shared/models/enum/role';
 import { SignUpSteps } from '@shared/models/enum/sign-up-steps';
-import { UserService } from '@shared/services/user/user.service';
+import { DriverService } from '@app/shared/services/user/driver/driver.service';
+import { SupervisorService } from '@app/shared/services/user/supervisor/supervisor.service';
 import { FillInformationComponent } from './components/steps/fill-information/fill-information.component';
 import { RegisterComponent } from './components/steps/register/register.component';
 import { SensorCodeComponent } from './components/steps/sensor-code/sensor-code.component';
@@ -19,7 +20,7 @@ import { Router } from '@angular/router';
   selector: 'app-sign-up',
   standalone: true,
   imports: [TitleComponent, SensorCodeComponent, UserTypeComponent],
-  providers: [UserService],
+  providers: [DriverService, SupervisorService],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css',
 })
@@ -54,7 +55,11 @@ export class SignUpComponent {
   })
   container!: ViewContainerRef;
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private driverService: DriverService,
+    private supervisorService: SupervisorService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadComponent(this.currentStepView);
@@ -112,10 +117,6 @@ export class SignUpComponent {
           this.user.firstLastName = userInformation.firstLastName;
           this.user.secondLastName = userInformation.secondLastName;
           this.user.phone = userInformation.phone;
-          // console.log(this.user);
-          this.userService.setEndpoint(
-            this.userType === Role.Driver ? 'drivers' : 'supervisors'
-          );
 
           if (this.userType === Role.Driver) {
             let driver: Driver = {
@@ -124,7 +125,7 @@ export class SignUpComponent {
               supervisorId: parseInt(this.enteredCode[0]),
             };
 
-            this.userService.registerDriver(driver).subscribe({
+            this.driverService.create(driver).subscribe({
               next: (response: Driver) => {
                 console.log('Driver created:', response);
                 this.router.navigate(['/sing-in']);
@@ -142,7 +143,7 @@ export class SignUpComponent {
               },
             });
           } else {
-            this.userService.registerSupervisor(this.user).subscribe({
+            this.supervisorService.create(this.user).subscribe({
               next: (response: User) => {
                 console.log('Supervisor created:', response);
                 this.router.navigate(['/sing-in']);

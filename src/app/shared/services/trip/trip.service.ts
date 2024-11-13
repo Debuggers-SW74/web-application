@@ -10,22 +10,16 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class TripService extends BaseService<Trip> {
-  private endpoint = 'trips';
-
   constructor(http: HttpClient) {
-    super(http, new AuthService(new Router()));
+    super(http, new AuthService(new Router()), 'trips');
   }
 
   createTrip(trip: TripCreate): Observable<TripCreate> {
     const headers = this.getAuthHeaders();
 
-    return this.http.post<TripCreate>(
-      this.baseUrl + this.endpoint + '/create',
-      trip,
-      {
-        headers,
-      }
-    );
+    return this.http.post<TripCreate>(this.baseUrl + this.endpoint, trip, {
+      headers,
+    });
   }
 
   getTripsByDriverId(driverId: number): Observable<Trip[]> {
@@ -102,11 +96,23 @@ export class TripService extends BaseService<Trip> {
     );
   }
 
+  startTrip(tripId: number): Observable<void> {
+    const headers = this.getAuthHeaders();
+
+    return this.http.post<void>(
+      this.baseUrl + this.endpoint + tripId + '/starts',
+      null,
+      {
+        headers,
+      }
+    );
+  }
+
   finishTrip(tripId: number): Observable<void> {
     const headers = this.getAuthHeaders();
 
-    return this.http.put<void>(
-      this.baseUrl + this.endpoint + '/finish/' + tripId,
+    return this.http.post<void>(
+      this.baseUrl + this.endpoint + tripId + '/completations',
       null,
       {
         headers,
@@ -117,8 +123,8 @@ export class TripService extends BaseService<Trip> {
   cancelTrip(tripId: number): Observable<void> {
     const headers = this.getAuthHeaders();
 
-    return this.http.put<void>(
-      this.baseUrl + this.endpoint + '/cancel/' + tripId,
+    return this.http.post<void>(
+      this.baseUrl + this.endpoint + tripId + '/cancellations',
       null,
       {
         headers,

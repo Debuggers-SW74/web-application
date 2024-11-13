@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ResultCardComponent } from '../result-card/result-card.component';
 import { CommonModule } from '@angular/common';
 import { ResultDriver } from '../../models/ResultDriver';
-import { UserService } from '@shared/services/user/user.service';
+import { UserService } from '@app/shared/services/user/user/user.service';
 import { User } from '@app/shared/models/entities/User';
 import { AuthService } from '@app/shared/services/auth/auth.service';
 

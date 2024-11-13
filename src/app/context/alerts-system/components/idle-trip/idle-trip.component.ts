@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from '@app/shared/services/auth/auth.service';
 import { DriverCardComponent } from '../driver-card/driver-card.component';
 import { TripCardComponent } from '../trip-card/trip-card.component';
-import { UserService } from '@app/shared/services/user/user.service';
+import { UserService } from '@app/shared/services/user/user/user.service';
 import { User } from '@app/shared/models/entities/User';
 
 @Component({
