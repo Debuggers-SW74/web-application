@@ -72,7 +72,7 @@ export class BookTripComponent {
     // console.log(this.bookTripForm.value);
 
     this.tripService
-      .createTrip({
+      .create({
         ...this.bookTripForm.value,
         status: TripStatus.Pending,
         supervisorId: this.authService.getUserIdFromToken(),

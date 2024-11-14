@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { environment } from '@app/environments/environment';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
@@ -9,9 +9,15 @@ import { AuthService } from '../auth/auth.service';
 })
 export class BaseService<T> {
   protected baseUrl = environment.apiUrl;
-  protected authUrl = environment.authUrl;
+  protected endpoint: string;
 
-  constructor(protected http: HttpClient, private authService: AuthService) {}
+  constructor(
+    protected http: HttpClient,
+    private authService: AuthService,
+    @Inject(String) endpoint: string
+  ) {
+    this.endpoint = endpoint;
+  }
 
   // Método para construir headers con el token JWT si está disponible
   protected getAuthHeaders(): HttpHeaders {
@@ -24,51 +30,35 @@ export class BaseService<T> {
   }
 
   // Método GET genérico
-  getAll(endpoint: string, requireAuth: boolean = true): Observable<T[]> {
+  getAll(requireAuth: boolean = true): Observable<T[]> {
     const headers = requireAuth ? this.getAuthHeaders() : new HttpHeaders();
-    return this.http.get<T[]>(this.baseUrl + endpoint, { headers });
+    return this.http.get<T[]>(this.baseUrl + this.endpoint, { headers });
   }
 
   // Método GET por ID
-  getById(
-    endpoint: string,
-    id: number | string,
-    requireAuth: boolean = true
-  ): Observable<T> {
+  getById(id: number | string, requireAuth: boolean = true): Observable<T> {
     const headers = requireAuth ? this.getAuthHeaders() : new HttpHeaders();
-    return this.http.get<T>(`${this.baseUrl + endpoint}/${id}`, { headers });
-  }
-
-  // Método POST genérico
-  create(
-    endpoint: string,
-    data: T,
-    requireAuth: boolean = true
-  ): Observable<T> {
-    const headers = requireAuth ? this.getAuthHeaders() : new HttpHeaders();
-    return this.http.post<T>(this.baseUrl + endpoint, data, { headers });
-  }
-
-  // Método PUT genérico
-  update(
-    endpoint: string,
-    data: T,
-    requireAuth: boolean = true
-  ): Observable<T> {
-    const headers = requireAuth ? this.getAuthHeaders() : new HttpHeaders();
-    return this.http.put<T>(`${this.baseUrl + endpoint}/update`, data, {
+    return this.http.get<T>(`${this.baseUrl + this.endpoint}/${id}`, {
       headers,
     });
   }
 
-  // Método DELETE genérico
-  delete(
-    endpoint: string,
-    id: number | string,
-    requireAuth: boolean = true
-  ): Observable<void> {
+  // Método POST genérico
+  create(data: T, requireAuth: boolean = true): Observable<T> {
     const headers = requireAuth ? this.getAuthHeaders() : new HttpHeaders();
-    return this.http.delete<void>(`${this.baseUrl + endpoint}/${id}`, {
+    return this.http.post<T>(this.baseUrl + this.endpoint, data, { headers });
+  }
+
+  // Método PUT genérico
+  update(data: T, requireAuth: boolean = true): Observable<T> {
+    const headers = requireAuth ? this.getAuthHeaders() : new HttpHeaders();
+    return this.http.put<T>(this.baseUrl + this.endpoint, data, { headers });
+  }
+
+  // Método DELETE genérico
+  delete(id: number | string, requireAuth: boolean = true): Observable<void> {
+    const headers = requireAuth ? this.getAuthHeaders() : new HttpHeaders();
+    return this.http.delete<void>(`${this.baseUrl + this.endpoint}/${id}`, {
       headers,
     });
   }

@@ -11,9 +11,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { Profile, User, Driver } from '@shared/models/entities/User';
+import { User, Driver } from '@shared/models/entities/User';
 import { AuthService } from '@shared/services/auth/auth.service';
-import { UserService } from '@shared/services/user/user.service';
+import { DriverService } from '@shared/services/user/driver/driver.service';
+import { SupervisorService } from '@shared/services/user/supervisor/supervisor.service';
 
 @Component({
   selector: 'app-profile',
@@ -27,7 +28,7 @@ import { UserService } from '@shared/services/user/user.service';
     MatIconModule,
     CommonModule,
   ],
-  providers: [UserService],
+  providers: [DriverService, SupervisorService],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
 })
@@ -40,17 +41,16 @@ export class ProfileComponent {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private userService: UserService
+    private driverService: DriverService,
+    private supervisorService: SupervisorService
   ) {}
 
   ngOnInit(): void {
     const userId = this.authService.getUserIdFromToken();
     const userType = this.authService.getUserTypeFromToken();
 
-    const endpoint = userType === 'ROLE_DRIVER' ? 'drivers' : 'supervisors';
-
     if (userType === 'ROLE_DRIVER') {
-      this.userService.getDriverById(userId as number).subscribe({
+      this.driverService.getById(userId as number).subscribe({
         next: (response: Driver) => {
           console.log('Driver obtenido:', response);
           this.user = response;
@@ -59,10 +59,11 @@ export class ProfileComponent {
         },
         error: (err) => {
           console.error('Error fetching driver data:', err);
+          alert('Error fetching driver data');
         },
       });
     } else {
-      this.userService.getById(endpoint, userId as number).subscribe({
+      this.supervisorService.getById(userId as number).subscribe({
         next: (response: User) => {
           console.log('Usuario obtenido:', response);
           this.user = response;
@@ -70,6 +71,7 @@ export class ProfileComponent {
         },
         error: (err) => {
           console.error('Error fetching user data:', err);
+          alert('Error fetching driver data');
         },
       });
     }
@@ -115,12 +117,14 @@ export class ProfileComponent {
         supervisorId: this.driver?.supervisorId as number,
       };
 
-      this.userService.updateDriver(updateDriver).subscribe({
+      this.driverService.update(updateDriver).subscribe({
         next: (response: Driver) => {
           console.log('Driver updated:', response);
+          alert('Edit Profile Successfully');
         },
         error: (err) => {
           console.error('Error updating driver:', err);
+          alert('Error updating driver');
         },
       });
     } else {
@@ -133,16 +137,16 @@ export class ProfileComponent {
         id: this.user?.id as number,
       };
 
-      this.userService.update(endpoint, updateUser, true).subscribe({
+      this.supervisorService.update(updateUser, true).subscribe({
         next: (response: User) => {
           console.log('Supervisor updated:', response);
+          alert('Edit Profile Successfully');
         },
         error: (err) => {
-          console.error('Error updating driver:', err);
+          console.error('Error updating supervisor:', err);
+          alert('Error updating supervisor');
         },
       });
     }
-
-    alert('Edit Profile Successfully');
   }
 }

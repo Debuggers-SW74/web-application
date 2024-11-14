@@ -9,6 +9,10 @@ export interface User {
   password?: string;
 }
 
+export interface UserCreate extends User {
+  sensorCode: string;
+}
+
 export interface Driver extends User {
   supervisorId: number;
 }

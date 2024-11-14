@@ -1,17 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AuthService } from '@app/shared/services/auth/auth.service';
+import { AuthService } from '@shared/services/auth/auth.service';
 import { DriverCardComponent } from '../driver-card/driver-card.component';
 import { TripCardComponent } from '../trip-card/trip-card.component';
-import { UserService } from '@app/shared/services/user/user.service';
-import { User } from '@app/shared/models/entities/User';
+import { DriverService } from '@shared/services/user/driver/driver.service';
+import { SupervisorService } from '@shared/services/user/supervisor/supervisor.service';
 
 @Component({
   selector: 'app-idle-trip',
   standalone: true,
   imports: [TripCardComponent, DriverCardComponent, RouterModule, CommonModule],
-  providers: [UserService],
+  providers: [DriverService, SupervisorService],
   templateUrl: './idle-trip.component.html',
   styleUrl: './idle-trip.component.css',
 })
@@ -22,7 +22,8 @@ export class IdleTripComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private userService: UserService
+    private driverService: DriverService,
+    private supervisorService: SupervisorService
   ) {}
 
   ngOnInit(): void {
@@ -31,15 +32,18 @@ export class IdleTripComponent implements OnInit {
 
     this.userType = userTypeFromToken as string;
 
-    const endpoint =
-      this.userType === 'ROLE_DRIVER' ? 'drivers' : 'supervisors';
-
     this.showDrivers = this.userType !== 'ROLE_DRIVER';
 
-    this.userService
-      .getById(endpoint, userId as number)
-      .subscribe((user: User) => {
-        this.userName = user.name;
+    if (this.userType === 'ROLE_DRIVER') {
+      this.driverService.getById(userId as number).subscribe((driver) => {
+        this.userName = driver.name;
       });
+    } else {
+      this.supervisorService
+        .getById(userId as number)
+        .subscribe((supervisor) => {
+          this.userName = supervisor.name;
+        });
+    }
   }
 }

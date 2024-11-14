@@ -2,7 +2,10 @@
 
 <ng-container *ngIf="pendingTrips && pendingTrips.length > 0; else noTrips">
   <div *ngFor="let trip of pendingTrips">
-    <app-resume-trip-card [trip]="trip" [action]="true"></app-resume-trip-card>
+    <app-resume-trip-card
+      [trip]="trip"
+      [action]="haveActions"
+    ></app-resume-trip-card>
   </div>
 </ng-container>
 <ng-template #noTrips>

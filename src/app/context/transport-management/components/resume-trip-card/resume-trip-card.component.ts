@@ -20,12 +20,29 @@ export class ResumeTripCardComponent {
   constructor(private tripService: TripService) {}
 
   finishTrip() {
-    // console.log('Finish trip');
-    this.tripService.finishTrip(this.trip.id).subscribe();
+    console.log(this.trip);
+    this.tripService.finishTrip(this.trip.tripId).subscribe({
+      next: (response) => {
+        console.log(response);
+        alert('Trip finished');
+      },
+      error: (error) => {
+        console.error(error);
+        alert('Error finishing trip');
+      },
+    });
   }
 
   cancelTrip() {
-    // console.log('Cancel trip');
-    this.tripService.finishTrip(this.trip.id).subscribe();
+    this.tripService.finishTrip(this.trip.tripId).subscribe({
+      next: (response) => {
+        console.log(response);
+        alert('Trip finished');
+      },
+      error: (error) => {
+        console.error(error);
+        alert('Error finishing trip');
+      },
+    });
   }
 }
