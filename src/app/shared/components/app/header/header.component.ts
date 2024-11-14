@@ -8,7 +8,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { User } from '@shared/models/entities/User';
 import { AuthService } from '@shared/services/auth/auth.service';
-import { UserService } from '@shared/services/user/user.service';
+import { DriverService } from '@shared/services/user/driver/driver.service';
+import { SupervisorService } from '@shared/services/user/supervisor/supervisor.service';
 import { filter } from 'rxjs/operators';
 import { DialogNotificationsComponent } from './components/dialog-notifications/dialog-notifications.component';
 
@@ -23,7 +24,7 @@ import { DialogNotificationsComponent } from './components/dialog-notifications/
     CommonModule,
     MatMenuModule,
   ],
-  providers: [AuthService],
+  providers: [AuthService, DriverService, SupervisorService],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
@@ -39,7 +40,8 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
     private authService: AuthService,
-    private userService: UserService
+    private driverService: DriverService,
+    private supervisorService: SupervisorService,
   ) {}
 
   ngOnInit() {
@@ -48,8 +50,8 @@ export class HeaderComponent implements OnInit {
     this.router.events
       .pipe(
         filter(
-          (event): event is NavigationEnd => event instanceof NavigationEnd
-        )
+          (event): event is NavigationEnd => event instanceof NavigationEnd,
+        ),
       )
       .subscribe((event: NavigationEnd) => {
         this.currentUrl = event.urlAfterRedirects;
@@ -58,30 +60,43 @@ export class HeaderComponent implements OnInit {
     const userId = this.authService.getUserIdFromToken();
     const userTypeFromToken = this.authService.getUserTypeFromToken();
 
-    const endpoint =
-      userTypeFromToken === 'ROLE_DRIVER' ? 'drivers' : 'supervisors';
     this.showDrivers = userTypeFromToken === 'ROLE_SUPERVISOR';
-    // console.log(userTypeFromToken);
-    // console.log(this.showDrivers);
 
-    this.userService.getById(endpoint, userId as number).subscribe({
-      next: (response: User) => {
-        // console.log('Usuario obtenido:', response);
-        // this.userName = response.name + ' ' + response.firstLastName;
-        this.userName = response.name;
+    if (userTypeFromToken === 'ROLE_DRIVER') {
+      this.driverService.getById(userId as number).subscribe({
+        next: (response: User) => {
+          this.userName = response.name;
 
-        const nameInitial = response.name
-          ? response.name.split(' ')[0].charAt(0)
-          : '';
-        const lastNameInitial = response.firstLastName
-          ? response.firstLastName.split(' ')[0].charAt(0)
-          : '';
-        this.nameInitials = nameInitial + lastNameInitial;
-      },
-      error: (err) => {
-        console.error('Error fetching user data:', err);
-      },
-    });
+          const nameInitial = response.name
+            ? response.name.split(' ')[0].charAt(0)
+            : '';
+          const lastNameInitial = response.firstLastName
+            ? response.firstLastName.split(' ')[0].charAt(0)
+            : '';
+          this.nameInitials = nameInitial + lastNameInitial;
+        },
+        error: (err) => {
+          console.error('Error fetching user data:', err);
+        },
+      });
+    } else {
+      this.supervisorService.getById(userId as number).subscribe({
+        next: (response: User) => {
+          this.userName = response.name;
+
+          const nameInitial = response.name
+            ? response.name.split(' ')[0].charAt(0)
+            : '';
+          const lastNameInitial = response.firstLastName
+            ? response.firstLastName.split(' ')[0].charAt(0)
+            : '';
+          this.nameInitials = nameInitial + lastNameInitial;
+        },
+        error: (err) => {
+          console.error('Error fetching user data:', err);
+        },
+      });
+    }
   }
 
   openNotifications(): void {

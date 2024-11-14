@@ -7,9 +7,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { ResultCardComponent } from '../result-card/result-card.component';
 import { CommonModule } from '@angular/common';
 import { ResultDriver } from '../../models/ResultDriver';
-import { UserService } from '@shared/services/user/user.service';
-import { User } from '@app/shared/models/entities/User';
-import { AuthService } from '@app/shared/services/auth/auth.service';
+import { DriverService } from '@shared/services/user/driver/driver.service';
+import { SupervisorService } from '@shared/services/user/supervisor/supervisor.service';
+import { AuthService } from '@shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-search',
@@ -23,7 +23,7 @@ import { AuthService } from '@app/shared/services/auth/auth.service';
     ResultCardComponent,
     CommonModule,
   ],
-  providers: [UserService],
+  providers: [DriverService, SupervisorService],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css',
 })
@@ -36,21 +36,25 @@ export class SearchComponent implements OnInit {
   results: ResultDriver[] = [];
 
   constructor(
-    private userService: UserService,
-    private authService: AuthService
+    private driverService: DriverService,
+    private supervisorServisor: SupervisorService,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
-    this.userService.setEndpoint('drivers');
-
     const userId = this.authService.getUserIdFromToken();
 
-    this.userService
+    this.supervisorServisor
       .getDriversBySupervisorId(userId as number)
-      .subscribe((drivers: ResultDriver[]) => {
-        if (drivers) {
-          this.results = drivers;
-        }
+      .subscribe({
+        next: (response: ResultDriver[]) => {
+          if (response) {
+            this.results = response;
+          }
+        },
+        error: (err) => {
+          console.error('Error fetching drivers data:', err);
+        },
       });
   }
 
@@ -60,9 +64,7 @@ export class SearchComponent implements OnInit {
   }
 
   searchDrivers() {
-    this.userService.setEndpoint('drivers');
-
-    this.userService.getAllDrivers().subscribe((response: ResultDriver[]) => {
+    this.driverService.getAllDrivers().subscribe((response: ResultDriver[]) => {
       if (this.results.length > 0) {
         this.results = response.filter((resultDriver: ResultDriver) => {
           return resultDriver.name
@@ -74,7 +76,7 @@ export class SearchComponent implements OnInit {
     });
 
     // TODO: Replace for this
-    // this.userService
+    // this.driverService
     //   .getDriverByNameOrSensorCode(this.nameOrSensorCode)
     //   .subscribe((drivers: User[] | null) => {
     //     if (drivers) {
