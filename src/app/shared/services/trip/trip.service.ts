@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Trip, TripCreate } from '@shared/models/entities/Trip';
+import { Trip, TripCreate, TripStatus } from '@shared/models/entities/Trip';
 import { BaseService } from '../base/base.service';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
@@ -11,51 +11,32 @@ import { Observable } from 'rxjs';
 })
 export class TripService extends BaseService<Trip> {
   constructor(http: HttpClient) {
-    super(http, new AuthService(new Router()), 'trips');
+    super(http, new AuthService(new Router()), '/trips');
   }
 
-  createTrip(trip: TripCreate): Observable<TripCreate> {
-    const headers = this.getAuthHeaders();
-
-    return this.http.post<TripCreate>(this.baseUrl + this.endpoint, trip, {
-      headers,
-    });
-  }
-
-  getTripsByDriverId(driverId: number): Observable<Trip[]> {
+  getTripsByDriverIdAndStatus(
+    driverId: number,
+    status: number
+  ): Observable<Trip[]> {
     const headers = this.getAuthHeaders();
 
     return this.http.get<Trip[]>(
-      this.baseUrl + this.endpoint + '/driver/' + driverId,
+      this.baseUrl +
+        this.endpoint +
+        '/driver/' +
+        driverId +
+        '/status/' +
+        status,
       {
         headers,
       }
     );
   }
 
-  getTripsBySupervisorId(supervisorId: number): Observable<Trip[]> {
-    const headers = this.getAuthHeaders();
-
-    return this.http.get<Trip[]>(
-      this.baseUrl + this.endpoint + '/supervisor/' + supervisorId,
-      {
-        headers,
-      }
-    );
-  }
-
-  getPendingTripsByDriverId(driverId: number): Observable<Trip[]> {
-    const headers = this.getAuthHeaders();
-
-    return this.http.get<Trip[]>(
-      this.baseUrl + this.endpoint + '/driver/' + driverId + '/status/1',
-      {
-        headers,
-      }
-    );
-  }
-
-  getPendingTripsBySupervisorId(supervisorId: number): Observable<Trip[]> {
+  getTripsBySupervisorIdAndStatus(
+    supervisorId: number,
+    status: number
+  ): Observable<Trip[]> {
     const headers = this.getAuthHeaders();
 
     return this.http.get<Trip[]>(
@@ -63,33 +44,8 @@ export class TripService extends BaseService<Trip> {
         this.endpoint +
         '/supervisor/' +
         supervisorId +
-        '/status/1',
-      {
-        headers,
-      }
-    );
-  }
-
-  getHistoryTripsByDriverId(driverId: number): Observable<Trip[]> {
-    const headers = this.getAuthHeaders();
-
-    return this.http.get<Trip[]>(
-      this.baseUrl + this.endpoint + '/driver/' + driverId + '/status/2',
-      {
-        headers,
-      }
-    );
-  }
-
-  getHistoryTripsBySupervisorId(supervisorId: number): Observable<Trip[]> {
-    const headers = this.getAuthHeaders();
-
-    return this.http.get<Trip[]>(
-      this.baseUrl +
-        this.endpoint +
-        '/supervisor/' +
-        supervisorId +
-        '/status/2',
+        '/status/' +
+        status,
       {
         headers,
       }
@@ -112,7 +68,7 @@ export class TripService extends BaseService<Trip> {
     const headers = this.getAuthHeaders();
 
     return this.http.post<void>(
-      this.baseUrl + this.endpoint + tripId + '/completations',
+      this.baseUrl + this.endpoint + '/' + tripId + '/completions',
       null,
       {
         headers,
@@ -124,7 +80,7 @@ export class TripService extends BaseService<Trip> {
     const headers = this.getAuthHeaders();
 
     return this.http.post<void>(
-      this.baseUrl + this.endpoint + tripId + '/cancellations',
+      this.baseUrl + this.endpoint + '/' + tripId + '/cancellations',
       null,
       {
         headers,

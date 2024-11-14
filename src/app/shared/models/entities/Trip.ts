@@ -1,7 +1,7 @@
-import { TripStatus } from '../enum/trip-status';
+// import { TripStatus } from '../enum/trip-status';
 
 export interface Trip {
-  id: number;
+  tripId: number;
   driverId: number;
   driverName: string;
   driverPhone: string;
@@ -18,7 +18,7 @@ export interface Trip {
   endTime: string;
   subject: string;
   description: string;
-  status: TripStatus;
+  status: string;
 }
 
 export interface TripCreate {
@@ -34,4 +34,9 @@ export interface TripCreate {
   endTime: string;
   subject: string;
   description: string;
+}
+
+export interface TripStatus {
+  id: number;
+  status: string;
 }

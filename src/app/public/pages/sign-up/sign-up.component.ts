@@ -1,15 +1,14 @@
 import { Component, ViewChild, ViewContainerRef } from '@angular/core';
 import { TitleComponent } from '@shared/components/auth/title/title.component';
 import {
-  User,
   UserInformation,
   UserRegistration,
-  Driver,
+  UserCreate,
 } from '@shared/models/entities/User';
 import { Role } from '@shared/models/enum/role';
 import { SignUpSteps } from '@shared/models/enum/sign-up-steps';
-import { DriverService } from '@app/shared/services/user/driver/driver.service';
-import { SupervisorService } from '@app/shared/services/user/supervisor/supervisor.service';
+import { DriverService } from '@shared/services/user/driver/driver.service';
+import { SupervisorService } from '@shared/services/user/supervisor/supervisor.service';
 import { FillInformationComponent } from './components/steps/fill-information/fill-information.component';
 import { RegisterComponent } from './components/steps/register/register.component';
 import { SensorCodeComponent } from './components/steps/sensor-code/sensor-code.component';
@@ -35,10 +34,9 @@ export class SignUpComponent {
   currentStep = this.steps[0];
   currentStepView: any = SensorCodeComponent;
   stepTitle = 'Insert your Sensor Code';
-  enteredCode = '';
 
   userType: Role = Role.Driver;
-  user: User = {
+  user: UserCreate = {
     id: 0,
     name: '',
     firstLastName: '',
@@ -47,6 +45,7 @@ export class SignUpComponent {
     email: '',
     username: '',
     password: '',
+    sensorCode: '',
   };
 
   @ViewChild('dynamicComponentContainer', {
@@ -94,7 +93,7 @@ export class SignUpComponent {
     if (componentRef.instance instanceof SensorCodeComponent) {
       componentRef.instance.onSubmit = () => this.changeStep(this.steps[1]);
       componentRef.instance.onSubmitted.subscribe((enteredCode: string) => {
-        this.enteredCode = enteredCode;
+        this.user.sensorCode = enteredCode;
       });
     } else if (componentRef.instance instanceof UserTypeComponent) {
       componentRef.instance.onSubmit = () => this.changeStep(this.steps[2]);
@@ -107,7 +106,6 @@ export class SignUpComponent {
         (userRegistration: UserRegistration) => {
           this.user.email = userRegistration.email;
           this.user.password = userRegistration.password;
-          // console.log(this.user);
         }
       );
     } else if (componentRef.instance instanceof FillInformationComponent) {
@@ -117,16 +115,11 @@ export class SignUpComponent {
           this.user.firstLastName = userInformation.firstLastName;
           this.user.secondLastName = userInformation.secondLastName;
           this.user.phone = userInformation.phone;
+          this.user.username = this.user.name;
 
           if (this.userType === Role.Driver) {
-            let driver: Driver = {
-              ...this.user,
-              username: this.user.name + this.user.firstLastName,
-              supervisorId: parseInt(this.enteredCode[0]),
-            };
-
-            this.driverService.create(driver).subscribe({
-              next: (response: Driver) => {
+            this.driverService.register(this.user).subscribe({
+              next: (response: UserCreate) => {
                 console.log('Driver created:', response);
                 this.router.navigate(['/sing-in']);
               },
@@ -143,8 +136,8 @@ export class SignUpComponent {
               },
             });
           } else {
-            this.supervisorService.create(this.user).subscribe({
-              next: (response: User) => {
+            this.supervisorService.register(this.user).subscribe({
+              next: (response: UserCreate) => {
                 console.log('Supervisor created:', response);
                 this.router.navigate(['/sing-in']);
               },

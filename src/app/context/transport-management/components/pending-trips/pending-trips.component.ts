@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Trip } from '@shared/models/entities/Trip';
-// import { TripStatus } from '@shared/models/enum/trip-status';
 import { ResumeTripCardComponent } from '../resume-trip-card/resume-trip-card.component';
 import { CommonModule } from '@angular/common';
 import { TripService } from '@shared/services/trip/trip.service';
+import { TripStatusService } from '@shared/services/trip-status/trip-status.service';
 import { AuthService } from '@shared/services/auth/auth.service';
 
 @Component({
@@ -16,10 +16,12 @@ import { AuthService } from '@shared/services/auth/auth.service';
 })
 export class PendingTripsComponent implements OnInit {
   pendingTrips: Trip[] = [];
+  haveActions: boolean = false;
 
   constructor(
     private authService: AuthService,
-    private tripService: TripService
+    private tripService: TripService,
+    private tripStatusService: TripStatusService
   ) {}
 
   ngOnInit(): void {
@@ -27,17 +29,25 @@ export class PendingTripsComponent implements OnInit {
     const userType = this.authService.getUserTypeFromToken();
 
     if (userType === 'ROLE_SUPERVISOR') {
-      this.tripService
-        .getPendingTripsBySupervisorId(userId as number)
-        .subscribe((trips: Trip[]) => {
-          if (this.pendingTrips) this.pendingTrips = trips;
-        });
-    } else {
-      this.tripService
-        .getPendingTripsByDriverId(userId as number)
-        .subscribe((trips: Trip[]) => {
-          if (this.pendingTrips) this.pendingTrips = trips;
-        });
+      this.haveActions = true;
     }
+
+    this.tripStatusService.getTripStatus().subscribe((tripStatusMap) => {
+      const pendingId = tripStatusMap.get('PENDING') as number;
+
+      if (userType === 'ROLE_SUPERVISOR') {
+        this.tripService
+          .getTripsBySupervisorIdAndStatus(userId as number, pendingId)
+          .subscribe((trips: Trip[]) => {
+            if (this.pendingTrips) this.pendingTrips = trips;
+          });
+      } else {
+        this.tripService
+          .getTripsByDriverIdAndStatus(userId as number, pendingId)
+          .subscribe((trips: Trip[]) => {
+            if (this.pendingTrips) this.pendingTrips = trips;
+          });
+      }
+    });
   }
 }
