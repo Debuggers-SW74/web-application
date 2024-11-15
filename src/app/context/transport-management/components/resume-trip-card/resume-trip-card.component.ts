@@ -19,6 +19,20 @@ export class ResumeTripCardComponent {
 
   constructor(private tripService: TripService) {}
 
+  startTrip() {
+    console.log(this.trip);
+    this.tripService.startTrip(this.trip.tripId).subscribe({
+      next: (response) => {
+        console.log(response);
+        alert('Trip started');
+      },
+      error: (error) => {
+        console.error(error);
+        alert('Error starting trip');
+      },
+    });
+  }
+
   finishTrip() {
     console.log(this.trip);
     this.tripService.finishTrip(this.trip.tripId).subscribe({

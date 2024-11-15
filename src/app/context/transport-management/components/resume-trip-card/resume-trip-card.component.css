@@ -18,11 +18,11 @@ p {
   font-size: 20px;
 }
 
-.view-more-button {
+.cancel-button {
   background-color: transparent;
   border: none;
-  color: var(--mat-primary);
-  border-bottom: 1px solid var(--mat-primary);
+  color: var(--mat-warn);
+  border-bottom: 1px solid var(--mat-warn);
   cursor: pointer;
   font-size: 12px;
   width: fit-content;

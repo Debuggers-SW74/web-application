@@ -8,7 +8,7 @@
           <h2>Trip Information</h2>
         </div>
         <div class="card">
-          <img [src]="driver.img" [alt]="driver.name" />
+          <img src="assets/svg/user/avatar.svg" alt="Avatar" />
           <div class="spacer"></div>
           <div class="content">
             <div class="row">
@@ -16,13 +16,13 @@
                 <p>
                   <b>Driver:</b>
                   <br />
-                  {{ driver.name }}
+                  {{ activeTrip?.driverName }}
                 </p>
               </div>
               <div>
                 <p>
                   <b>Phone Number:</b>
-                  <br />{{ driver.phone }}
+                  <br />{{ activeTrip?.driverPhone }}
                 </p>
               </div>
             </div>
@@ -31,14 +31,14 @@
                 <p>
                   <b>From:</b>
                   <br />
-                  {{ driver.from }}
+                  {{ activeTrip?.origin }}
                 </p>
               </div>
               <div>
                 <p>
                   <b>To:</b>
                   <br />
-                  {{ driver.to }}
+                  {{ activeTrip?.destination }}
                 </p>
               </div>
             </div>
@@ -107,8 +107,12 @@
               </div>
             </div>
           </div>
-          <button mat-flat-button disabled color="primary">
-            <!-- TODO -->
+          <button
+            mat-flat-button
+            color="warn"
+            (click)="onSendAlert()"
+            *ngIf="showAction"
+          >
             Send alert
           </button>
         </div>
