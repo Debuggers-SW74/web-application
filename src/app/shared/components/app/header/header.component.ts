@@ -35,13 +35,14 @@ export class HeaderComponent implements OnInit {
   nameInitials: string | undefined = undefined;
   currentUrl: string = '';
   showDrivers: boolean = false;
+  userId: number | undefined = undefined;
 
   constructor(
     private router: Router,
     private dialog: MatDialog,
     private authService: AuthService,
     private driverService: DriverService,
-    private supervisorService: SupervisorService,
+    private supervisorService: SupervisorService
   ) {}
 
   ngOnInit() {
@@ -50,8 +51,8 @@ export class HeaderComponent implements OnInit {
     this.router.events
       .pipe(
         filter(
-          (event): event is NavigationEnd => event instanceof NavigationEnd,
-        ),
+          (event): event is NavigationEnd => event instanceof NavigationEnd
+        )
       )
       .subscribe((event: NavigationEnd) => {
         this.currentUrl = event.urlAfterRedirects;
@@ -74,6 +75,7 @@ export class HeaderComponent implements OnInit {
             ? response.firstLastName.split(' ')[0].charAt(0)
             : '';
           this.nameInitials = nameInitial + lastNameInitial;
+          this.userId = response.id;
         },
         error: (err) => {
           console.error('Error fetching user data:', err);
@@ -91,6 +93,7 @@ export class HeaderComponent implements OnInit {
             ? response.firstLastName.split(' ')[0].charAt(0)
             : '';
           this.nameInitials = nameInitial + lastNameInitial;
+          this.userId = response.id;
         },
         error: (err) => {
           console.error('Error fetching user data:', err);
@@ -102,6 +105,7 @@ export class HeaderComponent implements OnInit {
   openNotifications(): void {
     this.dialog.open(DialogNotificationsComponent, {
       panelClass: 'notification-dialog',
+      data: { userId: this.userId },
     });
   }
 
