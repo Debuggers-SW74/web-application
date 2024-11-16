@@ -1,17 +1,37 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { Alert } from '@shared/models/entities/Alert';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSelectModule } from '@angular/material/select';
 import { Trip } from '@shared/models/entities/Trip';
 import { ChartConfiguration, ChartData, ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { AlertsService } from '../../services/alerts/alerts.service';
+import { ThresholdService } from '../../services/threshold/threshold.service';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { Alert } from '@shared/models/entities/Alert';
 
 @Component({
   selector: 'app-active-trip',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, BaseChartDirective],
-  providers: [AlertsService],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    BaseChartDirective,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+  ],
+  providers: [AlertsService, ThresholdService],
   templateUrl: './active-trip.component.html',
   styleUrl: './active-trip.component.css',
 })
@@ -20,7 +40,49 @@ export class ActiveTripComponent implements OnInit {
   @Input() showAction: boolean = false;
   alertToSend: Alert | undefined;
 
-  constructor(private alertsService: AlertsService) {}
+  sensorForm!: FormGroup;
+
+  constructor(
+    private alertsService: AlertsService,
+    private thresholdService: ThresholdService,
+    private formBuilder: FormBuilder
+  ) {
+    this.sensorForm = this.formBuilder.group({
+      min: ['', Validators.required],
+      max: ['', Validators.required],
+      sensor: ['', Validators.required],
+    });
+  }
+
+  sensors = [
+    {
+      sensorType: 'Temperature',
+      id: 1,
+    },
+    {
+      sensorType: 'Humedity',
+      id: 2,
+    },
+    {
+      sensorType: 'Presure',
+      id: 3,
+    },
+    {
+      sensorType: 'Gas Leak',
+      id: 4,
+    },
+  ];
+
+  submit() {
+    this.thresholdService.update(this.sensorForm.value).subscribe({
+      next: () => {
+        console.log('Threshold updated');
+      },
+      error: (error) => {
+        console.error('Error updating threshold', error);
+      },
+    });
+  }
 
   ngOnInit(): void {
     this.alertsService

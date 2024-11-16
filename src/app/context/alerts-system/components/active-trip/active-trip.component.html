@@ -107,6 +107,64 @@
               </div>
             </div>
           </div>
+          <div>
+            <mat-accordion>
+              <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+                  <mat-panel-title> Threshold Setup </mat-panel-title>
+                  <!-- <mat-panel-description>
+                    Define the request values
+                  </mat-panel-description> -->
+                </mat-expansion-panel-header>
+
+                <form
+                  mat
+                  [formGroup]="sensorForm"
+                  class="form-register"
+                  (ngSubmit)="submit()"
+                >
+                  <div>
+                    <mat-form-field>
+                      <mat-label>Min</mat-label>
+                      <input
+                        matInput
+                        type="number"
+                        min="1"
+                        formControlName="min"
+                      />
+                    </mat-form-field>
+
+                    <mat-form-field>
+                      <mat-label>Max</mat-label>
+                      <input
+                        matInput
+                        type="number"
+                        min="1"
+                        formControlName="max"
+                      />
+                    </mat-form-field>
+                  </div>
+
+                  <mat-select name="sensor" id="" formControlName="sensor">
+                    <mat-option
+                      *ngFor="let sensor of sensors"
+                      [value]="sensor.id"
+                    >
+                      {{ sensor.sensorType }}
+                    </mat-option>
+                  </mat-select>
+
+                  <button
+                    mat-flat-button
+                    color="primary"
+                    class="fp-button continue-button"
+                  >
+                    Update
+                  </button>
+                </form>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
           <button
             mat-flat-button
             color="warn"
