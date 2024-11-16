@@ -1,22 +1,23 @@
-import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, Input, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { Alert } from '@shared/models/entities/Alert';
+import { Threshold } from '@shared/models/entities/threshold';
 import { Trip } from '@shared/models/entities/Trip';
 import { ChartConfiguration, ChartData, ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { AlertsService } from '../../services/alerts/alerts.service';
 import { ThresholdService } from '../../services/threshold/threshold.service';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
-import { Alert } from '@shared/models/entities/Alert';
 
 @Component({
   selector: 'app-active-trip',
@@ -39,6 +40,7 @@ export class ActiveTripComponent implements OnInit {
   @Input() activeTrip: Trip | undefined;
   @Input() showAction: boolean = false;
   alertToSend: Alert | undefined;
+  thresholdInformation: Threshold[] = [];
 
   sensorForm!: FormGroup;
 
@@ -100,6 +102,21 @@ export class ActiveTripComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error al obtener las alertas', error);
+        },
+      });
+
+    this.thresholdService
+      .getByTripId(this.activeTrip?.tripId as number)
+      .subscribe({
+        next: (thresholds: Threshold[]) => {
+          if (thresholds && thresholds.length > 0) {
+            thresholds.map((threshold) => {
+              console.log('Threshold obtenido', threshold);
+            });
+          }
+        },
+        error: (error) => {
+          console.error('Error al obtener los thresholds', error);
         },
       });
   }

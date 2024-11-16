@@ -13,6 +13,13 @@ export class ThresholdService extends BaseService<Threshold> {
     super(http, new AuthService(new Router()), '/thresholds');
   }
 
+  sensorsMap = new Map<string, number>([
+    ['SENSOR_GAS', 1],
+    ['SENSOR_HUMIDITY', 2],
+    ['SENSOR_PRESSURE', 3],
+    ['SENSOR_TEMPERATURE', 4],
+  ]);
+
   getByTripId(tripId: number) {
     const headers = this.getAuthHeaders();
 
