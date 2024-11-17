@@ -56,7 +56,7 @@ export class TripService extends BaseService<Trip> {
     const headers = this.getAuthHeaders();
 
     return this.http.post<void>(
-      this.baseUrl + this.endpoint + tripId + '/starts',
+      this.baseUrl + this.endpoint + '/' + tripId + '/starts',
       null,
       {
         headers,

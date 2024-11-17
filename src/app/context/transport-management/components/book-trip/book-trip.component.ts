@@ -69,12 +69,18 @@ export class BookTripComponent {
       return;
     }
 
+    const date: Date = this.bookTripForm.value.date;
+    const formattedDate = date.toISOString().split('T')[0];
+
+    this.bookTripForm.patchValue({
+      date: formattedDate,
+    });
+
     // console.log(this.bookTripForm.value);
 
     this.tripService
       .create({
         ...this.bookTripForm.value,
-        status: TripStatus.Pending,
         supervisorId: this.authService.getUserIdFromToken(),
         driverId: this?.resultDriver?.id,
       })

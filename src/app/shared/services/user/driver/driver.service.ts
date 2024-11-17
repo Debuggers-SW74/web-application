@@ -13,18 +13,6 @@ export class DriverService extends UserService<Driver> {
     super(http, '/drivers');
   }
 
-  getAllDrivers(): Observable<ResultDriver[]> {
-    const headers = this.getAuthHeaders();
-
-    return this.http.get<ResultDriver[]>(
-      this.baseUrl +
-        this.endpoint +
-        +{
-          headers,
-        }
-    );
-  }
-
   getDriverByNameOrSensorCode(nameOrSensorCode: string): Observable<Driver[]> {
     const headers = this.getAuthHeaders();
 
