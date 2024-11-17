@@ -15,9 +15,9 @@ export class ThresholdService extends BaseService<any> {
 
   sensorsMap = new Map<string, number>([
     ['SENSOR_GAS', 1],
-    ['SENSOR_HUMIDITY', 2],
+    ['SENSOR_TEMPERATURE', 2],
     ['SENSOR_PRESSURE', 3],
-    ['SENSOR_TEMPERATURE', 4],
+    ['SENSOR_HUMIDITY', 4],
   ]);
 
   thresholdsDefaultValues = [
@@ -27,9 +27,9 @@ export class ThresholdService extends BaseService<any> {
       minThreshold: 0.21,
     },
     {
-      sensorTypeId: 2, // SENSOR_HUMIDITY
-      maxThreshold: 80,
-      minThreshold: 20,
+      sensorTypeId: 2, // SENSOR_TEMPERATURE
+      maxThreshold: 40,
+      minThreshold: -10,
     },
     {
       sensorTypeId: 3, // SENSOR_PRESSURE
@@ -37,9 +37,9 @@ export class ThresholdService extends BaseService<any> {
       minThreshold: 5,
     },
     {
-      sensorTypeId: 4, // SENSOR_TEMPERATURE
-      maxThreshold: 40,
-      minThreshold: -10,
+      sensorTypeId: 4, // SENSOR_HUMIDITY
+      maxThreshold: 80,
+      minThreshold: 20,
     },
   ];
 

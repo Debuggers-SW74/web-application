@@ -50,9 +50,9 @@ export class ActiveTripComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.sensorForm = this.formBuilder.group({
-      min: ['', Validators.required],
-      max: ['', Validators.required],
-      sensor: ['', Validators.required],
+      minThreshold: ['', Validators.required],
+      maxThreshold: ['', Validators.required],
+      safetyThresholdId: ['', Validators.required],
     });
   }
 
@@ -63,8 +63,8 @@ export class ActiveTripComponent implements OnInit {
       id: 1,
     },
     {
-      sensorType: 'Humidity',
-      sensorMap: 'SENSOR_HUMIDITY',
+      sensorType: 'Temperature',
+      sensorMap: 'SENSOR_TEMPERATURE',
       id: 2,
     },
     {
@@ -73,8 +73,8 @@ export class ActiveTripComponent implements OnInit {
       id: 3,
     },
     {
-      sensorType: 'Temperature',
-      sensorMap: 'SENSOR_TEMPERATURE',
+      sensorType: 'Humidity',
+      sensorMap: 'SENSOR_HUMIDITY',
       id: 4,
     },
   ];
@@ -127,7 +127,7 @@ export class ActiveTripComponent implements OnInit {
 
   onSensorChange(event: any) {
     this.sensorForm.patchValue({
-      sensor: event.value.id,
+      safetyThresholdId: event.value.id,
     });
 
     this.thresholdService
@@ -139,8 +139,8 @@ export class ActiveTripComponent implements OnInit {
               (threshold) => threshold.sensorType === event.value.sensorMap
             );
             this.sensorForm.patchValue({
-              min: this.thresholdInformation[0].minThreshold,
-              max: this.thresholdInformation[0].maxThreshold,
+              minThreshold: this.thresholdInformation[0].minThreshold,
+              maxThreshold: this.thresholdInformation[0].maxThreshold,
             });
           } else {
             console.log('No hay thresholds');
