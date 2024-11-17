@@ -3,12 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { TripStatusService } from '@shared/services/trip-status/trip-status.service';
 import { TripService } from '@shared/services/trip/trip.service';
 import { Trip } from '@shared/models/entities/Trip';
-import { AuthService } from '@app/shared/services/auth/auth.service';
+import { AuthService } from '@shared/services/auth/auth.service';
+import { TruncateWordsPipe } from '@shared/pipes/truncate-words/truncate-words.pipe';
 
 @Component({
   selector: 'app-trip-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TruncateWordsPipe],
   providers: [TripStatusService],
   templateUrl: './trip-card.component.html',
   styleUrl: './trip-card.component.css',

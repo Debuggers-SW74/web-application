@@ -128,7 +128,6 @@
 }
 
 .sensor-info button {
-  background-color: #f45b5b;
   color: white;
   border: none;
   padding: 15px 30px;
@@ -137,10 +136,6 @@
   cursor: pointer;
   margin-top: 20px;
   transition: background-color 0.3s;
-}
-
-.sensor-info button:hover {
-  background-color: #e04848;
 }
 
 .sensor-info {

@@ -8,7 +8,7 @@
           <h2>Trip Information</h2>
         </div>
         <div class="card">
-          <img [src]="driver.img" [alt]="driver.name" />
+          <img src="assets/svg/user/avatar.svg" alt="Avatar" />
           <div class="spacer"></div>
           <div class="content">
             <div class="row">
@@ -16,13 +16,13 @@
                 <p>
                   <b>Driver:</b>
                   <br />
-                  {{ driver.name }}
+                  {{ activeTrip?.driverName }}
                 </p>
               </div>
               <div>
                 <p>
                   <b>Phone Number:</b>
-                  <br />{{ driver.phone }}
+                  <br />{{ activeTrip?.driverPhone }}
                 </p>
               </div>
             </div>
@@ -31,14 +31,14 @@
                 <p>
                   <b>From:</b>
                   <br />
-                  {{ driver.from }}
+                  {{ activeTrip?.origin }}
                 </p>
               </div>
               <div>
                 <p>
                   <b>To:</b>
                   <br />
-                  {{ driver.to }}
+                  {{ activeTrip?.destination }}
                 </p>
               </div>
             </div>
@@ -107,8 +107,69 @@
               </div>
             </div>
           </div>
-          <button mat-flat-button disabled color="primary">
-            <!-- TODO -->
+          <div>
+            <mat-accordion>
+              <mat-expansion-panel [expanded]="false">
+                <mat-expansion-panel-header>
+                  <mat-panel-title> Threshold Setup </mat-panel-title>
+                  <!-- <mat-panel-description>
+                    Define the request values
+                  </mat-panel-description> -->
+                </mat-expansion-panel-header>
+
+                <form
+                  mat
+                  [formGroup]="sensorForm"
+                  class="form-register"
+                  (ngSubmit)="submit()"
+                >
+                  <div>
+                    <mat-form-field>
+                      <mat-label>Min</mat-label>
+                      <input
+                        matInput
+                        type="number"
+                        formControlName="minThreshold"
+                      />
+                    </mat-form-field>
+
+                    <mat-form-field>
+                      <mat-label>Max</mat-label>
+                      <input
+                        matInput
+                        type="number"
+                        min="1"
+                        formControlName="maxThreshold"
+                      />
+                    </mat-form-field>
+                  </div>
+
+                  <mat-select
+                    name="sensor"
+                    (selectionChange)="onSensorChange($event)"
+                  >
+                    <mat-option *ngFor="let sensor of sensors" [value]="sensor">
+                      {{ sensor.sensorType }}
+                    </mat-option>
+                  </mat-select>
+
+                  <button
+                    mat-flat-button
+                    color="primary"
+                    class="fp-button continue-button"
+                  >
+                    Update
+                  </button>
+                </form>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+          <button
+            mat-flat-button
+            color="warn"
+            (click)="onSendAlert()"
+            *ngIf="showAction"
+          >
             Send alert
           </button>
         </div>

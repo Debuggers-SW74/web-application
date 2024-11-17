@@ -1,2 +1,11 @@
-<app-active-trip *ngIf="activeTrip"></app-active-trip>
-<app-idle-trip *ngIf="!activeTrip"></app-idle-trip>
+<ng-container *ngIf="activeTrip; else noActive">
+  <div *ngFor="let trip of trips">
+    <app-active-trip
+      [activeTrip]="trip"
+      [showAction]="isSupervisor"
+    ></app-active-trip>
+  </div>
+</ng-container>
+<ng-template #noActive>
+  <app-idle-trip></app-idle-trip>
+</ng-template>

@@ -1,6 +1,7 @@
 export enum NotificationType {
-  Finished = 'Finished',
-  Cancelled = 'Cancelled',
-  Assigned = 'Assigned',
-  Created = 'Created',
+  Started = 'TRIP_STARTED',
+  Finished = 'TRIP_FINISHED',
+  Cancelled = 'TRIP_CANCELLED',
+  Assigned = 'TRIP_ASSIGNED',
+  Created = 'TRIP_CREATED',
 }

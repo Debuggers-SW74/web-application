@@ -7,8 +7,8 @@
       <div class="content">
         <h3>Trip</h3>
         <p><b>Driver: </b>{{ trip.driverName }}</p>
-        <p><b>From: </b> {{ trip.origin }}</p>
-        <p><b>To: </b>{{ trip.destination }}</p>
+        <p><b>From: </b> {{ trip.origin | truncateWords : 4 }}</p>
+        <p><b>To: </b>{{ trip.destination | truncateWords : 4 }}</p>
       </div>
     </div>
   </div>

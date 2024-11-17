@@ -2,17 +2,19 @@
   <mat-card-content>
     <div class="trip-card-header">
       <b class="resume">Resume</b>
-      <button class="view-more-button">View more</button>
+      <button class="cancel-button" (click)="cancelTrip()" *ngIf="action">
+        Cancel
+      </button>
     </div>
 
     <div class="trip-card-body">
       <b class="subject">Subject: {{ trip.subject }}</b>
       <div class="trip-info">
         <p>
-          From: <b>{{ trip.origin }}</b>
+          From: <b>{{ trip.origin | truncateWords : 6 }}</b>
         </p>
         <p>
-          To: <b>{{ trip.destination }}</b>
+          To: <b>{{ trip.destination | truncateWords : 6 }}</b>
         </p>
         <p>
           Date: <b>{{ trip.date }}</b>
@@ -39,7 +41,19 @@
       </div>
     </div>
   </mat-card-content>
-  <mat-card-actions *ngIf="action">
+  <mat-card-actions
+    *ngIf="action"
+    style="display: flex; justify-content: center; gap: 10px"
+  >
+    <button
+      mat-flat-button
+      color="accent"
+      class="fp-button action-button"
+      (click)="startTrip()"
+      *ngIf="trip.status === 'PENDING'"
+    >
+      Start
+    </button>
     <button
       mat-flat-button
       color="primary"
@@ -47,14 +61,6 @@
       (click)="finishTrip()"
     >
       Finish
-    </button>
-    <button
-      mat-flat-button
-      color="warn"
-      class="fp-button action-button"
-      (click)="cancelTrip()"
-    >
-      Cancel
     </button>
   </mat-card-actions>
 </mat-card>

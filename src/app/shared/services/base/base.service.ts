@@ -13,7 +13,7 @@ export class BaseService<T> {
 
   constructor(
     protected http: HttpClient,
-    private authService: AuthService,
+    protected authService: AuthService,
     @Inject(String) endpoint: string
   ) {
     this.endpoint = endpoint;

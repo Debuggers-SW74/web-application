@@ -30,21 +30,20 @@ import { AuthService } from '@shared/services/auth/auth.service';
 export class SearchComponent implements OnInit {
   @Output() changeStep = new EventEmitter<ResultDriver>();
 
-  nameOrSensorCode: string = '';
+  name: string = '';
   resultDriver: ResultDriver | null = null;
 
   results: ResultDriver[] = [];
 
   constructor(
-    private driverService: DriverService,
-    private supervisorServisor: SupervisorService,
-    private authService: AuthService,
+    private supervisorService: SupervisorService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     const userId = this.authService.getUserIdFromToken();
 
-    this.supervisorServisor
+    this.supervisorService
       .getDriversBySupervisorId(userId as number)
       .subscribe({
         next: (response: ResultDriver[]) => {
@@ -64,16 +63,32 @@ export class SearchComponent implements OnInit {
   }
 
   searchDrivers() {
-    this.driverService.getAllDrivers().subscribe((response: ResultDriver[]) => {
-      if (this.results.length > 0) {
-        this.results = response.filter((resultDriver: ResultDriver) => {
-          return resultDriver.name
-            .toLowerCase()
-            .includes(this.nameOrSensorCode.toLowerCase());
-        });
-        console.log('Resultados:', this.results);
-      }
-    });
+    const userId = this.authService.getUserIdFromToken();
+
+    console.log('Buscando:', this.name);
+
+    this.supervisorService
+      .getDriversBySupervisorId(userId as number)
+      .subscribe((response: ResultDriver[]) => {
+        if (response.length > 0) {
+          this.results = response.filter((resultDriver: ResultDriver) => {
+            console.log('Driver:', resultDriver);
+
+            return (
+              resultDriver.name
+                .toLowerCase()
+                .includes(this.name.toLowerCase()) ||
+              resultDriver.firstLastName
+                .toLowerCase()
+                .includes(this.name.toLowerCase()) ||
+              resultDriver.secondLastName
+                .toLowerCase()
+                .includes(this.name.toLowerCase())
+            );
+          });
+          console.log('Resultados:', this.results);
+        }
+      });
 
     // TODO: Replace for this
     // this.driverService

@@ -17,6 +17,7 @@ import { Trip } from '@shared/models/entities/Trip';
 })
 export class HomeComponent {
   activeTrip: boolean = false;
+  isSupervisor: boolean = false;
   trips: Trip[] = [];
 
   constructor(
@@ -29,10 +30,12 @@ export class HomeComponent {
     const userId = this.authService.getUserIdFromToken();
     const userType = this.authService.getUserTypeFromToken();
 
+    this.isSupervisor = userType === 'ROLE_SUPERVISOR';
+
     this.tripStatusService.getTripStatus().subscribe((tripStatusMap) => {
       const inProgressId = tripStatusMap.get('IN_PROGRESS') as number;
 
-      if (userType === 'ROLE_SUPERVISOR') {
+      if (this.isSupervisor) {
         this.tripService
           .getTripsBySupervisorIdAndStatus(userId as number, inProgressId)
           .subscribe({
@@ -73,80 +76,80 @@ export class HomeComponent {
       }
     });
 
-    this.tripStatusService.getTripStatus().subscribe((tripStatusMap) => {
-      const pendingId = tripStatusMap.get('PENDING') as number;
+    // this.tripStatusService.getTripStatus().subscribe((tripStatusMap) => {
+    //   const pendingId = tripStatusMap.get('PENDING') as number;
 
-      if (userType === 'ROLE_SUPERVISOR') {
-        this.tripService
-          .getTripsBySupervisorIdAndStatus(userId as number, pendingId)
-          .subscribe({
-            next: (response: Trip[]) => {
-              console.log('Trips obtenidos:', response);
-              if (response)
-                response.map((trip) => {
-                  const today = new Date();
-                  const tripDate = new Date(trip.date);
-                  if (
-                    today.getFullYear() === tripDate.getFullYear() &&
-                    today.getMonth() === tripDate.getMonth() &&
-                    today.getDate() === tripDate.getDate()
-                  )
-                    this.tripService.startTrip(trip.tripId).subscribe({
-                      next: (response) => {
-                        console.log('Trip started:', response);
-                        this.activeTrip = true;
-                        this.trips.push(trip);
-                      },
-                      error: (err) => {
-                        console.error('Error starting trip:', err);
-                        alert('Error starting trip');
-                      },
-                    });
-                });
-              else this.trips = [];
-            },
-            error: (err) => {
-              console.error('Error fetching trips data:', err);
-              this.trips = [];
-              alert('Error fetching trips data');
-            },
-          });
-      } else {
-        this.tripService
-          .getTripsByDriverIdAndStatus(userId as number, pendingId)
-          .subscribe({
-            next: (response: Trip[]) => {
-              console.log('Trips obtenidos:', response);
-              if (response)
-                response.map((trip) => {
-                  const today = new Date();
-                  const tripDate = new Date(trip.date);
-                  if (
-                    today.getFullYear() === tripDate.getFullYear() &&
-                    today.getMonth() === tripDate.getMonth() &&
-                    today.getDate() === tripDate.getDate()
-                  )
-                    this.tripService.startTrip(trip.tripId).subscribe({
-                      next: (response) => {
-                        console.log('Trip started:', response);
-                        this.activeTrip = true;
-                        this.trips.push(trip);
-                      },
-                      error: (err) => {
-                        console.error('Error starting trip:', err);
-                        alert('Error starting trip');
-                      },
-                    });
-                });
-              else this.trips = [];
-            },
-            error: (err) => {
-              console.error('Error fetching trips data:', err);
-              this.trips = [];
-              alert('Error fetching trips data');
-            },
-          });
-      }
-    });
+    //   if (userType === 'ROLE_SUPERVISOR') {
+    //     this.tripService
+    //       .getTripsBySupervisorIdAndStatus(userId as number, pendingId)
+    //       .subscribe({
+    //         next: (response: Trip[]) => {
+    //           console.log('Trips obtenidos:', response);
+    //           if (response)
+    //             response.map((trip) => {
+    //               const today = new Date();
+    //               const tripDate = new Date(trip.date);
+    //               if (
+    //                 today.getFullYear() === tripDate.getFullYear() &&
+    //                 today.getMonth() === tripDate.getMonth() &&
+    //                 today.getDate() === tripDate.getDate()
+    //               )
+    //                 this.tripService.startTrip(trip.tripId).subscribe({
+    //                   next: (response) => {
+    //                     console.log('Trip started:', response);
+    //                     this.activeTrip = true;
+    //                     this.trips.push(trip);
+    //                   },
+    //                   error: (err) => {
+    //                     console.error('Error starting trip:', err);
+    //                     alert('Error starting trip');
+    //                   },
+    //                 });
+    //             });
+    //           else this.trips = [];
+    //         },
+    //         error: (err) => {
+    //           console.error('Error fetching trips data:', err);
+    //           this.trips = [];
+    //           alert('Error fetching trips data');
+    //         },
+    //       });
+    //   } else {
+    //     this.tripService
+    //       .getTripsByDriverIdAndStatus(userId as number, pendingId)
+    //       .subscribe({
+    //         next: (response: Trip[]) => {
+    //           console.log('Trips obtenidos:', response);
+    //           if (response)
+    //             response.map((trip) => {
+    //               const today = new Date();
+    //               const tripDate = new Date(trip.date);
+    //               if (
+    //                 today.getFullYear() === tripDate.getFullYear() &&
+    //                 today.getMonth() === tripDate.getMonth() &&
+    //                 today.getDate() === tripDate.getDate()
+    //               )
+    //                 this.tripService.startTrip(trip.tripId).subscribe({
+    //                   next: (response) => {
+    //                     console.log('Trip started:', response);
+    //                     this.activeTrip = true;
+    //                     this.trips.push(trip);
+    //                   },
+    //                   error: (err) => {
+    //                     console.error('Error starting trip:', err);
+    //                     alert('Error starting trip');
+    //                   },
+    //                 });
+    //             });
+    //           else this.trips = [];
+    //         },
+    //         error: (err) => {
+    //           console.error('Error fetching trips data:', err);
+    //           this.trips = [];
+    //           alert('Error fetching trips data');
+    //         },
+    //       });
+    //   }
+    // });
   }
 }
