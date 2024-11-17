@@ -145,11 +145,11 @@
                     </mat-form-field>
                   </div>
 
-                  <mat-select name="sensor" id="" formControlName="sensor">
-                    <mat-option
-                      *ngFor="let sensor of sensors"
-                      [value]="sensor.id"
-                    >
+                  <mat-select
+                    name="sensor"
+                    (selectionChange)="onSensorChange($event)"
+                  >
+                    <mat-option *ngFor="let sensor of sensors" [value]="sensor">
                       {{ sensor.sensorType }}
                     </mat-option>
                   </mat-select>

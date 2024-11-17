@@ -58,19 +58,23 @@ export class ActiveTripComponent implements OnInit {
 
   sensors = [
     {
-      sensorType: 'Temperature',
+      sensorType: 'Gas Leak',
+      sensorMap: 'SENSOR_GAS',
       id: 1,
     },
     {
-      sensorType: 'Humedity',
+      sensorType: 'Humidity',
+      sensorMap: 'SENSOR_HUMIDITY',
       id: 2,
     },
     {
       sensorType: 'Presure',
+      sensorMap: 'SENSOR_PRESSURE',
       id: 3,
     },
     {
-      sensorType: 'Gas Leak',
+      sensorType: 'Temperature',
+      sensorMap: 'SENSOR_TEMPERATURE',
       id: 4,
     },
   ];
@@ -113,6 +117,33 @@ export class ActiveTripComponent implements OnInit {
             thresholds.map((threshold) => {
               console.log('Threshold obtenido', threshold);
             });
+          }
+        },
+        error: (error) => {
+          console.error('Error al obtener los thresholds', error);
+        },
+      });
+  }
+
+  onSensorChange(event: any) {
+    this.sensorForm.patchValue({
+      sensor: event.value.id,
+    });
+
+    this.thresholdService
+      .getByTripId(this.activeTrip?.tripId as number)
+      .subscribe({
+        next: (thresholds: Threshold[]) => {
+          if (thresholds && thresholds.length > 0) {
+            this.thresholdInformation = thresholds.filter(
+              (threshold) => threshold.sensorType === event.value.sensorMap
+            );
+            this.sensorForm.patchValue({
+              min: this.thresholdInformation[0].minThreshold,
+              max: this.thresholdInformation[0].maxThreshold,
+            });
+          } else {
+            console.log('No hay thresholds');
           }
         },
         error: (error) => {
