@@ -11,10 +11,10 @@
       <b class="subject">Subject: {{ trip.subject }}</b>
       <div class="trip-info">
         <p>
-          From: <b>{{ trip.origin }}</b>
+          From: <b>{{ trip.origin | truncateWords : 6 }}</b>
         </p>
         <p>
-          To: <b>{{ trip.destination }}</b>
+          To: <b>{{ trip.destination | truncateWords : 6 }}</b>
         </p>
         <p>
           Date: <b>{{ trip.date }}</b>
