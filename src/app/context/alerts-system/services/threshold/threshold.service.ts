@@ -8,7 +8,7 @@ import { Threshold } from '@shared/models/entities/threshold';
 @Injectable({
   providedIn: 'root',
 })
-export class ThresholdService extends BaseService<Threshold> {
+export class ThresholdService extends BaseService<any> {
   constructor(http: HttpClient) {
     super(http, new AuthService(new Router()), '/thresholds');
   }
@@ -19,6 +19,56 @@ export class ThresholdService extends BaseService<Threshold> {
     ['SENSOR_PRESSURE', 3],
     ['SENSOR_TEMPERATURE', 4],
   ]);
+
+  thresholdsDefaultValues = [
+    {
+      sensorTypeId: 1, // SENSOR_GAS
+      maxThreshold: 1.05,
+      minThreshold: 0.21,
+    },
+    {
+      sensorTypeId: 2, // SENSOR_HUMIDITY
+      maxThreshold: 80,
+      minThreshold: 20,
+    },
+    {
+      sensorTypeId: 3, // SENSOR_PRESSURE
+      maxThreshold: 25,
+      minThreshold: 5,
+    },
+    {
+      sensorTypeId: 4, // SENSOR_TEMPERATURE
+      maxThreshold: 40,
+      minThreshold: -10,
+    },
+  ];
+
+  createDefaultThresholds(
+    tripId: number,
+    supervisorId: number
+  ): Promise<any[]> {
+    const headers = this.getAuthHeaders();
+
+    const createThresholdPromises = this.thresholdsDefaultValues.map(
+      (threshold) => {
+        return this.http
+          .post(
+            `${this.baseUrl}${this.endpoint}`,
+            {
+              ...threshold,
+              tripId,
+              supervisorId,
+            },
+            {
+              headers,
+            }
+          )
+          .toPromise();
+      }
+    );
+
+    return Promise.all(createThresholdPromises);
+  }
 
   getByTripId(tripId: number) {
     const headers = this.getAuthHeaders();
