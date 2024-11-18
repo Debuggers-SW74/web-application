@@ -20,7 +20,7 @@ import { catchError, of } from 'rxjs';
   templateUrl: './dialog-notifications.component.html',
   styleUrl: './dialog-notifications.component.css',
 })
-export class DialogNotificationsComponent implements OnInit, OnDestroy {
+export class DialogNotificationsComponent implements OnInit {
   notifications: Notification[] = [];
 
   constructor(
@@ -30,14 +30,7 @@ export class DialogNotificationsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.notificationService.connectToWebSocket();
-
     this.loadNotificationsHttp();
-  }
-
-  ngOnDestroy() {
-    // Clean up WebSocket connection
-    this.notificationService.disconnect();
   }
 
   private loadNotificationsHttp() {

@@ -130,6 +130,7 @@
                         matInput
                         type="number"
                         formControlName="minThreshold"
+                        [readonly]="!allowUpdate"
                       />
                     </mat-form-field>
 
@@ -140,6 +141,7 @@
                         type="number"
                         min="1"
                         formControlName="maxThreshold"
+                        [readonly]="!allowUpdate"
                       />
                     </mat-form-field>
                   </div>
@@ -157,6 +159,7 @@
                     mat-flat-button
                     color="primary"
                     class="fp-button continue-button"
+                    *ngIf="allowUpdate"
                   >
                     Update
                   </button>

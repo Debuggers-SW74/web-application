@@ -14,6 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { Alert } from '@shared/models/entities/Alert';
 import { Threshold } from '@shared/models/entities/threshold';
 import { Trip } from '@shared/models/entities/Trip';
+import { AuthService } from '@shared/services/auth/auth.service';
 import { ChartConfiguration, ChartData, ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { AlertsService } from '../../services/alerts/alerts.service';
@@ -32,7 +33,7 @@ import { ThresholdService } from '../../services/threshold/threshold.service';
     MatSelectModule,
     ReactiveFormsModule,
   ],
-  providers: [AlertsService, ThresholdService],
+  providers: [AlertsService, ThresholdService, AuthService],
   templateUrl: './active-trip.component.html',
   styleUrl: './active-trip.component.css',
 })
@@ -41,12 +42,14 @@ export class ActiveTripComponent implements OnInit {
   @Input() showAction: boolean = false;
   alertToSend: Alert | undefined;
   thresholdInformation: Threshold[] = [];
+  allowUpdate = false;
 
   sensorForm!: FormGroup;
 
   constructor(
     private alertsService: AlertsService,
     private thresholdService: ThresholdService,
+    private authService: AuthService,
     private formBuilder: FormBuilder
   ) {
     this.sensorForm = this.formBuilder.group({
@@ -91,6 +94,9 @@ export class ActiveTripComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.allowUpdate =
+      this.authService.getUserTypeFromToken() === 'ROLE_SUPERVISOR';
+
     this.alertsService
       .getByTripId(this.activeTrip?.tripId as number)
       .subscribe({
