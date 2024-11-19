@@ -23,23 +23,23 @@ export class ThresholdService extends BaseService<any> {
   thresholdsDefaultValues = [
     {
       sensorTypeId: 1, // SENSOR_GAS
-      maxThreshold: 1.05,
-      minThreshold: 0.21,
+      maxThreshold: 50,
+      minThreshold: 0,
     },
     {
       sensorTypeId: 2, // SENSOR_TEMPERATURE
       maxThreshold: 40,
-      minThreshold: -10,
+      minThreshold: 0,
     },
     {
       sensorTypeId: 3, // SENSOR_PRESSURE
-      maxThreshold: 25,
-      minThreshold: 5,
+      maxThreshold: 125,
+      minThreshold: 0,
     },
     {
       sensorTypeId: 4, // SENSOR_HUMIDITY
       maxThreshold: 80,
-      minThreshold: 20,
+      minThreshold: 0,
     },
   ];
 
