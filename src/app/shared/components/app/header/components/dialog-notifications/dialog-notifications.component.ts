@@ -1,21 +1,28 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import {
-  MatDialogModule,
   MAT_DIALOG_DATA,
+  MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { Notification } from '@shared/models/entities/Notification';
 import { NotificationType } from '@shared/models/enum/notification-type';
-import { CommonModule } from '@angular/common';
 import { NotificationService } from '@shared/services/notification/notification.service';
 import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-dialog-notifications',
   standalone: true,
-  imports: [MatCardModule, MatDialogModule, MatButtonModule, CommonModule],
+  imports: [
+    MatCardModule,
+    MatDialogModule,
+    MatButtonModule,
+    CommonModule,
+    MatIconModule,
+  ],
   providers: [NotificationService],
   templateUrl: './dialog-notifications.component.html',
   styleUrl: './dialog-notifications.component.css',
@@ -33,6 +40,10 @@ export class DialogNotificationsComponent implements OnInit {
     this.loadNotificationsHttp();
   }
 
+  onRefreshNotifications() {
+    this.loadNotificationsHttp();
+  }
+
   private loadNotificationsHttp() {
     this.notificationService
       .getByUserId(this.data.userId)
@@ -43,7 +54,12 @@ export class DialogNotificationsComponent implements OnInit {
         })
       )
       .subscribe((notifications) => {
-        this.notifications = notifications;
+        if (notifications && notifications.length > 0)
+          this.notifications = notifications;
+        else {
+          this.notifications = [];
+          console.log('No notifications found');
+        }
       });
   }
 
