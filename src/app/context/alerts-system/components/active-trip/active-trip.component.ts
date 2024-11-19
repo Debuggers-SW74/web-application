@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -47,6 +47,7 @@ export class ActiveTripComponent implements OnInit, OnDestroy {
   sensorData: SensorData[] = [];
   allowUpdate = false;
   private intervalId: any;
+  @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
   sensorForm!: FormGroup;
 
@@ -174,6 +175,7 @@ export class ActiveTripComponent implements OnInit, OnDestroy {
 
   updateChartData() {
     if (this.sensorData && this.sensorData.length > 0) {
+      console.log('Actualizando datos del gráfico');
       // Obtener los timestamps para el eje X
       const timestamps = this.sensorData
         .filter((data) => data !== undefined)
@@ -183,6 +185,12 @@ export class ActiveTripComponent implements OnInit, OnDestroy {
             minute: '2-digit',
           })
         ); // Formato "hh:mm"
+
+      // Actualizar las etiquetas (labels) del eje X
+      this.lineChartData.labels = [
+        ...(this.lineChartData.labels || []), // Si no hay etiquetas, inicia con un arreglo vacío
+        ...timestamps,
+      ].slice(-10); // Limitar a las últimas 10 etiquetas
 
       // Actualizar los datos del eje Y (temperatura)
       this.lineChartData.datasets[0].data = [
@@ -200,22 +208,33 @@ export class ActiveTripComponent implements OnInit, OnDestroy {
           .map((data) => data.humidityValue),
       ].slice(-10);
 
-      // Actualizar las etiquetas (labels) del eje X
-      if (this.lineChartData.labels) {
-        this.lineChartData.labels = [
-          ...this.lineChartData.labels,
-          ...timestamps,
-        ].slice(-10);
-      } else {
-        this.lineChartData.labels = timestamps.slice(-10); // Si no hay etiquetas existentes
-      }
+      // Actualizar el gráfico de burbuja
+      this.updateBubbleChartData();
 
-      // Actualizar los datos del gráfico de barras (solo el último valor de gas)
-      this.barChartData.datasets[0].data = [
-        this.sensorData[this.sensorData.length - 1].gasValue,
-      ];
+      // Notificar al gráfico que se actualizaron los datos
+      this.chart?.update();
     } else {
       console.log('No hay datos de sensor disponibles');
+    }
+  }
+
+  updateBubbleChartData() {
+    if (this.sensorData && this.sensorData.length > 0) {
+      const latestSensor = this.sensorData[this.sensorData.length - 1];
+      const gasValue = latestSensor.gasValue;
+
+      // Asegúrate de que gasValue es válido
+      console.log('Gas Value:', gasValue);
+
+      // Usar gasValue directamente como el radio
+      this.bubbleChartData.datasets[0].data[0].r = gasValue;
+
+      // Ajustar las escalas para que se acomoden al valor de gasValue
+      const maxScale = Math.max(gasValue * 2, 100); // Escala doble del gasValue o mínimo de 100
+      this.bubbleChartOptions.scales!['x']!.max = maxScale;
+      this.bubbleChartOptions.scales!['y']!.max = maxScale;
+
+      this.chart?.update();
     }
   }
 
@@ -379,33 +398,49 @@ export class ActiveTripComponent implements OnInit, OnDestroy {
 
   public lineChartType: ChartConfiguration<'line'>['type'] = 'line';
 
-  public barChartData: ChartData<'bar'> = {
-    labels: [' '],
+  public bubbleChartData: ChartData<'bubble'> = {
     datasets: [
       {
-        label: 'GNV',
-        data: [],
-        borderColor: '#36a2eb',
-        backgroundColor: 'rgba(54, 162, 235, 0.5)',
-        borderWidth: 2,
-        borderRadius: Number.MAX_VALUE,
-        borderSkipped: false,
+        label: 'Nivel de Gas',
+        data: [
+          {
+            x: 50, // Coordenada X fija para centrar
+            y: 50, // Coordenada Y fija para centrar
+            r: 20, // Radio inicial de la burbuja
+          },
+        ],
+        backgroundColor: 'rgba(54, 162, 235, 0.5)', // Color de la burbuja
+        hoverBackgroundColor: 'rgba(54, 162, 235, 0.7)', // Color al pasar el mouse
       },
     ],
   };
 
-  public barChartOptions: ChartOptions<'bar'> = {
+  public bubbleChartOptions: ChartOptions<'bubble'> = {
     responsive: true,
+    scales: {
+      x: {
+        min: 0,
+        max: 100, // Fija el eje X para centrar la burbuja
+        display: false, // Oculta el eje X
+      },
+      y: {
+        min: 0,
+        max: 100, // Fija el eje Y para centrar la burbuja
+        display: false, // Oculta el eje Y
+      },
+    },
     plugins: {
       legend: {
-        position: 'top',
+        display: false, // Oculta la leyenda
       },
-      title: {
-        display: true,
-        text: 'Presión de Gas (GNV)',
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            const raw = context.raw as { x: number; y: number; r: number }; // Define el tipo esperado
+            return `Nivel de Gas: ${raw.r}`;
+          },
+        },
       },
     },
   };
-
-  public barChartType: ChartConfiguration<'bar'>['type'] = 'bar';
 }
