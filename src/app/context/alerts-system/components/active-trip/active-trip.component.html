@@ -156,6 +156,7 @@
                         type="number"
                         formControlName="minThreshold"
                         [readonly]="!allowUpdate"
+                        min="0"
                       />
                     </mat-form-field>
 
@@ -164,7 +165,7 @@
                       <input
                         matInput
                         type="number"
-                        min="1"
+                        min="10"
                         formControlName="maxThreshold"
                         [readonly]="!allowUpdate"
                       />

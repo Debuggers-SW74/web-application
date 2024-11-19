@@ -102,6 +102,35 @@ export class ActiveTripComponent implements OnInit, OnDestroy {
     this.allowUpdate =
       this.authService.getUserTypeFromToken() === 'ROLE_SUPERVISOR';
 
+    if (!this.allowUpdate) {
+      this.getAlerts();
+      this.intervalId = setInterval(() => this.getSensorData(), 30000);
+    }
+
+    this.thresholdService
+      .getByTripId(this.activeTrip?.tripId as number)
+      .subscribe({
+        next: (thresholds: Threshold[]) => {
+          if (thresholds && thresholds.length > 0) {
+            this.thresholdInformation = thresholds;
+          }
+        },
+        error: (error) => {
+          console.error('Error al obtener los thresholds', error);
+        },
+      });
+
+    this.getSensorData();
+    this.intervalId = setInterval(() => this.getSensorData(), 30000);
+  }
+
+  ngOnDestroy(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
+
+  getAlerts() {
     this.alertsService
       .getByTripId(this.activeTrip?.tripId as number)
       .subscribe({
@@ -119,30 +148,6 @@ export class ActiveTripComponent implements OnInit, OnDestroy {
           console.error('Error al obtener las alertas', error);
         },
       });
-
-    this.thresholdService
-      .getByTripId(this.activeTrip?.tripId as number)
-      .subscribe({
-        next: (thresholds: Threshold[]) => {
-          if (thresholds && thresholds.length > 0) {
-            thresholds.map((threshold) => {
-              console.log('Threshold obtenido', threshold);
-            });
-          }
-        },
-        error: (error) => {
-          console.error('Error al obtener los thresholds', error);
-        },
-      });
-
-    this.getSensorData();
-    this.intervalId = setInterval(() => this.getSensorData(), 30000);
-  }
-
-  ngOnDestroy(): void {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
   }
 
   getSensorData() {
@@ -166,6 +171,7 @@ export class ActiveTripComponent implements OnInit, OnDestroy {
         },
       });
   }
+
   updateChartData() {
     if (this.sensorData && this.sensorData.length > 0) {
       // Obtener los timestamps para el eje X
@@ -241,20 +247,77 @@ export class ActiveTripComponent implements OnInit, OnDestroy {
   }
 
   onSendAlert() {
-    this.alertToSend = {
-      sensorType: 'string',
-      value: 20,
-      timestamp: new Date().toISOString(),
-      tripId: this.activeTrip?.tripId as number,
-    };
+    const latestSensorData = this.sensorData[this.sensorData.length - 1];
 
-    this.alertsService.create(this.alertToSend as Alert).subscribe({
-      next: () => {
-        console.log('Alerta enviada');
-      },
-      error: (error) => {
-        console.error('Error al enviar la alerta', error);
-      },
+    this.thresholdInformation.forEach((threshold) => {
+      let alertToSend: Alert | undefined;
+
+      switch (threshold.sensorType) {
+        case 'SENSOR_GAS':
+          if (
+            latestSensorData.gasValue > threshold.maxThreshold ||
+            latestSensorData.gasValue < threshold.minThreshold
+          ) {
+            alertToSend = {
+              sensorType: 'SENSOR_GAS',
+              value: latestSensorData.gasValue,
+              timestamp: new Date().toISOString(),
+              tripId: this.activeTrip?.tripId as number,
+            };
+          }
+          break;
+        case 'SENSOR_TEMPERATURE':
+          if (
+            latestSensorData.temperatureValue > threshold.maxThreshold ||
+            latestSensorData.temperatureValue < threshold.minThreshold
+          ) {
+            alertToSend = {
+              sensorType: 'SENSOR_TEMPERATURE',
+              value: latestSensorData.temperatureValue,
+              timestamp: new Date().toISOString(),
+              tripId: this.activeTrip?.tripId as number,
+            };
+          }
+          break;
+        case 'SENSOR_PRESSURE':
+          if (
+            latestSensorData.pressureValue > threshold.maxThreshold ||
+            latestSensorData.pressureValue < threshold.minThreshold
+          ) {
+            alertToSend = {
+              sensorType: 'SENSOR_PRESSURE',
+              value: latestSensorData.pressureValue,
+              timestamp: new Date().toISOString(),
+              tripId: this.activeTrip?.tripId as number,
+            };
+          }
+          break;
+        case 'SENSOR_HUMIDITY':
+          if (
+            latestSensorData.humidityValue > threshold.maxThreshold ||
+            latestSensorData.humidityValue < threshold.minThreshold
+          ) {
+            alertToSend = {
+              sensorType: 'SENSOR_HUMIDITY',
+              value: latestSensorData.humidityValue,
+              timestamp: new Date().toISOString(),
+              tripId: this.activeTrip?.tripId as number,
+            };
+          }
+          break;
+      }
+
+      if (alertToSend) {
+        this.alertToSend = alertToSend;
+        this.alertsService.create(this.alertToSend).subscribe({
+          next: () => {
+            console.log('Alerta enviada');
+          },
+          error: (error) => {
+            console.error('Error al enviar la alerta', error);
+          },
+        });
+      }
     });
   }
 
