@@ -58,13 +58,26 @@
                 <p>
                   <b>Temperature:</b>
                   <br />
-                  16°C
+                  <span *ngIf="sensorData && sensorData.length > 0">
+                    {{
+                      sensorData[sensorData.length - 1].temperatureValue
+                        ? sensorData[sensorData.length - 1].temperatureValue
+                        : 0
+                    }}
+                  </span>
                 </p>
               </div>
               <div>
                 <p>
                   <b>Humidity</b>
-                  <br />Dry
+                  <br />
+                  <span *ngIf="sensorData && sensorData.length > 0">
+                    {{
+                      sensorData[sensorData.length - 1].humidityValue > 20
+                        ? "Dry"
+                        : "Wet"
+                    }}
+                  </span>
                 </p>
               </div>
             </div>
@@ -84,14 +97,26 @@
                 <p>
                   <b>Preasure:</b>
                   <br />
-                  1.2 bar
+                  <span *ngIf="sensorData && sensorData.length > 0">
+                    {{
+                      sensorData[sensorData.length - 1].pressureValue
+                        ? sensorData[sensorData.length - 1].pressureValue
+                        : 0
+                    }}
+                  </span>
                 </p>
               </div>
               <div>
                 <p>
                   <b>Gas leak:</b>
                   <br />
-                  No
+                  <span *ngIf="sensorData && sensorData.length > 0">
+                    {{
+                      sensorData[sensorData.length - 1].gasValue > 20
+                        ? "Yes"
+                        : "No"
+                    }}
+                  </span>
                 </p>
               </div>
             </div>
@@ -99,9 +124,9 @@
               <div class="chart">
                 <canvas
                   baseChart
-                  [data]="barChartData"
-                  [options]="barChartOptions"
-                  [type]="barChartType"
+                  [data]="bubbleChartData"
+                  [options]="bubbleChartOptions"
+                  [type]="'bubble'"
                 >
                 </canvas>
               </div>
@@ -130,6 +155,8 @@
                         matInput
                         type="number"
                         formControlName="minThreshold"
+                        [readonly]="!allowUpdate"
+                        min="0"
                       />
                     </mat-form-field>
 
@@ -138,8 +165,9 @@
                       <input
                         matInput
                         type="number"
-                        min="1"
+                        min="10"
                         formControlName="maxThreshold"
+                        [readonly]="!allowUpdate"
                       />
                     </mat-form-field>
                   </div>
@@ -157,6 +185,7 @@
                     mat-flat-button
                     color="primary"
                     class="fp-button continue-button"
+                    *ngIf="allowUpdate"
                   >
                     Update
                   </button>

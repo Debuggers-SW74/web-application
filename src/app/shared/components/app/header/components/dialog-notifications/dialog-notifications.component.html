@@ -5,10 +5,18 @@
       <div class="notification-information">
         <h3>{{ defineTitle(notification.type) }}</h3>
         <p>Click below to see details</p>
-        <button mat-flat-button color="primary" mat-dialog-close class="fp-button details">
+        <button
+          mat-flat-button
+          color="primary"
+          mat-dialog-close
+          class="fp-button details"
+        >
           Details
         </button>
       </div>
     </mat-card>
   </div>
+  <button mat-icon-button (click)="onRefreshNotifications()">
+    <mat-icon>refresh</mat-icon>
+  </button>
 </mat-dialog-content>
