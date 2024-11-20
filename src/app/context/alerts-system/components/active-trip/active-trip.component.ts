@@ -11,7 +11,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { Alert } from '@shared/models/entities/Alert';
+import { Alert, AlertReceive } from '@shared/models/entities/Alert';
 import { SensorData } from '@shared/models/entities/SensorData';
 import { Threshold } from '@shared/models/entities/threshold';
 import { Trip } from '@shared/models/entities/Trip';
@@ -63,6 +63,7 @@ export class ActiveTripComponent implements OnInit, OnDestroy {
     },
   };
   sensorData: SensorData[] = [];
+  showedAlertsIdx: number[] = [];
   allowUpdate = false;
   private intervalId: any;
   sensorType = '';
@@ -201,17 +202,26 @@ export class ActiveTripComponent implements OnInit, OnDestroy {
     this.alertsService
       .getByTripId(this.activeTrip?.tripId as number)
       .subscribe({
-        next: (alerts: Alert[]) => {
+        next: (alerts: AlertReceive[]) => {
           if (alerts && alerts.length > 0) {
             alerts
               .filter((alert) => {
                 const currentTime = new Date().getTime();
-                const alertTime = new Date(alert.timestamp).getTime();
+                const alertTime = new Date(
+                  alert.sensorData.timestamp
+                ).getTime();
                 const timeWindow = 40 * 1000; // 40 seconds in milliseconds
 
-                return currentTime - alertTime <= timeWindow;
+                return (
+                  currentTime - alertTime <= timeWindow &&
+                  !this.showedAlertsIdx.includes(alert.id)
+                );
               })
               .map((alertReceive) => {
+                if (!this.showedAlertsIdx.includes(alertReceive.id)) {
+                  this.showedAlertsIdx.push(alertReceive.id);
+                }
+
                 console.log(
                   'Alerta recibida en los últimos 40 segundos:',
                   alertReceive
