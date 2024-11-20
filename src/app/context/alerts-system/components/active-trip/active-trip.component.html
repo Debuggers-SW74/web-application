@@ -73,10 +73,14 @@
                   <br />
                   <span *ngIf="sensorData && sensorData.length > 0">
                     {{
-                      sensorData[sensorData.length - 1].humidityValue > 20
-                        ? "Dry"
-                        : "Wet"
+                      sensorData[sensorData.length - 1].humidityValue >
+                      thresholdInfo.humidity.max
+                        ? "Wet"
+                        : "Dry"
                     }}
+                  </span>
+                  <span *ngIf="sensorData && sensorData.length > 0">
+                    {{ sensorData[sensorData.length - 1].humidityValue }}
                   </span>
                 </p>
               </div>
@@ -112,10 +116,14 @@
                   <br />
                   <span *ngIf="sensorData && sensorData.length > 0">
                     {{
-                      sensorData[sensorData.length - 1].gasValue > 20
+                      sensorData[sensorData.length - 1].gasValue >
+                      thresholdInfo.gas.max
                         ? "Yes"
                         : "No"
                     }}
+                  </span>
+                  <span *ngIf="sensorData && sensorData.length > 0">
+                    {{ sensorData[sensorData.length - 1].gasValue }}
                   </span>
                 </p>
               </div>
