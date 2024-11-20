@@ -58,13 +58,13 @@ export class HeaderComponent implements OnInit {
         this.currentUrl = event.urlAfterRedirects;
       });
 
-    const userId = this.authService.getUserIdFromToken();
+    const userTokenId = this.authService.getUserIdFromToken();
     const userTypeFromToken = this.authService.getUserTypeFromToken();
 
     this.showDrivers = userTypeFromToken === 'ROLE_SUPERVISOR';
 
     if (userTypeFromToken === 'ROLE_DRIVER') {
-      this.driverService.getById(userId as number).subscribe({
+      this.driverService.getById(userTokenId as number).subscribe({
         next: (response: User) => {
           this.userName = response.name;
 
@@ -75,14 +75,14 @@ export class HeaderComponent implements OnInit {
             ? response.firstLastName.split(' ')[0].charAt(0)
             : '';
           this.nameInitials = nameInitial + lastNameInitial;
-          this.userId = response.id;
+          this.userId = response.userId;
         },
         error: (err) => {
           console.error('Error fetching user data:', err);
         },
       });
     } else {
-      this.supervisorService.getById(userId as number).subscribe({
+      this.supervisorService.getById(userTokenId as number).subscribe({
         next: (response: User) => {
           this.userName = response.name;
 
@@ -93,7 +93,7 @@ export class HeaderComponent implements OnInit {
             ? response.firstLastName.split(' ')[0].charAt(0)
             : '';
           this.nameInitials = nameInitial + lastNameInitial;
-          this.userId = response.id;
+          this.userId = response.userId;
         },
         error: (err) => {
           console.error('Error fetching user data:', err);
