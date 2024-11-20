@@ -203,10 +203,21 @@ export class ActiveTripComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (alerts: Alert[]) => {
           if (alerts && alerts.length > 0) {
-            alerts.map((alertReceive) => {
-              console.log('Alerta recibida', alertReceive);
-              alert('Alerta recibida');
-            });
+            alerts
+              .filter((alert) => {
+                const currentTime = new Date().getTime();
+                const alertTime = new Date(alert.timestamp).getTime();
+                const timeWindow = 40 * 1000; // 40 seconds in milliseconds
+
+                return currentTime - alertTime <= timeWindow;
+              })
+              .map((alertReceive) => {
+                console.log(
+                  'Alerta recibida en los últimos 40 segundos:',
+                  alertReceive
+                );
+                alert('Alerta recibida');
+              });
           } else {
             console.log('No hay alertas');
           }
