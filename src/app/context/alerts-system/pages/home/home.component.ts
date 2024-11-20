@@ -41,7 +41,7 @@ export class HomeComponent {
           .subscribe({
             next: (response: Trip[]) => {
               console.log('Trips obtenidos:', response);
-              if (response)
+              if (response !== null)
                 response.map((trip) => {
                   this.activeTrip = true;
                   this.trips.push(trip);

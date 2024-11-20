@@ -175,6 +175,7 @@
                   <mat-select
                     name="sensor"
                     (selectionChange)="onSensorChange($event)"
+                    *ngIf="!allowUpdate"
                   >
                     <mat-option *ngFor="let sensor of sensors" [value]="sensor">
                       {{ sensor.sensorType }}
@@ -193,14 +194,27 @@
               </mat-expansion-panel>
             </mat-accordion>
           </div>
-          <button
-            mat-flat-button
-            color="warn"
-            (click)="onSendAlert()"
-            *ngIf="showAction"
-          >
-            Send alert
-          </button>
+          <div class="send-alert">
+            <mat-select
+              name="sensor"
+              (selectionChange)="onSensorChange($event)"
+              *ngIf="allowUpdate"
+            >
+              <mat-option *ngFor="let sensor of sensors" [value]="sensor">
+                {{ sensor.sensorType }}
+              </mat-option>
+            </mat-select>
+
+            <button
+              style="width: fit-content"
+              mat-flat-button
+              color="warn"
+              (click)="onSendAlert()"
+              *ngIf="showAction"
+            >
+              Send alert
+            </button>
+          </div>
         </div>
       </div>
     </div>
