@@ -47,6 +47,7 @@ export class ActiveTripComponent implements OnInit, OnDestroy {
   sensorData: SensorData[] = [];
   allowUpdate = false;
   private intervalId: any;
+  sensorType = '';
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
   sensorForm!: FormGroup;
@@ -164,7 +165,7 @@ export class ActiveTripComponent implements OnInit, OnDestroy {
             this.sensorData = sensorData;
             this.updateChartData();
           } else {
-            alert('No hay datos de sensor disponibles');
+            // alert('No hay datos de sensor disponibles');
           }
         },
         error: (error) => {
@@ -242,6 +243,7 @@ export class ActiveTripComponent implements OnInit, OnDestroy {
     this.sensorForm.patchValue({
       safetyThresholdId: event.value.id,
     });
+    this.sensorType = event.value.sensorMap;
 
     this.thresholdService
       .getByTripId(this.activeTrip?.tripId as number)
@@ -266,78 +268,123 @@ export class ActiveTripComponent implements OnInit, OnDestroy {
   }
 
   onSendAlert() {
+    if (this.sensorType === '') {
+      alert('Seleccione un sensor');
+      return;
+    }
+
     const latestSensorData = this.sensorData[this.sensorData.length - 1];
 
-    this.thresholdInformation.forEach((threshold) => {
-      let alertToSend: Alert | undefined;
+    if (this.sensorType === 'SENSOR_GAS') {
+      this.alertToSend = {
+        sensorType: this.sensorType,
+        value: latestSensorData.gasValue,
+        timestamp: new Date().toISOString(),
+        tripId: this.activeTrip?.tripId as number,
+      };
+    } else if (this.sensorType === 'SENSOR_TEMPERATURE') {
+      this.alertToSend = {
+        sensorType: this.sensorType,
+        value: latestSensorData.temperatureValue,
+        timestamp: new Date().toISOString(),
+        tripId: this.activeTrip?.tripId as number,
+      };
+    } else if (this.sensorType === 'SENSOR_PRESSURE') {
+      this.alertToSend = {
+        sensorType: this.sensorType,
+        value: latestSensorData.pressureValue,
+        timestamp: new Date().toISOString(),
+        tripId: this.activeTrip?.tripId as number,
+      };
+    } else if (this.sensorType === 'SENSOR_HUMIDITY') {
+      this.alertToSend = {
+        sensorType: this.sensorType,
+        value: latestSensorData.humidityValue,
+        timestamp: new Date().toISOString(),
+        tripId: this.activeTrip?.tripId as number,
+      };
+    }
 
-      switch (threshold.sensorType) {
-        case 'SENSOR_GAS':
-          if (
-            latestSensorData.gasValue > threshold.maxThreshold ||
-            latestSensorData.gasValue < threshold.minThreshold
-          ) {
-            alertToSend = {
-              sensorType: 'SENSOR_GAS',
-              value: latestSensorData.gasValue,
-              timestamp: new Date().toISOString(),
-              tripId: this.activeTrip?.tripId as number,
-            };
-          }
-          break;
-        case 'SENSOR_TEMPERATURE':
-          if (
-            latestSensorData.temperatureValue > threshold.maxThreshold ||
-            latestSensorData.temperatureValue < threshold.minThreshold
-          ) {
-            alertToSend = {
-              sensorType: 'SENSOR_TEMPERATURE',
-              value: latestSensorData.temperatureValue,
-              timestamp: new Date().toISOString(),
-              tripId: this.activeTrip?.tripId as number,
-            };
-          }
-          break;
-        case 'SENSOR_PRESSURE':
-          if (
-            latestSensorData.pressureValue > threshold.maxThreshold ||
-            latestSensorData.pressureValue < threshold.minThreshold
-          ) {
-            alertToSend = {
-              sensorType: 'SENSOR_PRESSURE',
-              value: latestSensorData.pressureValue,
-              timestamp: new Date().toISOString(),
-              tripId: this.activeTrip?.tripId as number,
-            };
-          }
-          break;
-        case 'SENSOR_HUMIDITY':
-          if (
-            latestSensorData.humidityValue > threshold.maxThreshold ||
-            latestSensorData.humidityValue < threshold.minThreshold
-          ) {
-            alertToSend = {
-              sensorType: 'SENSOR_HUMIDITY',
-              value: latestSensorData.humidityValue,
-              timestamp: new Date().toISOString(),
-              tripId: this.activeTrip?.tripId as number,
-            };
-          }
-          break;
-      }
-
-      if (alertToSend) {
-        this.alertToSend = alertToSend;
-        this.alertsService.create(this.alertToSend).subscribe({
-          next: () => {
-            console.log('Alerta enviada');
-          },
-          error: (error) => {
-            console.error('Error al enviar la alerta', error);
-          },
-        });
-      }
+    this.alertsService.create(this.alertToSend!).subscribe({
+      next: () => {
+        console.log('Alerta enviada');
+      },
+      error: (error) => {
+        console.error('Error al enviar la alerta', error);
+        alert('Error al enviar la alerta');
+      },
     });
+
+    // this.thresholdInformation.forEach((threshold) => {
+    //   let alertToSend: Alert | undefined;
+
+    //   switch (threshold.sensorType) {
+    //     case 'SENSOR_GAS':
+    //       if (
+    //         latestSensorData.gasValue > threshold.maxThreshold ||
+    //         latestSensorData.gasValue < threshold.minThreshold
+    //       ) {
+    //         alertToSend = {
+    //           sensorType: 'SENSOR_GAS',
+    //           value: latestSensorData.gasValue,
+    //           timestamp: new Date().toISOString(),
+    //           tripId: this.activeTrip?.tripId as number,
+    //         };
+    //       }
+    //       break;
+    //     case 'SENSOR_TEMPERATURE':
+    //       if (
+    //         latestSensorData.temperatureValue > threshold.maxThreshold ||
+    //         latestSensorData.temperatureValue < threshold.minThreshold
+    //       ) {
+    //         alertToSend = {
+    //           sensorType: 'SENSOR_TEMPERATURE',
+    //           value: latestSensorData.temperatureValue,
+    //           timestamp: new Date().toISOString(),
+    //           tripId: this.activeTrip?.tripId as number,
+    //         };
+    //       }
+    //       break;
+    //     case 'SENSOR_PRESSURE':
+    //       if (
+    //         latestSensorData.pressureValue > threshold.maxThreshold ||
+    //         latestSensorData.pressureValue < threshold.minThreshold
+    //       ) {
+    //         alertToSend = {
+    //           sensorType: 'SENSOR_PRESSURE',
+    //           value: latestSensorData.pressureValue,
+    //           timestamp: new Date().toISOString(),
+    //           tripId: this.activeTrip?.tripId as number,
+    //         };
+    //       }
+    //       break;
+    //     case 'SENSOR_HUMIDITY':
+    //       if (
+    //         latestSensorData.humidityValue > threshold.maxThreshold ||
+    //         latestSensorData.humidityValue < threshold.minThreshold
+    //       ) {
+    //         alertToSend = {
+    //           sensorType: 'SENSOR_HUMIDITY',
+    //           value: latestSensorData.humidityValue,
+    //           timestamp: new Date().toISOString(),
+    //           tripId: this.activeTrip?.tripId as number,
+    //         };
+    //       }
+    //       break;
+    //   }
+
+    //   if (alertToSend) {
+    //     this.alertToSend = alertToSend;
+    //     this.alertsService.create(this.alertToSend).subscribe({
+    //       next: () => {
+    //         console.log('Alerta enviada');
+    //       },
+    //       error: (error) => {
+    //         console.error('Error al enviar la alerta', error);
+    //       },
+    //     });
+    //   }
+    // });
   }
 
   public lineChartData: ChartData<'line'> = {

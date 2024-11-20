@@ -163,6 +163,14 @@
   color: #666;
 }
 
+.send-alert {
+  display: flex;
+  flex-direction: column;
+  width: full;
+  align-items: center;
+  margin-top: 10px;
+}
+
 @media (max-width: 768px) {
   .sensor-info {
     padding: 15px;

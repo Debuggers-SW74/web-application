@@ -7,6 +7,7 @@ export interface User {
   email: string;
   username: string;
   password?: string;
+  userId?: number;
 }
 
 export interface UserCreate extends User {

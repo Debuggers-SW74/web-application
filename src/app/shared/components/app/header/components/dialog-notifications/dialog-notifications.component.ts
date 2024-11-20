@@ -45,6 +45,7 @@ export class DialogNotificationsComponent implements OnInit {
   }
 
   private loadNotificationsHttp() {
+    console.log('Loading notifications for user:', this.data.userId);
     this.notificationService
       .getByUserId(this.data.userId)
       .pipe(
@@ -54,9 +55,9 @@ export class DialogNotificationsComponent implements OnInit {
         })
       )
       .subscribe((notifications) => {
-        if (notifications && notifications.length > 0)
+        if (notifications && notifications.length > 0) {
           this.notifications = notifications;
-        else {
+        } else {
           this.notifications = [];
           console.log('No notifications found');
         }
@@ -69,8 +70,6 @@ export class DialogNotificationsComponent implements OnInit {
         return 'The Trip has just finished';
       case NotificationType.Cancelled:
         return 'The Trip has just been cancelled';
-      case NotificationType.Assigned:
-        return 'The Trip has been assigned to you';
       case NotificationType.Created:
         return 'The Trip has been created';
       case NotificationType.Started:
@@ -86,12 +85,10 @@ export class DialogNotificationsComponent implements OnInit {
         return 'assets/img/notifications/trip_finished.png';
       case NotificationType.Cancelled:
         return 'assets/img/notifications/trip_cancelled.png';
-      case NotificationType.Assigned:
-        return 'assets/img/notifications/trip_assigned.png';
       case NotificationType.Created:
         return 'assets/img/notifications/trip_created.png';
       case NotificationType.Started:
-        return 'assets/img/notifications/trip_created.png';
+        return 'assets/img/notifications/trip_assigned.png';
       default:
         return '';
     }
