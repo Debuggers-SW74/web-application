@@ -44,6 +44,24 @@ export class ActiveTripComponent implements OnInit, OnDestroy {
   @Input() showAction: boolean = false;
   alertToSend: Alert | undefined;
   thresholdInformation: Threshold[] = [];
+  thresholdInfo = {
+    gas: {
+      min: 0,
+      max: 0,
+    },
+    temperature: {
+      min: 0,
+      max: 0,
+    },
+    pressure: {
+      min: 0,
+      max: 0,
+    },
+    humidity: {
+      min: 0,
+      max: 0,
+    },
+  };
   sensorData: SensorData[] = [];
   allowUpdate = false;
   private intervalId: any;
@@ -93,6 +111,31 @@ export class ActiveTripComponent implements OnInit, OnDestroy {
     this.thresholdService.update(this.sensorForm.value).subscribe({
       next: () => {
         console.log('Threshold updated');
+
+        switch (this.sensorType) {
+          case 'SENSOR_GAS':
+            this.thresholdInfo.gas.min = this.sensorForm.value.minThreshold;
+            this.thresholdInfo.gas.max = this.sensorForm.value.maxThreshold;
+            break;
+          case 'SENSOR_TEMPERATURE':
+            this.thresholdInfo.temperature.min =
+              this.sensorForm.value.minThreshold;
+            this.thresholdInfo.temperature.max =
+              this.sensorForm.value.maxThreshold;
+            break;
+          case 'SENSOR_PRESSURE':
+            this.thresholdInfo.pressure.min =
+              this.sensorForm.value.minThreshold;
+            this.thresholdInfo.pressure.max =
+              this.sensorForm.value.maxThreshold;
+            break;
+          case 'SENSOR_HUMIDITY':
+            this.thresholdInfo.humidity.min =
+              this.sensorForm.value.minThreshold;
+            this.thresholdInfo.humidity.max =
+              this.sensorForm.value.maxThreshold;
+            break;
+        }
       },
       error: (error) => {
         console.error('Error updating threshold', error);
@@ -106,7 +149,7 @@ export class ActiveTripComponent implements OnInit, OnDestroy {
 
     if (!this.allowUpdate) {
       this.getAlerts();
-      this.intervalId = setInterval(() => this.getSensorData(), 30000);
+      this.intervalId = setInterval(() => this.getAlerts(), 30000);
     }
 
     this.thresholdService
@@ -115,6 +158,28 @@ export class ActiveTripComponent implements OnInit, OnDestroy {
         next: (thresholds: Threshold[]) => {
           if (thresholds && thresholds.length > 0) {
             this.thresholdInformation = thresholds;
+            thresholds.map((threshold) => {
+              switch (threshold.sensorType) {
+                case 'SENSOR_GAS':
+                  this.thresholdInfo.gas.min = threshold.minThreshold;
+                  this.thresholdInfo.gas.max = threshold.maxThreshold;
+                  break;
+                case 'SENSOR_TEMPERATURE':
+                  this.thresholdInfo.temperature.min = threshold.minThreshold;
+                  this.thresholdInfo.temperature.max = threshold.maxThreshold;
+                  break;
+                case 'SENSOR_PRESSURE':
+                  this.thresholdInfo.pressure.min = threshold.minThreshold;
+                  this.thresholdInfo.pressure.max = threshold.maxThreshold;
+                  break;
+                case 'SENSOR_HUMIDITY':
+                  this.thresholdInfo.humidity.min = threshold.minThreshold;
+                  this.thresholdInfo.humidity.max = threshold.maxThreshold;
+                  break;
+              }
+            });
+          } else {
+            console.log('No hay thresholds');
           }
         },
         error: (error) => {
@@ -166,6 +231,7 @@ export class ActiveTripComponent implements OnInit, OnDestroy {
             this.updateChartData();
           } else {
             // alert('No hay datos de sensor disponibles');
+            console.log('No hay datos de sensor disponibles');
           }
         },
         error: (error) => {

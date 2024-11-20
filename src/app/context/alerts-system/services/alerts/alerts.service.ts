@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Alert } from '@shared/models/entities/Alert';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { BaseService } from '@shared/services/base/base.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class AlertsService extends BaseService<Alert> {
     super(http, new AuthService(new Router()), '/alerts');
   }
 
-  getByTripId(tripId: number) {
+  getByTripId(tripId: number): Observable<Alert[]> {
     const headers = this.getAuthHeaders();
 
     return this.http.get<Alert[]>(
